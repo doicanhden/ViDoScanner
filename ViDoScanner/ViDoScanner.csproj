@@ -53,6 +53,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Utilities\NotificationObject.cs" />
+    <Compile Include="ValueConverters\PathToImageConverter.cs" />
+    <Compile Include="ValueConverters\VisibilityConverter.cs" />
+    <Compile Include="ViewModels\AnchorViewModel.cs" />
+    <Compile Include="ViewModels\FieldViewModel.cs" />
+    <Compile Include="ViewModels\PageViewModel.cs" />
+    <Compile Include="ViewModels\TemplateViewModel.cs" />
+    <Compile Include="Views\EditableTabHeaderControl.cs" />
+    <Compile Include="Views\FormattedTab.xaml.cs">
+      <DependentUpon>FormattedTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GridLinesFieldView.xaml.cs">
+      <DependentUpon>GridLinesFieldView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PageView.xaml.cs">
+      <DependentUpon>PageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TemplateView.xaml.cs">
+      <DependentUpon>TemplateView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -61,10 +81,27 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\FormattedTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GridLinesFieldView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TemplateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
