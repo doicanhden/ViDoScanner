@@ -8,12 +8,40 @@
   x:Class="ViDoScanner.Views.TemplateView" 
   mc:Ignorable="d">
   <UserControl.Resources>
-    <DataTemplate DataType="{x:Type ViewModels:PageViewModel}">
-      <Views:PageView/>
-    </DataTemplate>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Themes/CloseButtonTheme.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+
+      <!-- Tab item header container style -->
+      <Style x:Key="TabItemHeaderContainerStyle" TargetType="TabItem">
+        <Setter Property="HeaderTemplate">
+          <Setter.Value>
+            <DataTemplate>
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition/>
+                  <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Views:EditableTextBlock Grid.Column="0" Text="{Binding Name}"/>
+                <Button Grid.Column="1" Width="16" Height="16" Margin="8,0,0,0"
+                      Template="{DynamicResource CloseButtonTheme}"
+                      Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=DataContext.DeletePage}"
+                      CommandParameter="{Binding}"/>
+              </Grid>
+            </DataTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+
+      <DataTemplate DataType="{x:Type ViewModels:PageViewModel}">
+        <Views:PageView/>
+      </DataTemplate>
+
+    </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
-    <Views:FormattedTab ItemSource="{Binding Pages}"/>
+    <TabControl ItemsSource="{Binding Pages}" SelectedIndex="0" ItemContainerStyle="{StaticResource TabItemHeaderContainerStyle}"/>
   </Grid>
 </UserControl>
 

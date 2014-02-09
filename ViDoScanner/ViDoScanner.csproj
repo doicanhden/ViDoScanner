@@ -66,9 +66,6 @@
     <Compile Include="Views\EditableTextBlock.xaml.cs">
       <DependentUpon>EditableTextBlock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FormattedTab.xaml.cs">
-      <DependentUpon>FormattedTab.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\GridLinesFieldView.xaml.cs">
       <DependentUpon>GridLinesFieldView.xaml</DependentUpon>
     </Compile>
@@ -100,10 +97,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditableTextBlock.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\FormattedTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
