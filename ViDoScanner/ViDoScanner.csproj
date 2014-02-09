@@ -60,7 +60,12 @@
     <Compile Include="ViewModels\FieldViewModel.cs" />
     <Compile Include="ViewModels\PageViewModel.cs" />
     <Compile Include="ViewModels\TemplateViewModel.cs" />
-    <Compile Include="Views\EditableTabHeaderControl.cs" />
+    <Compile Include="Views\CreatePageView.xaml.cs">
+      <DependentUpon>CreatePageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditableTextBlock.xaml.cs">
+      <DependentUpon>EditableTextBlock.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FormattedTab.xaml.cs">
       <DependentUpon>FormattedTab.xaml</DependentUpon>
     </Compile>
@@ -86,6 +91,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Themes\CloseButtonTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreatePageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditableTextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\FormattedTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

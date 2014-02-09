@@ -4,40 +4,46 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-  xmlns:vc="clr-namespace:ViDoScanner.ValueConverters"
+  xmlns:Views="clr-namespace:ViDoScanner.Views"
   mc:Ignorable="d"
-  Focusable="True" IsTabStop="True">
+  Focusable="True" IsTabStop="True" KeyDown="UserControl_KeyDown">
   <UserControl.Resources>
-    <Style x:Key="SelectionThumbStyle" TargetType="{x:Type Thumb}">
-      <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate TargetType="{x:Type Thumb}">
-            <Border BorderBrush="#FF385D8A" Background="#00000000" BorderThickness="2,2,2,2"/>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
-    <Style x:Key="SquareThumbStyle" TargetType="{x:Type Thumb}">
-      <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate TargetType="{x:Type Thumb}">
-            <Border BorderThickness="1,1,1,1" BorderBrush="#FF7D8289">
-              <Border.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                  <GradientStop Color="#FFF6FFFF" Offset="0"/>
-                  <GradientStop Color="#FFCAEAED" Offset="0.45"/>
-                  <GradientStop Color="#FFCAEAED" Offset="0.5"/>
-                  <GradientStop Color="#FFCAEAED" Offset="0.55"/>
-                  <GradientStop Color="#FFF6FFFF" Offset="1"/>
-                </LinearGradientBrush>
-              </Border.Background>
-            </Border>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Themes/CloseButtonTheme.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+
+      <Style x:Key="SelectionThumbStyle" TargetType="{x:Type Thumb}">
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+        <Setter Property="Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="{x:Type Thumb}">
+              <Border BorderBrush="Blue" Background="#00000000" BorderThickness="2,2,2,2"/>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+      <Style x:Key="SquareThumbStyle" TargetType="{x:Type Thumb}">
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+        <Setter Property="Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="{x:Type Thumb}">
+              <Border BorderThickness="1,1,1,1" BorderBrush="#FF7D8289" Opacity="0.8">
+                <Border.Background>
+                  <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFF6FFFF" Offset="0"/>
+                    <GradientStop Color="#FFCAEAED" Offset="0.45"/>
+                    <GradientStop Color="#FFCAEAED" Offset="0.5"/>
+                    <GradientStop Color="#FFCAEAED" Offset="0.55"/>
+                    <GradientStop Color="#FFF6FFFF" Offset="1"/>
+                  </LinearGradientBrush>
+                </Border.Background>
+              </Border>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+    </ResourceDictionary>
   </UserControl.Resources>
   <UserControl.Style>
     <Style TargetType="UserControl">
@@ -50,41 +56,56 @@
   </UserControl.Style>
   <Grid>
     <Grid.Background>
-      <VisualBrush TileMode="Tile" Viewport="{Binding Cell}" ViewportUnits="Absolute" Viewbox="{Binding Cell}" ViewboxUnits="Absolute">
+      <VisualBrush TileMode="Tile"
+                   Viewport="{Binding Cell}" ViewboxUnits="Absolute"
+                   Viewbox="{Binding Cell}" ViewportUnits="Absolute">
         <VisualBrush.Visual>
           <Rectangle Stroke="Red" StrokeThickness="1" Height="{Binding Cell.Height}" Width="{Binding Cell.Width}"/>
         </VisualBrush.Visual>
       </VisualBrush>
     </Grid.Background>
+
+    <!-- Move box -->
     <Thumb Visibility="{Binding Path=FocusVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
            Style="{DynamicResource SelectionThumbStyle}" DragDelta="SelectionThumb_DragDelta"  Cursor="SizeAll"/>
+    
+    <!-- Resize box -->
     <Thumb Visibility="{Binding Path=FocusVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
            HorizontalAlignment="Left" VerticalAlignment="Top"
-           Style="{DynamicResource SquareThumbStyle}" DragDelta="Thumb_DragDelta" Width="10" Height="10" Margin="-5,-5,0,0" Cursor="SizeNWSE"/>
+           Style="{DynamicResource SquareThumbStyle}" DragDelta="Thumb_DragDelta" Width="12" Height="12" Margin="-5,-5,0,0" Cursor="SizeNWSE"/>
     <Thumb Visibility="{Binding Path=FocusVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
            HorizontalAlignment="Center" VerticalAlignment="Top"
-           Style="{DynamicResource SquareThumbStyle}" DragDelta="Thumb_DragDelta" Width="8" Height="8" Margin="0,-5,0,0" Cursor="SizeNS"/>
+           Style="{DynamicResource SquareThumbStyle}" DragDelta="Thumb_DragDelta" Width="10" Height="10" Margin="0,-5,0,0" Cursor="SizeNS"/>
     <Thumb Visibility="{Binding Path=FocusVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
            HorizontalAlignment="Right" VerticalAlignment="Top"
-           Style="{DynamicResource SquareThumbStyle}" DragDelta="Thumb_DragDelta" Width="10" Height="10" Margin="0,-5,-5,0" Cursor="SizeNESW"/>
+           Style="{DynamicResource SquareThumbStyle}" DragDelta="Thumb_DragDelta" Width="12" Height="12" Margin="0,-5,-5,0" Cursor="SizeNESW"/>
     <Thumb Visibility="{Binding Path=FocusVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
            HorizontalAlignment="Right" VerticalAlignment="Center"
-           Style="{DynamicResource SquareThumbStyle}" DragDelta="Thumb_DragDelta" Width="8" Height="8" Margin="0,0,-5,0" Cursor="SizeWE"/>
+           Style="{DynamicResource SquareThumbStyle}" DragDelta="Thumb_DragDelta" Width="10" Height="10" Margin="0,0,-5,0" Cursor="SizeWE"/>
     <Thumb Visibility="{Binding Path=FocusVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
            HorizontalAlignment="Right" VerticalAlignment="Bottom" 
-           Style="{DynamicResource SquareThumbStyle}" DragDelta="Thumb_DragDelta" Width="10" Height="10" Margin="0,0,-5,-5" Cursor="SizeNWSE"/>
+           Style="{DynamicResource SquareThumbStyle}" DragDelta="Thumb_DragDelta" Width="12" Height="12" Margin="0,0,-5,-5" Cursor="SizeNWSE"/>
     <Thumb Visibility="{Binding Path=FocusVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
            HorizontalAlignment="Center" VerticalAlignment="Bottom"
-           Style="{DynamicResource SquareThumbStyle}" DragDelta="Thumb_DragDelta" Width="8" Height="8" Margin="0,0,0,-5" Cursor="SizeNS"/>
+           Style="{DynamicResource SquareThumbStyle}" DragDelta="Thumb_DragDelta" Width="10" Height="10" Margin="0,0,0,-5" Cursor="SizeNS"/>
     <Thumb Visibility="{Binding Path=FocusVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
            HorizontalAlignment="Left" VerticalAlignment="Bottom" 
-           Style="{DynamicResource SquareThumbStyle}" DragDelta="Thumb_DragDelta" Width="10" Height="10" Margin="-5,0,0,-5" Cursor="SizeNESW"/>
+           Style="{DynamicResource SquareThumbStyle}" DragDelta="Thumb_DragDelta" Width="12" Height="12" Margin="-5,0,0,-5" Cursor="SizeNESW"/>
     <Thumb Visibility="{Binding Path=FocusVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
            HorizontalAlignment="Left" VerticalAlignment="Center"
-           Style="{DynamicResource SquareThumbStyle}" DragDelta="Thumb_DragDelta" Width="8" Height="8" Margin="-5,0,0,0" Cursor="SizeWE"/>
+           Style="{DynamicResource SquareThumbStyle}" DragDelta="Thumb_DragDelta" Width="10" Height="10" Margin="-5,0,0,0" Cursor="SizeWE"/>
 
-    <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center" Height="20" Text="{Binding Name}" ToolTip="Name of this Field."/>
-    <TextBlock VerticalAlignment="Top" HorizontalAlignment="Right" TextAlignment="Center" Width="20" Height="20" Text="X" ToolTip="Delete this Field." x:Name="DeleteButton" MouseDown="TextBlock_MouseDown"/>
+    <Grid Margin="0,-20,0,0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="20"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <Views:EditableTextBlock Grid.Column="0" x:Name="FieldName" ToolTip="Tên của vùng." Text="{Binding Name, Mode=TwoWay}" FontWeight="Bold"/>
+      <Button Grid.Column="1" ToolTip="Xóa vùng này." Width="20" Height="20" x:Name="DeleteButton" Click="DeleteButton_Click" Template="{DynamicResource CloseButtonTheme}"/>
+    </Grid>
   </Grid>
 </UserControl>

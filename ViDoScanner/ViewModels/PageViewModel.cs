@@ -63,7 +63,7 @@
       {
         return (selectField ?? (selectField = new RelayCommand<FieldViewModel>(
           (x) => SelectedField = x,
-          (x) => SelectedField == null || SelectedField == x || SelectedField.IsValid)));
+          (x) => SelectedField == null || SelectedField.IsValid || (x != null && !x.IsValid))));
       }
     }
     /// <summary>

@@ -11,6 +11,18 @@
   d:DesignHeight="300" d:DesignWidth="300">
   <UserControl.Resources>
     <ValueConverters:PathToImageConverter x:Key="PathToImageConverter"/>
+    <DataTemplate DataType="{x:Type ViewModels:AnchorViewModel}">
+      <Canvas>
+        <Rectangle
+          Stroke="Blue"
+          StrokeThickness="2"
+          StrokeDashArray="1 2"
+          Canvas.Left="{Binding X}"
+          Canvas.Top="{Binding Y}"
+          Width="{Binding Width}"
+          Height="{Binding Height}"/>
+      </Canvas>
+    </DataTemplate>
     <DataTemplate DataType="{x:Type ViewModels:FieldViewModel}">
       <Canvas>
         <Views:GridLinesFieldView
@@ -26,10 +38,42 @@
       </Canvas>
     </DataTemplate>
   </UserControl.Resources>
-  <ScrollViewer HorizontalScrollBarVisibility="Auto" >
-    <Grid  FocusManager.IsFocusScope="True">
-      <Image  Source="{Binding ImagePath, Converter={StaticResource PathToImageConverter}}" Stretch="None"/>
-      <ItemsControl ItemsSource="{Binding Fields}"/>
-    </Grid>
-  </ScrollViewer>
+  <Grid>
+    <Border BorderBrush="Blue" BorderThickness="2" Width="850" Height="520">
+      <ScrollViewer HorizontalScrollBarVisibility="Auto" FocusManager.IsFocusScope="True"
+                    PreviewMouseDown="ScrollViewer_PreviewMouseDown"
+                    PreviewMouseMove="ScrollViewer_PreviewMouseMove"
+                    PreviewMouseUp="ScrollViewer_PreviewMouseUp">
+        <Grid >
+          <Image x:Name="PageGrid" Source="{Binding ImagePath, Converter={StaticResource PathToImageConverter}}" Stretch="None"/>
+          <ItemsControl ItemsSource="{Binding Anchors}"/>
+          <ItemsControl ItemsSource="{Binding Fields}"/>
+
+          <Canvas>
+            <!-- Mouse down -->
+            <Line Stroke="Red" Y1="0" Y2="520"
+              Visibility="{Binding Path=CreationVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+              X1="{Binding Path=Point1.X, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+              X2="{Binding Path=Point1.X, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+
+            <Line Stroke="Red" X1="0" X2="850"
+              Visibility="{Binding Path=CreationVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+              Y1="{Binding Path=Point1.Y, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+              Y2="{Binding Path=Point1.Y, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+
+            <Line Stroke="Red" Y1="0" Y2="520"
+              Visibility="{Binding Path=CreationVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+              X1="{Binding Path=Point2.X, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+              X2="{Binding Path=Point2.X, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+
+            <Line Stroke="Red" X1="0" X2="850"
+              Visibility="{Binding Path=CreationVisibility, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+              Y1="{Binding Path=Point2.Y, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+              Y2="{Binding Path=Point2.Y, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+
+          </Canvas>
+        </Grid>
+      </ScrollViewer>
+    </Border>
+  </Grid>
 </UserControl>

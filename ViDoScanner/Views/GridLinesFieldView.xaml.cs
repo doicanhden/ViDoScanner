@@ -2,6 +2,7 @@
 namespace ViDoScanner.Views
 {
   using System;
+  using System.ComponentModel;
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Controls.Primitives;
@@ -11,13 +12,13 @@ namespace ViDoScanner.Views
   /// </summary>
   public partial class GridLinesFieldView : UserControl
   {
-    public Visibility FocusVisibility
+    private Visibility FocusVisibility
     {
       get { return (Visibility)GetValue(FocusVisibilityProperty); }
       set { SetValue(FocusVisibilityProperty, value); }
     }
 
-    public static readonly DependencyProperty FocusVisibilityProperty =
+    private static readonly DependencyProperty FocusVisibilityProperty =
         DependencyProperty.Register("FocusVisibility", typeof(Visibility), typeof(GridLinesFieldView), new PropertyMetadata(Visibility.Collapsed));
 
     
@@ -139,7 +140,8 @@ namespace ViDoScanner.Views
     }
     private static void ExecuteCommand(ICommand command, IInputElement commandTarget, object commandParameter)
     {
-      if (command != null)
+
+      if (command != null && CanExecuteCommand(command, commandTarget, commandParameter))
       {
         RoutedCommand routedCommand = command as RoutedCommand;
         if (routedCommand != null)
@@ -170,12 +172,6 @@ namespace ViDoScanner.Views
       base.OnLostFocus(e);
       FocusVisibility = Visibility.Collapsed;
     }
-    private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
-    {
-      ExecuteCommand(DeleteCommand, DeleteCommandTarget, DeleteCommandParameter);
-      e.Handled = true;
-    }
-    
     private void SelectionThumb_DragDelta(object sender, DragDeltaEventArgs e)
     {
       double l = (double)GetValue(Canvas.LeftProperty);
@@ -230,6 +226,31 @@ namespace ViDoScanner.Views
           break;
         default:
           break;
+      }
+    }
+    private void DeleteButton_Click(object sender, RoutedEventArgs e)
+    {
+      DeleteThisField();
+    }
+    private void DeleteThisField()
+    {
+      if (MessageBox.Show(
+        string.Format("Bạn muốn xóa vùng '{0}'?", FieldName.Text), "Cảnh báo",
+        MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.OK)
+      {
+        ExecuteCommand(DeleteCommand, DeleteCommandTarget, DeleteCommandParameter);
+      }
+    }
+    private void UserControl_KeyDown(object sender, KeyEventArgs e)
+    {
+      if (e.Key == Key.F2 && this.FieldName.IsEditable)
+      {
+        this.FieldName.IsInEditMode = true;
+      }
+
+      if (e.Key == Key.Delete)
+      {
+        DeleteThisField();
       }
     }
   }

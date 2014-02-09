@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ViDoScanner.Commands;
 using ViDoScanner.ViewModels;
+using ViDoScanner.Views;
 
 namespace ViDoScanner
 {
@@ -42,7 +43,6 @@ namespace ViDoScanner
       var r = new Rect(10, 10, 150, 150);
       page.CreateField.Execute(r);
 
-      page.SelectedField.Name = "Field";
       page.SelectedField.NumberOfCols = 6;
       page.SelectedField.NumberOfRows = 10;
     }
@@ -51,10 +51,6 @@ namespace ViDoScanner
     {
       var r = new Rect(10, 10, 150, 150);
       page.CreateField.Execute(r);
-
-      page.SelectedField.Name = "Field";
-      page.SelectedField.NumberOfCols = 0;
-      page.SelectedField.NumberOfRows = 0;
     }
   }
 }

@@ -6,8 +6,7 @@
   xmlns:Views="clr-namespace:ViDoScanner.Views"
   xmlns:ViewModels="clr-namespace:ViDoScanner.ViewModels"
   x:Class="ViDoScanner.Views.TemplateView" 
-  mc:Ignorable="d" 
-  d:DesignHeight="300" d:DesignWidth="300">
+  mc:Ignorable="d">
   <UserControl.Resources>
     <DataTemplate DataType="{x:Type ViewModels:PageViewModel}">
       <Views:PageView/>

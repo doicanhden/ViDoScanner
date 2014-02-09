@@ -8,19 +8,20 @@
   {
     #region Data Members
     private string name;
-    private double x;
-    private double y;
-    private double width;
-    private double height;
-    private int index;
-    private int numberOfBlanks;
-    private int numberOfRows;
-    private int numberOfCols;
+    private double x = 0;
+    private double y = 0;
+    private double width = 0;
+    private double height = 0;
+    private int index = 0;
+    private int numberOfBlanks = 0;
+    private int numberOfRows = 1;
+    private int numberOfCols = 1;
     #endregion
 
     #region Constructors
     public FieldViewModel(Rect rect, int index)
     {
+      Name = "Vùng " + index;
       Index = index;
       X = rect.X;
       Y = rect.Y;
