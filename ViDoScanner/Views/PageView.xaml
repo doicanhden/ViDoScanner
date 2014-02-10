@@ -39,11 +39,12 @@
   </UserControl.Resources>
   <Grid>
     <Border BorderBrush="Blue" BorderThickness="2" Width="850" Height="620">
-      <ScrollViewer HorizontalScrollBarVisibility="Auto" FocusManager.IsFocusScope="True"
-                    PreviewMouseDown="ScrollViewer_PreviewMouseDown"
-                    PreviewMouseMove="ScrollViewer_PreviewMouseMove"
-                    PreviewMouseUp="ScrollViewer_PreviewMouseUp">
-        <Grid >
+      <ScrollViewer HorizontalScrollBarVisibility="Auto" FocusManager.IsFocusScope="True" Focusable="False">
+        
+        <Grid
+          PreviewMouseDown="Grid_PreviewMouseDown"
+          PreviewMouseMove="Grid_PreviewMouseMove"
+          PreviewMouseUp="Grid_PreviewMouseUp">
           <Image x:Name="PageGrid" Source="{Binding ImagePath, Converter={StaticResource PathToImageConverter}}" Stretch="None"/>
           <ItemsControl ItemsSource="{Binding Anchors}"/>
           <ItemsControl ItemsSource="{Binding Fields}"/>

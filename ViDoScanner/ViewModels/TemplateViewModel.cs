@@ -4,17 +4,23 @@
   using System.Windows.Input;
   using ViDoScanner.Commands;
   using ViDoScanner.Utilities;
-  class TemplateViewModel:NotificationObject
+  class TemplateViewModel:ViewModelBasic
   {
+    #region Data Members
     private ICommand createPage;
     private ICommand selectPage;
     private ICommand deletePage;
     private PageViewModel selectedPage;
+    #endregion
 
+    #region Constructors
     public TemplateViewModel()
     {
       Pages = new ObservableCollection<PageViewModel>();
     }
+    #endregion
+
+    #region Public Properties
     /// <summary>
     /// Gets or sets list of pages.
     /// </summary>
@@ -25,7 +31,7 @@
     public PageViewModel SelectedPage
     {
       get { return (selectedPage); }
-      private set
+      set
       {
         if (selectedPage != value)
         {
@@ -34,7 +40,9 @@
         }
       }
     }
+    #endregion
 
+    #region Public Commands
     public ICommand CreatePage
     {
       get
@@ -78,5 +86,6 @@
           (x) => x != null)));
       }
     }
+    #endregion
   }
 }

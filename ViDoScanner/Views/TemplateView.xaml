@@ -35,13 +35,15 @@
       </Style>
 
       <DataTemplate DataType="{x:Type ViewModels:PageViewModel}">
-        <Views:PageView/>
+        <Views:PageView IsInCreationMode="{Binding IsInCreationMode, Mode=TwoWay}"/>
       </DataTemplate>
 
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
-    <TabControl ItemsSource="{Binding Pages}" SelectedIndex="0" ItemContainerStyle="{StaticResource TabItemHeaderContainerStyle}"/>
+    <TabControl x:Name="PagesView" ItemsSource="{Binding Pages}" SelectedItem="{Binding SelectedPage, Mode=TwoWay}" ItemContainerStyle="{StaticResource TabItemHeaderContainerStyle}"/>
+    <ToggleButton IsChecked="{Binding SelectedContent.IsInCreationMode, ElementName=PagesView, Mode=TwoWay}"
+                  VerticalAlignment="Top" HorizontalAlignment="Left" Content="C" Width="25" Height="25"/>
   </Grid>
 </UserControl>
 

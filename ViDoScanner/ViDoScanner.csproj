@@ -60,6 +60,7 @@
     <Compile Include="ViewModels\FieldViewModel.cs" />
     <Compile Include="ViewModels\PageViewModel.cs" />
     <Compile Include="ViewModels\TemplateViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBasic.cs" />
     <Compile Include="Views\CreatePageView.xaml.cs">
       <DependentUpon>CreatePageView.xaml</DependentUpon>
     </Compile>

@@ -2,7 +2,7 @@
 {
   using System.Windows;
   using ViDoScanner.Utilities;
-  class AnchorViewModel:NotificationObject
+  class AnchorViewModel:ViewModelBasic
   {
     #region Data Members
     private double x = 0;

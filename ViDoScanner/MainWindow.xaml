@@ -4,6 +4,8 @@
         xmlns:Views="clr-namespace:ViDoScanner.Views" x:Class="ViDoScanner.MainWindow"
   xmlns:ViewModels="clr-namespace:ViDoScanner.ViewModels"
         Title="MainWindow" Height="418" Width="521">
+  <Window.Resources>
+  </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
@@ -15,6 +17,7 @@
     </TextBlock>
     <Button Grid.Row="0" Content="Button" HorizontalAlignment="Left" Margin="92,0,0,0" Width="75" Click="Button_Click_1"/>
     <Button Grid.Row="0" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+
     <Views:TemplateView Grid.Row="1" x:Name="TemplateView"/>
   </Grid>
 </Window>

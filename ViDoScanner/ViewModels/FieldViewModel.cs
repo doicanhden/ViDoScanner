@@ -4,7 +4,7 @@
   using System.ComponentModel;
   using System.Windows;
   using ViDoScanner.Utilities;
-  public class FieldViewModel : NotificationObject, IDataErrorInfo
+  public class FieldViewModel : ViewModelBasic
   {
     #region Data Members
     private string name;
@@ -27,6 +27,8 @@
       Y = rect.Y;
       Width = rect.Width;
       Height = rect.Height;
+
+      ValidatedProperties = validatedProperties;
     }
     #endregion
 
@@ -161,19 +163,7 @@
       "NumberOfRows",
       "NumberOfCols"
     };
-    public bool IsValid
-    {
-      get
-      {
-        foreach (string propertyName in validatedProperties)
-        {
-          if (GetValidationError(propertyName) != null)
-            return (false);
-        }
-        return (true);
-      }
-    }
-    private string GetValidationError(string propertyName)
+    protected override string GetValidationError(string propertyName)
     {
       string error = null;
       switch (propertyName)
@@ -201,22 +191,6 @@
           break;
       }
       return (error);
-    }
-
-    private string DoAssert(bool isError, string error)
-    {
-      return (isError ? error : null);
-    }
-    #endregion
-
-    #region Implementation of IDataErrorInfo
-    string IDataErrorInfo.Error
-    {
-      get { return (null); }
-    }
-    string IDataErrorInfo.this[string propertyName]
-    {
-      get { return (GetValidationError(propertyName)); }
     }
     #endregion
   }

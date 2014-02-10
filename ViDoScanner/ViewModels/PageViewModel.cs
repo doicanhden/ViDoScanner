@@ -9,7 +9,7 @@
   using System.Windows.Input;
   using ViDoScanner.Commands;
   using ViDoScanner.Utilities;
-  class PageViewModel:NotificationObject
+  class PageViewModel:ViewModelBasic
   {
     #region Data Members
     private ICommand createField;
@@ -24,6 +24,8 @@
     private double y;
     private double width;
     private double height;
+
+    private bool isInCreationMode;
     #endregion
 
     #region Constructors
@@ -51,7 +53,7 @@
 
             SelectedField = field;
           },
-          (x) => !(x.IsEmpty))));
+          (x) => !(x.IsEmpty) && x.Width > 50 && x.Height > 50)));
       }
     }
     /// <summary>
@@ -63,7 +65,8 @@
       {
         return (selectField ?? (selectField = new RelayCommand<FieldViewModel>(
           (x) => SelectedField = x,
-          (x) => SelectedField == null || SelectedField.IsValid || (x != null && !x.IsValid))));
+          (x) =>(SelectedField == null || SelectedField.IsValid ||
+            (x != null && !x.IsValid)) && !IsInCreationMode)));
       }
     }
     /// <summary>
@@ -98,6 +101,18 @@
     /// Gets or sets list of anchors.
     /// </summary>
     public ObservableCollection<AnchorViewModel> Anchors { get; private set; }
+    public bool IsInCreationMode
+    {
+      get { return (isInCreationMode); }
+      private set
+      {
+        if (isInCreationMode != value)
+        {
+          isInCreationMode = value;
+          RaisePropertyChanged("IsInCreationMode");
+        }
+      }
+    }
     /// <summary>
     /// Gets or sets selected field.
     /// </summary>
