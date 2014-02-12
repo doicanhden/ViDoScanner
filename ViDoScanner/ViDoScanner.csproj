@@ -36,6 +36,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -53,7 +55,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Attributes\LocalizableDescriptionAttribute.cs" />
+    <Compile Include="Enums\DataTypes.cs" />
+    <Compile Include="Enums\Directions.cs" />
+    <Compile Include="Resources\Localization.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Localization.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\NotificationObject.cs" />
+    <Compile Include="ValueConverters\EnumToFriendlyNameConverter.cs" />
     <Compile Include="ValueConverters\PathToImageConverter.cs" />
     <Compile Include="ValueConverters\VisibilityConverter.cs" />
     <Compile Include="ViewModels\AnchorViewModel.cs" />
@@ -67,11 +78,17 @@
     <Compile Include="Views\EditableTextBlock.xaml.cs">
       <DependentUpon>EditableTextBlock.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FieldView.xaml.cs">
+      <DependentUpon>FieldView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GridLinesFieldView.xaml.cs">
       <DependentUpon>GridLinesFieldView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PageView.xaml.cs">
       <DependentUpon>PageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PropertyView.xaml.cs">
+      <DependentUpon>PropertyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TemplateView.xaml.cs">
       <DependentUpon>TemplateView.xaml</DependentUpon>
@@ -101,11 +118,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\FieldView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GridLinesFieldView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PropertyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -128,6 +153,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Resources\Localization.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Localization.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -140,6 +169,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ViDoScanner.Processing\ViDoScanner.Processing.csproj">
+      <Project>{2111da46-9a71-42ea-9d82-8b2b84a5b39a}</Project>
+      <Name>ViDoScanner.Processing</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

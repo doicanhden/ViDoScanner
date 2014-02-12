@@ -6,7 +6,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
   xmlns:Views="clr-namespace:ViDoScanner.Views"
   mc:Ignorable="d"
-  Focusable="True" IsTabStop="True" KeyDown="UserControl_KeyDown">
+  Focusable="True" IsTabStop="True" KeyDown="UserControl_KeyDown" Loaded="UserControl_Loaded">
   <UserControl.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
@@ -104,7 +104,13 @@
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto"/>
       </Grid.RowDefinitions>
-      <Views:EditableTextBlock Grid.Column="0" x:Name="FieldName" ToolTip="Tên của vùng." Text="{Binding Name, Mode=TwoWay}" FontWeight="Bold"/>
+
+      <Views:EditableTextBlock Grid.Column="0" x:Name="FieldName" Text="{Binding Name, Mode=TwoWay}" FontWeight="Bold" Foreground="Red">
+        <Views:EditableTextBlock.ToolTip>
+          <TextBlock>Tên của vùng (<TextBlock Text="{Binding Index}"/>).<LineBreak/>Nhấp đúp để thay đổi.</TextBlock>
+        </Views:EditableTextBlock.ToolTip>
+      </Views:EditableTextBlock>
+
       <Button Grid.Column="1" ToolTip="Xóa vùng này." Width="20" Height="20" x:Name="DeleteButton" Click="DeleteButton_Click" Template="{DynamicResource CloseButtonTheme}"/>
     </Grid>
   </Grid>

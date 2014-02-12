@@ -14,7 +14,7 @@ namespace ViDoScanner.ValueConverters
 
     public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
-      throw new NotImplementedException();
+      return ((Visibility)value == Visibility.Visible ? true : false);
     }
     #endregion
   }

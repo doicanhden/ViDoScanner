@@ -72,14 +72,20 @@
     {
       if (IsInCreationMode && CreationVisibility == Visibility.Visible)
       {
-        IsInCreationMode = false;
         CreationVisibility = Visibility.Collapsed;
 
         Rect r = new Rect(Point1, Point2);
+        r.X = (int)r.X;
+        r.Y = (int)r.Y;
+        r.Width = (int)r.Width;
+        r.Height = (int)r.Height;
 
         PageViewModel page = this.DataContext as PageViewModel;
         if (page.CreateField.CanExecute(r))
+        {
           page.CreateField.Execute(r);
+          IsInCreationMode = false;
+        }
       }
     }
     #endregion

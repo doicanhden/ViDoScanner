@@ -1,70 +1,135 @@
 ﻿namespace ViDoScanner.ViewModels
 {
   using System.Windows;
+  using System.Xml.Serialization;
   using ViDoScanner.Utilities;
-  class AnchorViewModel:ViewModelBasic
+
+  [XmlType(TypeName="Anchor")]
+  public class AnchorViewModel:ViewModelBasic
   {
     #region Data Members
-    private double x = 0;
-    private double y = 0;
-    private double width = 0;
-    private double height = 0;
+    private PageViewModel page;
+    private Rect rect = new Rect();
     #endregion
 
+    #region Constructors
+    /// <summary>
+    /// Initialize a new object of AnchorViewModel class.
+    /// Note: Page should be Set after initialize Field.
+    /// </summary>
     public AnchorViewModel()
     {
     }
-    public AnchorViewModel(Rect r)
+
+    /// <summary>
+    /// Initialize a new object of AnchorViewModel class.
+    /// </summary>
+    /// <param name="page">Page contain this Anchor</param>
+    public AnchorViewModel(PageViewModel page)
     {
-      X = r.X;
-      Y = r.Y;
-      Width = r.Width;
-      Height = r.Height;
+      this.page = page;
     }
+
+    /// <summary>
+    /// Initialize a new object of AnchorViewModel class.
+    /// </summary>
+    /// <param name="page">Page contain this Anchor</param>
+    /// <param name="rect">Rect of Anchor</param>
+    public AnchorViewModel(PageViewModel page, Rect r)
+    {
+      this.rect = r;
+      this.page = page;
+    }
+    #endregion
+
+    /// <summary>
+    /// Gets or sets X location of Field (pixel unit).
+    /// </summary>
+    [XmlAttribute(AttributeName="X")]
+    public int PixelX
+    {
+      get { return ((int)(X * page.ScaleX)); }
+      set { X = value / page.ScaleX; }
+    }
+
+    /// <summary>
+    /// Gets or sets Y location of Field (pixel unit).
+    /// </summary>
+    [XmlAttribute(AttributeName="Y")]
+    public int PixelY
+    {
+      get { return ((int)(Y * page.ScaleY)); }
+      set { Y = value / page.ScaleY; }
+    }
+
+    /// <summary>
+    /// Gets or sets Width of Field (pixel unit).
+    /// </summary>
+    [XmlAttribute(AttributeName="Width")]
+    public int PixelWidth
+    {
+      get { return ((int)(Width * page.ScaleX)); }
+      set { Width = value / page.ScaleX; }
+    }
+
+    /// <summary>
+    /// Gets or sets Height of Field (pixel unit).
+    /// </summary>
+    [XmlAttribute(AttributeName="Height")]
+    public int PixelHeight
+    {
+      get { return ((int)(Height * page.ScaleY)); }
+      set { Height = value / page.ScaleY; }
+    }
+
+    [XmlIgnore]
     public double X
     {
-      get { return (x); }
+      get { return (rect.X); }
       set
       {
-        if (x != value)
+        if (rect.X != value)
         {
-          x = value;
+          rect.X = value;
           RaisePropertyChanged("X");
         }
       }
     }
+    [XmlIgnore]
     public double Y
     {
-      get { return (y); }
+      get { return (rect.Y); }
       set
       {
-        if (y != value)
+        if (rect.Y != value)
         {
-          y = value;
+          rect.Y = value;
           RaisePropertyChanged("Y");
         }
       }
     }
+    [XmlIgnore]
     public double Width
     {
-      get { return (width); }
+      get { return (rect.Width); }
       set
       {
-        if (width != value)
+        if (rect.Width != value)
         {
-          width = value;
+          rect.Width = value;
           RaisePropertyChanged("Width");
         }
       }
     }
+    [XmlIgnore]
     public double Height
     {
-      get { return (height); }
+      get { return (rect.Height); }
       set
       {
-        if (height != value)
+        if (rect.Height != value)
         {
-          height = value;
+          rect.Height = value;
           RaisePropertyChanged("Height");
         }
       }

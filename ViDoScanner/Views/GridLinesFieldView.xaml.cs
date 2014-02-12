@@ -253,5 +253,10 @@ namespace ViDoScanner.Views
         DeleteThisField();
       }
     }
+
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
+      this.Focus();
+    }
   }
 }

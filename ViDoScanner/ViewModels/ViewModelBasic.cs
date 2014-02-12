@@ -1,5 +1,6 @@
 ﻿namespace ViDoScanner.ViewModels
 {
+  using System;
   using System.ComponentModel;
   using ViDoScanner.Utilities;
   public class ViewModelBasic:NotificationObject, IDataErrorInfo
@@ -8,28 +9,29 @@
     protected ViewModelBasic()
     {
     }
-    protected ViewModelBasic(string[] validatedProperties)
-    {
-      ValidatedProperties = validatedProperties;
-    }
     #endregion
 
     #region Properties
-    protected virtual string[] ValidatedProperties { get; set; }
     public virtual bool IsValid
     {
       get
       {
-        foreach (string propertyName in ValidatedProperties)
+        if (ValidatedProperties != null)
         {
-          if (GetValidationError(propertyName) != null)
-            return (false);
+          foreach (string propertyName in ValidatedProperties)
+          {
+            if (GetValidationError(propertyName) != null)
+              return (false);
+          }
         }
         return (true);
       }
     }
+    protected virtual string[] ValidatedProperties
+    {
+      get { return (null); }
+    }
     #endregion
-
     protected virtual string GetValidationError(string propertyName)
     {
       return (null);

@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViDoScanner", "ViDoScanner\ViDoScanner.csproj", "{B550AF5D-ED7B-4376-8741-23EE84A9C58E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViDoScanner.Processing", "ViDoScanner.Processing\ViDoScanner.Processing.csproj", "{2111DA46-9A71-42EA-9D82-8B2B84A5B39A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B550AF5D-ED7B-4376-8741-23EE84A9C58E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B550AF5D-ED7B-4376-8741-23EE84A9C58E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B550AF5D-ED7B-4376-8741-23EE84A9C58E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2111DA46-9A71-42EA-9D82-8B2B84A5B39A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2111DA46-9A71-42EA-9D82-8B2B84A5B39A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2111DA46-9A71-42EA-9D82-8B2B84A5B39A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2111DA46-9A71-42EA-9D82-8B2B84A5B39A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

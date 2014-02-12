@@ -41,9 +41,15 @@
     </ResourceDictionary>
   </UserControl.Resources>
   <Grid>
-    <TabControl x:Name="PagesView" ItemsSource="{Binding Pages}" SelectedItem="{Binding SelectedPage, Mode=TwoWay}" ItemContainerStyle="{StaticResource TabItemHeaderContainerStyle}"/>
-    <ToggleButton IsChecked="{Binding SelectedContent.IsInCreationMode, ElementName=PagesView, Mode=TwoWay}"
-                  VerticalAlignment="Top" HorizontalAlignment="Left" Content="C" Width="25" Height="25"/>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="25"/>
+      <ColumnDefinition Width="75*"/>
+      <ColumnDefinition Width="12*"/>
+    </Grid.ColumnDefinitions>
+    <ToggleButton Grid.Column="0" IsChecked="{Binding SelectedContent.IsInCreationMode, ElementName=PagesView, Mode=TwoWay}"
+                  VerticalAlignment="Top" HorizontalAlignment="Left" Content="F" Width="25" Height="25" Margin="0,0,0,0"/>
+    <TabControl Grid.Column="1" x:Name="PagesView" ItemsSource="{Binding Pages}" SelectedItem="{Binding SelectedPage, Mode=TwoWay}" ItemContainerStyle="{StaticResource TabItemHeaderContainerStyle}"/>
+    <Views:FieldView Grid.Column="2" DataContext="{Binding SelectedContent.SelectedField, ElementName=PagesView}" Margin="4,20,4,4"/>
   </Grid>
 </UserControl>
 
