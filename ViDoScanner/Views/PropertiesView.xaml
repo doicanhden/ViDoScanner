@@ -1,0 +1,128 @@
+﻿<UserControl
+  x:Class="ViDoScanner.Views.PropertiesView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+  xmlns:Resrc="clr-namespace:ViDoScanner.Resources"
+  xmlns:Controls="clr-namespace:ViDoScanner.Controls"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+  xmlns:Views="clr-namespace:ViDoScanner.Views"
+  xmlns:Enums="clr-namespace:ViDoScanner.Enums"
+  xmlns:VCons="clr-namespace:ViDoScanner.ValueConverters"
+  BorderThickness="1"
+  
+  mc:Ignorable="d" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}">
+  <UserControl.Resources>
+    <ObjectDataProvider x:Key="DataTypes" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+      <ObjectDataProvider.MethodParameters>
+        <x:Type TypeName="Enums:DataTypes"/>
+      </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider x:Key="Directions" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+      <ObjectDataProvider.MethodParameters>
+        <x:Type TypeName="Enums:Directions"/>
+      </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <VCons:EnumToFriendlyNameConverter x:Key="EnumItemsConverter"/>
+  </UserControl.Resources>
+  <ScrollViewer VerticalScrollBarVisibility="Visible" Padding="4">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+
+      <GroupBox Grid.Row="0" Header="{x:Static Resrc:Localization.Page}">
+        <Grid DataContext="{Binding}" Margin="2,8,2,2">
+          <Expander Header="{x:Static Resrc:Localization.Detail}" IsExpanded="True">
+            <StackPanel Margin="10,4,0,0">
+              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.Index}"/>
+              <TextBox Margin="4" Text="{Binding Index, Mode=TwoWay}"/>
+
+              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.FieldName}"/>
+              <TextBox Margin="4" Text="{Binding Name, Mode=TwoWay}"/>
+
+              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.ImagePath}"/>
+              <Controls:FileBrowserControl Margin="4" FileName="{Binding ImagePath, Mode=TwoWay}"/>
+            </StackPanel>
+          </Expander>
+        </Grid>
+      </GroupBox>
+
+      <GroupBox Grid.Row="1" Header="{x:Static Resrc:Localization.Field}">
+        <Grid DataContext="{Binding SelectedField}" Margin="2,8,2,2">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+
+          <Expander Grid.Row="0" IsExpanded="True" Header="{x:Static Resrc:Localization.Detail}">
+            <StackPanel Margin="10,4,0,0">
+              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.Index}"/>
+              <TextBox Text="{Binding Index, Mode=TwoWay}"/>
+
+              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.FieldName}"/>
+              <TextBox Text="{Binding Name, Mode=TwoWay}"/>
+
+              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.ExportDataType}"/>
+              <ComboBox ItemsSource="{Binding Source={StaticResource DataTypes}}" SelectedItem="{Binding Type, Mode=TwoWay}" Height="Auto">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock Text="{Binding Mode=OneWay, Converter={StaticResource EnumItemsConverter}}" Height="Auto" Margin="0" VerticalAlignment="Center"/>
+                  </DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
+
+              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.ExportDataDirection}"/>
+              <ComboBox ItemsSource="{Binding Source={StaticResource Directions}}" SelectedItem="{Binding Direction, Mode=TwoWay}" Height="Auto">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock Text="{Binding Mode=OneWay, Converter={StaticResource EnumItemsConverter}}" Height="Auto" Margin="0" VerticalAlignment="Center"/>
+                  </DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
+
+              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.NumberOfRecords}"/>
+              <TextBox Text="{Binding NumberOfRecords, Mode=TwoWay}" />
+
+              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.NumberOfSelection}"/>
+              <TextBox Text="{Binding NumberOfSelection, Mode=TwoWay}" />
+
+              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.NumberOfBlanks}"/>
+              <TextBox Text="{Binding NumberOfBlanks, Mode=TwoWay}" />
+
+              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.DefaultValue}"/>
+              <TextBox Text="{Binding DefaultValue, Mode=TwoWay}" />
+            </StackPanel>
+          </Expander>
+
+          <Expander Grid.Row="1" IsExpanded="False" Header="{x:Static Resrc:Localization.Location}">
+            <StackPanel Margin="10,4,0,0">
+              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.X}"/>
+              <TextBox Text="{Binding X, Mode=TwoWay}"/>
+
+              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.Y}"/>
+              <TextBox Text="{Binding Y, Mode=TwoWay}"/>
+            </StackPanel>
+          </Expander>
+
+          <Expander Grid.Row="2" IsExpanded="False" Header="{x:Static Resrc:Localization.Size}">
+            <StackPanel Margin="10,4,0,0">
+              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.Width}"/>
+              <TextBox Text="{Binding Width, Mode=TwoWay}"/>
+
+              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.Height}"/>
+              <TextBox Text="{Binding Height, Mode=TwoWay}"/>
+            </StackPanel>
+          </Expander>
+        </Grid>
+      </GroupBox>
+      <TextBlock Margin="5" Grid.Row="2" TextWrapping="Wrap"/>
+    </Grid>
+  </ScrollViewer>
+</UserControl>

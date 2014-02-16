@@ -3,6 +3,7 @@
   using System;
   using System.ComponentModel;
   using ViDoScanner.Utilities;
+
   public class ViewModelBasic:NotificationObject, IDataErrorInfo
   {
     #region Constructors
@@ -27,6 +28,7 @@
         return (true);
       }
     }
+
     protected virtual string[] ValidatedProperties
     {
       get { return (null); }

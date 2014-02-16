@@ -2,6 +2,7 @@
 {
   using System;
   using System.ComponentModel;
+
   /// <summary>
   /// Base class for items that support property notification.
   /// </summary>

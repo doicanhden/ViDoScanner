@@ -8,6 +8,6 @@
     Vertical,
 
     [LocalizableDescription(@"Horizontal", typeof(Localization))]
-    Horizontal,
+    Horizontal
   }
 }

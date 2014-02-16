@@ -1,0 +1,22 @@
+﻿<Window
+  x:Class="ViDoScanner.Windows.ConfigScanner"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:Controls="clr-namespace:ViDoScanner.Controls"
+  Title="ConfigScanner" Height="150" MinWidth="350" Width="350">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+    <TextBlock Margin="5" Grid.Column="0" Grid.Row="0" Text="Thư mục ảnh:" VerticalAlignment="Center"/>
+    <Controls:FileBrowserControl Grid.Column="1" Grid.Row="0" FileName="{Binding ImagesDirectory, Mode=TwoWay}"/>
+    <TextBlock Margin="5" Grid.Column="0" Grid.Row="1" Text="Thư mục lưu kết quả:" VerticalAlignment="Center"/>
+    <Controls:FileBrowserControl Grid.Column="1" Grid.Row="1" FileName="{Binding OutputDirectory, Mode=TwoWay}"/>
+  </Grid>
+</Window>

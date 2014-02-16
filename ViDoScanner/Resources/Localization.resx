@@ -129,11 +129,17 @@
   <data name="DeletedSelectedFieldFormatString" xml:space="preserve">
     <value>Bạn muốn xóa vùng '{0}'?</value>
   </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Chi tiết</value>
+  </data>
   <data name="ExportDataDirection" xml:space="preserve">
     <value>Chiều lấy dữ liệu</value>
   </data>
   <data name="ExportDataType" xml:space="preserve">
     <value>Kiểu dữ liệu xuất</value>
+  </data>
+  <data name="Field" xml:space="preserve">
+    <value>Vùng</value>
   </data>
   <data name="FieldName" xml:space="preserve">
     <value>Tên vùng</value>
@@ -144,11 +150,11 @@
   <data name="Horizontal" xml:space="preserve">
     <value>Chiều ngang</value>
   </data>
+  <data name="ImagePath" xml:space="preserve">
+    <value>Đường dẫn ảnh</value>
+  </data>
   <data name="Index" xml:space="preserve">
     <value>Số thứ tự</value>
-  </data>
-  <data name="Information" xml:space="preserve">
-    <value>Thông tin</value>
   </data>
   <data name="Location" xml:space="preserve">
     <value>Vị trí</value>
@@ -167,6 +173,9 @@
   </data>
   <data name="NumberOfSelection" xml:space="preserve">
     <value>Số lượng lựa chọn</value>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>Trang</value>
   </data>
   <data name="Size" xml:space="preserve">
     <value>Kích thước</value>

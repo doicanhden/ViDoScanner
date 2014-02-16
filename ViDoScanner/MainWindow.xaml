@@ -8,19 +8,20 @@
   <Window.Resources>
   </Window.Resources>
   <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
-    <TextBlock>
-      <TextBlock.Triggers>
-      </TextBlock.Triggers>
-    </TextBlock>
-    <Button Grid.Row="0" Content="Button" HorizontalAlignment="Left" Margin="92,0,0,0" Width="75" Click="Button_Click_1"/>
-    <Button Grid.Row="0" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-    <Button Grid.Row="0" Content="Button" HorizontalAlignment="Left" Margin="187,0,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_2"/>
-    <Button Grid.Row="0" Content="Button" HorizontalAlignment="Left" Margin="282,0,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_3"/>
-
-    <Views:TemplateView Grid.Row="1" x:Name="TemplateView" Margin="20,20,20,20"/>
+    <Menu>
+      <MenuItem Header="Mẫu">
+        <MenuItem Header="Tạo mẫu mới" HorizontalAlignment="Left"/>
+        <MenuItem Header="Mở mẫu sẵn có" HorizontalAlignment="Left" Click="MenuItemOpenTemplate_Click"/>
+        <MenuItem Header="Đóng mẫu" HorizontalAlignment="Left"/>
+        <MenuItem Header="Lưu mẫu" HorizontalAlignment="Left" Click="MenuItemSaveTemplate_Click"/>
+        <MenuItem Header="Lưu mẫu với tên khác" HorizontalAlignment="Left"/>
+      </MenuItem>
+      <MenuItem Header="Chức năng">
+        <MenuItem Header="Quét thử nghiệm mẫu" HorizontalAlignment="Left" Click="MenuItemTestScanner_Click"/>
+        <MenuItem Header="Quét nhận dạng" HorizontalAlignment="Left"/>
+        <MenuItem Header="Xem kết quả đã quét" HorizontalAlignment="Left" Click="MenuItemOpenTemplate_Click"/>
+      </MenuItem>
+    </Menu>
+    <Views:TemplateView Grid.Row="1" x:Name="TemplateView" Margin="0,20,20,20"/>
   </Grid>
 </Window>

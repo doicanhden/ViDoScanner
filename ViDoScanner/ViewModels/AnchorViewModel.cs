@@ -8,37 +8,18 @@
   public class AnchorViewModel:ViewModelBasic
   {
     #region Data Members
-    private PageViewModel page;
-    private Rect rect = new Rect();
+    private int pixelX;
+    private int pixelY;
+    private int pixelWidth;
+    private int pixelHeight;
     #endregion
 
     #region Constructors
     /// <summary>
-    /// Initialize a new object of AnchorViewModel class.
-    /// Note: Page should be Set after initialize Field.
+    /// Initializes a new instance of the <see cref="AnchorViewModel"/> class.
     /// </summary>
     public AnchorViewModel()
     {
-    }
-
-    /// <summary>
-    /// Initialize a new object of AnchorViewModel class.
-    /// </summary>
-    /// <param name="page">Page contain this Anchor</param>
-    public AnchorViewModel(PageViewModel page)
-    {
-      this.page = page;
-    }
-
-    /// <summary>
-    /// Initialize a new object of AnchorViewModel class.
-    /// </summary>
-    /// <param name="page">Page contain this Anchor</param>
-    /// <param name="rect">Rect of Anchor</param>
-    public AnchorViewModel(PageViewModel page, Rect r)
-    {
-      this.rect = r;
-      this.page = page;
     }
     #endregion
 
@@ -48,8 +29,15 @@
     [XmlAttribute(AttributeName="X")]
     public int PixelX
     {
-      get { return ((int)(X * page.ScaleX)); }
-      set { X = value / page.ScaleX; }
+      get { return (pixelX); }
+      set
+      {
+        if (pixelX != value)
+        {
+          pixelX = value;
+          RaisePropertyChanged("PixelX", "X");
+        }
+      }
     }
 
     /// <summary>
@@ -58,8 +46,15 @@
     [XmlAttribute(AttributeName="Y")]
     public int PixelY
     {
-      get { return ((int)(Y * page.ScaleY)); }
-      set { Y = value / page.ScaleY; }
+      get { return (pixelY); }
+      set
+      {
+        if (pixelY != value)
+        {
+          pixelY = value;
+          RaisePropertyChanged("PixelY", "Y");
+        }
+      }
     }
 
     /// <summary>
@@ -68,8 +63,15 @@
     [XmlAttribute(AttributeName="Width")]
     public int PixelWidth
     {
-      get { return ((int)(Width * page.ScaleX)); }
-      set { Width = value / page.ScaleX; }
+      get { return (pixelWidth); }
+      set
+      {
+        if (pixelWidth != value)
+        {
+          pixelWidth = value;
+          RaisePropertyChanged("PixelWidth", "Width");
+        }
+      }
     }
 
     /// <summary>
@@ -78,61 +80,42 @@
     [XmlAttribute(AttributeName="Height")]
     public int PixelHeight
     {
-      get { return ((int)(Height * page.ScaleY)); }
-      set { Height = value / page.ScaleY; }
+      get { return (pixelHeight); }
+      set
+      {
+        if (pixelHeight != value)
+        {
+          pixelHeight = value;
+          RaisePropertyChanged("PixelHeight", "Height");
+        }
+      }
     }
 
     [XmlIgnore]
+    public PageViewModel Page { get; set; }
+    [XmlIgnore]
     public double X
     {
-      get { return (rect.X); }
-      set
-      {
-        if (rect.X != value)
-        {
-          rect.X = value;
-          RaisePropertyChanged("X");
-        }
-      }
+      get { return (PixelX / Page.ScaleX); }
+      set { PixelX = (int)(value * Page.ScaleX); }
     }
     [XmlIgnore]
     public double Y
     {
-      get { return (rect.Y); }
-      set
-      {
-        if (rect.Y != value)
-        {
-          rect.Y = value;
-          RaisePropertyChanged("Y");
-        }
-      }
+      get { return (PixelY / Page.ScaleY); }
+      set { PixelY = (int)(value * Page.ScaleY); }
     }
     [XmlIgnore]
     public double Width
     {
-      get { return (rect.Width); }
-      set
-      {
-        if (rect.Width != value)
-        {
-          rect.Width = value;
-          RaisePropertyChanged("Width");
-        }
-      }
+      get { return (PixelWidth / Page.ScaleX); }
+      set { PixelWidth = (int)(value * Page.ScaleX); }
     }
     [XmlIgnore]
     public double Height
     {
-      get { return (rect.Height); }
-      set
-      {
-        if (rect.Height != value)
-        {
-          rect.Height = value;
-          RaisePropertyChanged("Height");
-        }
-      }
+      get { return (PixelHeight / Page.ScaleY); }
+      set { PixelHeight = (int)(value * Page.ScaleY); }
     }
   }
 }

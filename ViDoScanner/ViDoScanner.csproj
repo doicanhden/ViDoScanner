@@ -56,6 +56,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Attributes\LocalizableDescriptionAttribute.cs" />
+    <Compile Include="Controls\FileBrowserControl.xaml.cs">
+      <DependentUpon>FileBrowserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Enums\DataTypes.cs" />
     <Compile Include="Enums\Directions.cs" />
     <Compile Include="Resources\Localization.Designer.cs">
@@ -68,18 +71,22 @@
     <Compile Include="ValueConverters\PathToImageConverter.cs" />
     <Compile Include="ValueConverters\VisibilityConverter.cs" />
     <Compile Include="ViewModels\AnchorViewModel.cs" />
+    <Compile Include="ViewModels\ConfigViewModel.cs" />
     <Compile Include="ViewModels\FieldViewModel.cs" />
     <Compile Include="ViewModels\PageViewModel.cs" />
     <Compile Include="ViewModels\TemplateViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBasic.cs" />
+    <Compile Include="Views\PropertiesView.xaml.cs">
+      <DependentUpon>PropertiesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ConfigScanner.xaml.cs">
+      <DependentUpon>ConfigScanner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CreatePageView.xaml.cs">
       <DependentUpon>CreatePageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditableTextBlock.xaml.cs">
       <DependentUpon>EditableTextBlock.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FieldView.xaml.cs">
-      <DependentUpon>FieldView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GridLinesFieldView.xaml.cs">
       <DependentUpon>GridLinesFieldView.xaml</DependentUpon>
@@ -87,12 +94,13 @@
     <Compile Include="Views\PageView.xaml.cs">
       <DependentUpon>PageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PropertyView.xaml.cs">
-      <DependentUpon>PropertyView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\TemplateView.xaml.cs">
       <DependentUpon>TemplateView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\FileBrowserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -110,6 +118,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PropertiesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ConfigScanner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CreatePageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -118,19 +134,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FieldView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\GridLinesFieldView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PageView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PropertyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -172,7 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ViDoScanner.Processing\ViDoScanner.Processing.csproj">
-      <Project>{2111da46-9a71-42ea-9d82-8b2b84a5b39a}</Project>
+      <Project>{15add0d2-c4a5-4210-a1fa-410f1b163fcc}</Project>
       <Name>ViDoScanner.Processing</Name>
     </ProjectReference>
   </ItemGroup>

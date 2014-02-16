@@ -1,7 +1,5 @@
-﻿namespace ViDoScanner.Processing.Models
+﻿namespace ViDoScanner.Processing.Scanner
 {
-  using System.Xml.Serialization;
-
   public class Resolution
   {
     public Resolution()
@@ -16,12 +14,5 @@
     }
     public double X { get; set; }
     public double Y { get; set; }
-  }
-
-  class Page
-  {
-    public Resolution Resolution { get; set; }
-    [XmlArray]
-    public Field[] Fields { get; set; }
   }
 }

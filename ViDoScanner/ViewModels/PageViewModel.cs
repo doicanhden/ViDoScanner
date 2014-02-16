@@ -1,18 +1,14 @@
 ﻿namespace ViDoScanner.ViewModels
 {
-  using System.Collections.Generic;
-  using System.Collections.ObjectModel;
-  using System.ComponentModel;
-  using System.Windows;
-  using System.Linq;
   using System;
+  using System.Collections.ObjectModel;
+  using System.Linq;
+  using System.Windows;
   using System.Windows.Input;
-  using ViDoScanner.Commands;
-  using ViDoScanner.Utilities;
-  using System.Xml.Serialization;
   using System.Windows.Media.Imaging;
-  using ViDoScanner.Processing.Models;
-  
+  using System.Xml.Serialization;
+  using ViDoScanner.Commands;
+  using ViDoScanner.Processing.Scanner;
 
   [XmlType(TypeName="Page")]
   public class PageViewModel:ViewModelBasic
@@ -21,6 +17,8 @@
     private int index = 0;
     private string name;
     private string imagePath;
+    private int pixelWidth;
+    private int pixelHeight;
 
     private ICommand createField;
     private ICommand selectField;
@@ -31,13 +29,11 @@
     private BitmapImage image;
     private double scaleX;
     private double scaleY;
-    private double width;
-    private double height;
     #endregion
 
     #region Constructors
     /// <summary>
-    /// Initialize a new object of PageViewModel class.
+    /// Initializes a new instance of the <see cref="PageViewModel"/> class.
     /// </summary>
     public PageViewModel()
     {
@@ -46,7 +42,7 @@
     }
 
     /// <summary>
-    /// Initialize a new object of PageViewModel class.
+    /// Initializes a new instance of the <see cref="PageViewModel"/> class.
     /// </summary>
     /// <param name="imagePath">Path of image background.</param>
     public PageViewModel(string imagePath)
@@ -83,8 +79,15 @@
     [XmlAttribute(AttributeName="Width")]
     public int PixelWidth
     {
-      get { return ((int)(ScaleX * Width)); }
-      set { Width = value / ScaleX; }
+      get { return (pixelWidth); }
+      set
+      {
+        if (pixelWidth != value)
+        {
+          pixelWidth = value;
+          RaisePropertyChanged("PixelWidth", "Width");
+        }
+      }
     }
 
     /// <summary>
@@ -93,14 +96,20 @@
     [XmlAttribute(AttributeName="Height")]
     public int PixelHeight
     {
-      get { return ((int)(ScaleY * Height)); }
-      set { Height = value / ScaleY; }
+      get { return (pixelHeight); }
+      set
+      {
+        if (pixelHeight != value)
+        {
+          pixelHeight = value;
+          RaisePropertyChanged("PixelHeight", "Height");
+        }
+      }
     }
 
     /// <summary>
     /// Gets or sets image path of page.
     /// </summary>
-    [XmlAttribute]
     public string ImagePath
     {
       get { return (imagePath); }
@@ -182,15 +191,8 @@
     [XmlIgnore]
     public double Width
     {
-      get { return (width); }
-      set
-      {
-        if (width != value)
-        {
-          width = value;
-          RaisePropertyChanged("Width");
-        }
-      }
+      get { return (PixelWidth / ScaleX); }
+      set { PixelWidth = (int)(value * ScaleX); }
     }
 
     /// <summary>
@@ -199,15 +201,8 @@
     [XmlIgnore]
     public double Height
     {
-      get { return (height); }
-      set
-      {
-        if (height != value)
-        {
-          height = value;
-          RaisePropertyChanged("Height");
-        }
-      }
+      get { return (PixelHeight / ScaleY); }
+      set { PixelHeight = (int)(value * ScaleY); }
     }
 
     /// <summary>

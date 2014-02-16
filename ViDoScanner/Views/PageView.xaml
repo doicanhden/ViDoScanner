@@ -38,45 +38,39 @@
       </Canvas>
     </DataTemplate>
   </UserControl.Resources>
-  
+
   <Grid>
-    <Border BorderBrush="Blue" BorderThickness="2">
-      <ScrollViewer HorizontalScrollBarVisibility="Auto" FocusManager.IsFocusScope="True" Focusable="False">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" FocusManager.IsFocusScope="True" Focusable="False">
+      <Grid Focusable="False" Width="{Binding Width}" ClipToBounds="True"
+            PreviewMouseDown="Grid_PreviewMouseDown"
+            PreviewMouseMove="Grid_PreviewMouseMove"
+            PreviewMouseUp="Grid_PreviewMouseUp">
+        <Image x:Name="PageGrid" Source="{Binding Image, Mode=OneWay}"/>
+        <ItemsControl ItemsSource="{Binding Anchors}"/>
+        <ItemsControl ItemsSource="{Binding Fields}"/>
 
-        <Grid Focusable="False" Width="{Binding Width}" ClipToBounds="True"
-          PreviewMouseDown="Grid_PreviewMouseDown"
-          PreviewMouseMove="Grid_PreviewMouseMove"
-          PreviewMouseUp="Grid_PreviewMouseUp">
-          <Border BorderBrush="Red"  BorderThickness="2">
-            <Image x:Name="PageGrid" Source="{Binding Image}"/>
-          </Border>
-          <ItemsControl ItemsSource="{Binding Anchors}"/>
-          <ItemsControl ItemsSource="{Binding Fields}"/>
+        <Canvas>
+          <!-- Mouse down -->
+          <Line Stroke="Red" Y1="0" Y2="{Binding Height}"
+                Visibility="{Binding ElementName=MainUserControl, Path=CreationVisibility}"
+                X1="{Binding ElementName=MainUserControl, Path=Point1.X}"
+                X2="{Binding ElementName=MainUserControl, Path=Point1.X}"/>
+          <Line Stroke="Red" X1="0" X2="{Binding Width}"
+                Visibility="{Binding ElementName=MainUserControl, Path=CreationVisibility}"
+                Y1="{Binding ElementName=MainUserControl, Path=Point1.Y}"
+                Y2="{Binding ElementName=MainUserControl, Path=Point1.Y}"/>
 
-          <Canvas>
-            <!-- Mouse down -->
-            <Line Stroke="Red" Y1="0" Y2="{Binding Height}"
-              Visibility="{Binding ElementName=MainUserControl, Path=CreationVisibility}"
-              X1="{Binding ElementName=MainUserControl, Path=Point1.X}"
-              X2="{Binding ElementName=MainUserControl, Path=Point1.X}"/>
 
-            <Line Stroke="Red" X1="0" X2="{Binding Width}"
-              Visibility="{Binding ElementName=MainUserControl, Path=CreationVisibility}"
-              Y1="{Binding ElementName=MainUserControl, Path=Point1.Y}"
-              Y2="{Binding ElementName=MainUserControl, Path=Point1.Y}"/>
-
-            <Line Stroke="Red" Y1="0" Y2="{Binding Height}"
-              Visibility="{Binding ElementName=MainUserControl, Path=CreationVisibility}"
-              X1="{Binding ElementName=MainUserControl, Path=Point2.X}"
-              X2="{Binding ElementName=MainUserControl, Path=Point2.X}"/>
-
-            <Line Stroke="Red" X1="0" X2="{Binding Width}"
-              Visibility="{Binding ElementName=MainUserControl, Path=CreationVisibility}"
-              Y1="{Binding ElementName=MainUserControl, Path=Point2.Y}"
-              Y2="{Binding ElementName=MainUserControl, Path=Point2.Y}"/>
-          </Canvas>
-        </Grid>
-      </ScrollViewer>
-    </Border>
+          <Line Stroke="Red" Y1="0" Y2="{Binding Height}"
+                Visibility="{Binding ElementName=MainUserControl, Path=CreationVisibility}"
+                X1="{Binding ElementName=MainUserControl, Path=Point2.X}"
+                X2="{Binding ElementName=MainUserControl, Path=Point2.X}"/>
+          <Line Stroke="Red" X1="0" X2="{Binding Width}"
+                Visibility="{Binding ElementName=MainUserControl, Path=CreationVisibility}"
+                Y1="{Binding ElementName=MainUserControl, Path=Point2.Y}"
+                Y2="{Binding ElementName=MainUserControl, Path=Point2.Y}"/>
+        </Canvas>
+      </Grid>
+    </ScrollViewer>
   </Grid>
 </UserControl>

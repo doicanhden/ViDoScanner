@@ -97,6 +97,15 @@ namespace ViDoScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chi tiết.
+        /// </summary>
+        public static string Detail {
+            get {
+                return ResourceManager.GetString("Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chiều lấy dữ liệu.
         /// </summary>
         public static string ExportDataDirection {
@@ -111,6 +120,15 @@ namespace ViDoScanner.Resources {
         public static string ExportDataType {
             get {
                 return ResourceManager.GetString("ExportDataType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vùng.
+        /// </summary>
+        public static string Field {
+            get {
+                return ResourceManager.GetString("Field", resourceCulture);
             }
         }
         
@@ -142,20 +160,20 @@ namespace ViDoScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Đường dẫn ảnh.
+        /// </summary>
+        public static string ImagePath {
+            get {
+                return ResourceManager.GetString("ImagePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Số thứ tự.
         /// </summary>
         public static string Index {
             get {
                 return ResourceManager.GetString("Index", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Thông tin.
-        /// </summary>
-        public static string Information {
-            get {
-                return ResourceManager.GetString("Information", resourceCulture);
             }
         }
         
@@ -210,6 +228,15 @@ namespace ViDoScanner.Resources {
         public static string NumberOfSelection {
             get {
                 return ResourceManager.GetString("NumberOfSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trang.
+        /// </summary>
+        public static string Page {
+            get {
+                return ResourceManager.GetString("Page", resourceCulture);
             }
         }
         

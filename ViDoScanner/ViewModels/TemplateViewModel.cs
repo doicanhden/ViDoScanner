@@ -15,7 +15,7 @@
   {
     #region Data Members
     private string name;
-
+    private ObservableCollection<PageViewModel> pages;
     private ICommand createPage;
     private ICommand selectPage;
     private ICommand deletePage;
@@ -26,7 +26,7 @@
 
     #region Constructors
     /// <summary>
-    /// Initialize a new object of TemplateViewModel class.
+    /// Initializes a new instance of the <see cref="TemplateViewModel"/> class.
     /// </summary>
     public TemplateViewModel()
     {
@@ -55,7 +55,18 @@
     /// <summary>
     /// Gets or sets list of pages.
     /// </summary>
-    public ObservableCollection<PageViewModel> Pages { get; private set; }
+    public ObservableCollection<PageViewModel> Pages
+    {
+      get { return (pages); }
+      set
+      {
+        if (pages != value)
+        {
+          pages = value;
+          RaisePropertyChanged("Pages");
+        }
+      }
+    }
     #endregion
 
     #region Public Properties
@@ -92,15 +103,32 @@
 
       FileStream stream = new FileStream(pathTemplate, FileMode.Open);
       var template = (TemplateViewModel)serializer.Deserialize(stream);
+      stream.Close();
+
+      var pathFolder = Path.GetDirectoryName(pathTemplate) + Path.DirectorySeparatorChar;
+      foreach (var page in template.Pages)
+      {
+        if (page.Fields != null)
+        {
+          foreach (var field in page.Fields)
+          {
+            field.Page = page;
+          }
+        }
+
+        if (page.Anchors != null)
+        {
+          foreach (var anchor in page.Anchors)
+          {
+            anchor.Page = page;
+          }
+        }
+
+        page.ImagePath = pathFolder + Path.GetFileName(page.ImagePath);
+      }
 
       this.Name = template.Name;
       this.Pages = template.Pages;
-
-      var pathFolder = Path.GetDirectoryName(pathTemplate) + Path.DirectorySeparatorChar;
-      foreach (var page in Pages)
-      {
-        page.ImagePath = pathFolder + Path.GetFileName(page.ImagePath);
-      }
     }
 
     public ICommand SaveTemplate
