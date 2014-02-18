@@ -1,0 +1,40 @@
+﻿<Window
+  x:Class="ViDoScanner.Windows.CreatePage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:Resrc="clr-namespace:ViDoScanner.Resources"
+  xmlns:Controls="clr-namespace:ViDoScanner.Controls"
+  WindowStartupLocation="CenterOwner"
+  WindowStyle="ToolWindow"
+  Title="Tạo trang mới"
+  Height="160" Width="340"
+  ResizeMode="NoResize">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="4*"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="4*"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="4*"/>
+    </Grid.RowDefinitions>
+    <!-- Tên trang -->
+    <TextBlock Margin="4" Grid.Row="0" Grid.Column="0" Text="{x:Static Resrc:Localization.PageName}" VerticalAlignment="Center"/>
+    <TextBox Margin="4" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
+    <TextBlock Margin="4,0,4,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+    <!-- Đường dẫn ảnh -->
+    <TextBlock Margin="4" Grid.Row="2" Grid.Column="0" Text="{x:Static Resrc:Localization.ImagePath}" VerticalAlignment="Center"/>
+    <Controls:FileBrowserControl Grid.Row="2" Grid.Column="1" Margin="4"/>
+    <TextBlock Margin="4,0,4,0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+    <!-- Nút bấm Dialog-->
+    <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right">
+      <Button HorizontalAlignment="Left"  VerticalAlignment="Center" Content="Tạo" Width="100" Margin="5"/>
+      <Button HorizontalAlignment="Right" VerticalAlignment="Center" Content="Hủy" Width="100" Margin="5"/>
+    </StackPanel>
+  </Grid>
+</Window>

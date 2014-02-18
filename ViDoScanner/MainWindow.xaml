@@ -1,12 +1,11 @@
 ﻿<Window
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:Views="clr-namespace:ViDoScanner.Views" x:Class="ViDoScanner.MainWindow"
+  x:Class="ViDoScanner.MainWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:Views="clr-namespace:ViDoScanner.Views"
   xmlns:ViewModels="clr-namespace:ViDoScanner.ViewModels"
-  xmlns:Res="clr-namespace:ViDoScanner.Resources"
-        Title="MainWindow">
-  <Window.Resources>
-  </Window.Resources>
+  xmlns:Resrc="clr-namespace:ViDoScanner.Resources"
+  Title="ViDoScanner">
   <Grid>
     <Menu>
       <MenuItem Header="Mẫu">
@@ -15,6 +14,12 @@
         <MenuItem Header="Đóng mẫu" HorizontalAlignment="Left"/>
         <MenuItem Header="Lưu mẫu" HorizontalAlignment="Left" Click="MenuItemSaveTemplate_Click"/>
         <MenuItem Header="Lưu mẫu với tên khác" HorizontalAlignment="Left"/>
+      </MenuItem>
+      <MenuItem Header="Chỉnh sửa">
+        <MenuItem Header="Thêm trang" HorizontalAlignment="Left" Click="MenuItemTestScanner_Click"/>
+        <MenuItem Header="Xóa trang" HorizontalAlignment="Left"/>
+        <MenuItem Header="Thêm vùng" HorizontalAlignment="Left" Click="MenuItemOpenTemplate_Click"/>
+        <MenuItem Header="Xóa vùng" HorizontalAlignment="Left" Click="MenuItemOpenTemplate_Click"/>
       </MenuItem>
       <MenuItem Header="Chức năng">
         <MenuItem Header="Quét thử nghiệm mẫu" HorizontalAlignment="Left" Click="MenuItemTestScanner_Click"/>

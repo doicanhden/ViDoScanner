@@ -144,6 +144,9 @@
   <data name="FieldName" xml:space="preserve">
     <value>Tên vùng</value>
   </data>
+  <data name="GrayscaleThreshold" xml:space="preserve">
+    <value>Ngưỡng xám</value>
+  </data>
   <data name="Height" xml:space="preserve">
     <value>Chiều cao</value>
   </data>
@@ -176,6 +179,15 @@
   </data>
   <data name="Page" xml:space="preserve">
     <value>Trang</value>
+  </data>
+  <data name="PageName" xml:space="preserve">
+    <value>Tên trang</value>
+  </data>
+  <data name="RatioDelta" xml:space="preserve">
+    <value>Tỉ lệ phân biệt</value>
+  </data>
+  <data name="RatioThreshold" xml:space="preserve">
+    <value>Tỉ lệ tô kín</value>
   </data>
   <data name="Size" xml:space="preserve">
     <value>Kích thước</value>

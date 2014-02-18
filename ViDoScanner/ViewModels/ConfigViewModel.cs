@@ -11,6 +11,8 @@
 
     private double ratioThreshold;
     private double ratioTheta;
+
+    private int grayscaleThreshold;
     #endregion
 
     public ConfigViewModel()
@@ -18,8 +20,9 @@
       BlankSelection = "-";
       MultiSelection = "*";
       RatioThreshold = 25;
-      RatioTheta = 125;
+      RatioDelta = 125;
     }
+
     public string ImagesDirectory
     {
       get { return (imagesDirectory); }
@@ -82,7 +85,7 @@
         }
       }
     }
-    public double RatioTheta
+    public double RatioDelta
     {
       get { return (ratioTheta); }
       set
@@ -95,5 +98,17 @@
       }
     }
 
+    public int GrayscaleThreshold
+    {
+      get { return (grayscaleThreshold); }
+      set
+      {
+        if (grayscaleThreshold != value)
+        {
+          grayscaleThreshold = value;
+          RaisePropertyChanged("GrayscaleThreshold");
+        }
+      }
+    }
   }
 }

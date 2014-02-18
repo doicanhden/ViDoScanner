@@ -1,4 +1,4 @@
-﻿namespace ViDoScanner.Processing.Enums
+﻿namespace ViDoScanner.Core
 {
   public enum Directions
   {

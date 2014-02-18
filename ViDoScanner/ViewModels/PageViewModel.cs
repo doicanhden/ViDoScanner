@@ -8,6 +8,7 @@
   using System.Windows.Media.Imaging;
   using System.Xml.Serialization;
   using ViDoScanner.Commands;
+  using ViDoScanner.Core;
   using ViDoScanner.Processing.Scanner;
 
   [XmlType(TypeName="Page")]
@@ -282,7 +283,7 @@
     {
       get
       {
-        return (createField ?? (createField = new RelayCommand<Rect>(
+        return (createField ?? (createField = new RelayCommand<System.Windows.Rect>(
           (x) =>
           {
             var field = new FieldViewModel(this, x, GenerateIndex);

@@ -4,16 +4,43 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-  xmlns:Views="clr-namespace:ViDoScanner.Views"
+  xmlns:Controls="clr-namespace:ViDoScanner.Controls"
   mc:Ignorable="d"
   Focusable="True" IsTabStop="True" KeyDown="UserControl_KeyDown" Loaded="UserControl_Loaded">
   <UserControl.Resources>
-    <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Themes/CloseButtonTheme.xaml"/>
-      </ResourceDictionary.MergedDictionaries>
+    <LinearGradientBrush x:Key="ClickGradientCloseButton">
+      <GradientStop Color="#FF5C2014"/>
+      <GradientStop Color="#FFB0452C"/>
+    </LinearGradientBrush>
 
-      <Style x:Key="SelectionThumbStyle" TargetType="{x:Type Thumb}">
+    <LinearGradientBrush x:Key="HoverGradientCloseButton">
+      <GradientStop Color="#FF757474"/>
+      <GradientStop Color="#FF918F8F"/>
+    </LinearGradientBrush>
+
+    <ControlTemplate x:Key="CloseButtonTheme" TargetType="{x:Type Button}">
+      <Grid x:Name="MainGrid">
+        <Rectangle x:Name="MainRectangle" Fill="#00000000" RadiusX="8" RadiusY="8"/>
+        <ContentPresenter x:Name="Presenter" TextBlock.Foreground="#BB225588"
+                          HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Path x:Name="Cross" Data="M0,0 L1,1 M0,1 L1,0" Stretch="Fill"
+              Stroke="Black" StrokeThickness="2" Width="8" Height="8" />
+      </Grid>
+      <ControlTemplate.Triggers>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter TargetName="MainRectangle" Property="Fill" Value="{StaticResource HoverGradientCloseButton}"/>
+          <Setter TargetName="MainRectangle" Property="Stroke" Value="Transparent"/>
+          <Setter TargetName="Cross" Property="Stroke" Value="White" />
+        </Trigger>
+        <Trigger Property="IsPressed" Value="True">
+          <Setter TargetName="MainRectangle" Property="Fill" Value="{StaticResource ClickGradientCloseButton}"/>
+          <Setter TargetName="Cross" Property="Stroke" Value="White" />
+        </Trigger>
+      </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
+
+    <Style x:Key="SelectionThumbStyle" TargetType="{x:Type Thumb}">
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
         <Setter Property="Template">
           <Setter.Value>
@@ -43,7 +70,6 @@
           </Setter.Value>
         </Setter>
       </Style>
-    </ResourceDictionary>
   </UserControl.Resources>
   <UserControl.Style>
     <Style TargetType="UserControl">
@@ -105,13 +131,13 @@
         <RowDefinition Height="Auto"/>
       </Grid.RowDefinitions>
 
-      <Views:EditableTextBlock Grid.Column="0" x:Name="FieldName" Text="{Binding Name, Mode=TwoWay}" FontWeight="Bold" Foreground="Red">
-        <Views:EditableTextBlock.ToolTip>
+      <Controls:EditableTextBlockControl Grid.Column="0" x:Name="FieldName" Text="{Binding Name, Mode=TwoWay}" FontWeight="Bold" Foreground="Red">
+        <Controls:EditableTextBlockControl.ToolTip>
           <TextBlock>Tên của vùng (<TextBlock Text="{Binding Index}"/>).<LineBreak/>Nhấp đúp để thay đổi.</TextBlock>
-        </Views:EditableTextBlock.ToolTip>
-      </Views:EditableTextBlock>
+        </Controls:EditableTextBlockControl.ToolTip>
+      </Controls:EditableTextBlockControl>
 
-      <Button Grid.Column="1" ToolTip="Xóa vùng này." Width="20" Height="20" x:Name="DeleteButton" Click="DeleteButton_Click" Template="{DynamicResource CloseButtonTheme}"/>
+      <Button Grid.Column="1" ToolTip="Xóa vùng này." Width="20" Height="20" x:Name="DeleteButton" Click="DeleteButton_Click" Template="{StaticResource CloseButtonTheme}"/>
     </Grid>
   </Grid>
 </UserControl>

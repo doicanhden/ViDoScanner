@@ -1,10 +1,10 @@
 ﻿<UserControl
-  x:Class="ViDoScanner.Views.EditableTextBlock"
+  x:Class="ViDoScanner.Controls.EditableTextBlockControl"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-  xmlns:local="clr-namespace:ViDoScanner.Views"
+  xmlns:local="clr-namespace:ViDoScanner.Controls"
   mc:Ignorable="d" 
   MouseDoubleClick="MainControl_MouseDoubleClick"
   x:Name="MainControl">
@@ -17,7 +17,7 @@
       <TextBlock Text="{Binding ElementName=MainControl, Path=Text}"/>
     </DataTemplate>
 
-    <Style TargetType="{x:Type local:EditableTextBlock}">
+    <Style TargetType="{x:Type local:EditableTextBlockControl}">
       <Style.Triggers>
         <Trigger Property="IsInEditMode" Value="True">
           <Setter Property="ContentTemplate" Value="{StaticResource EditModeTemplate}" />

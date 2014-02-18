@@ -76,17 +76,20 @@
     <Compile Include="ViewModels\PageViewModel.cs" />
     <Compile Include="ViewModels\TemplateViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBasic.cs" />
+    <Compile Include="Views\ConfigurationView.xaml.cs">
+      <DependentUpon>ConfigurationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PropertiesView.xaml.cs">
       <DependentUpon>PropertiesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\ConfigScanner.xaml.cs">
       <DependentUpon>ConfigScanner.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CreatePageView.xaml.cs">
-      <DependentUpon>CreatePageView.xaml</DependentUpon>
+    <Compile Include="Windows\CreatePage.xaml.cs">
+      <DependentUpon>CreatePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EditableTextBlock.xaml.cs">
-      <DependentUpon>EditableTextBlock.xaml</DependentUpon>
+    <Compile Include="Controls\EditableTextBlockControl.xaml.cs">
+      <DependentUpon>EditableTextBlockControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GridLinesFieldView.xaml.cs">
       <DependentUpon>GridLinesFieldView.xaml</DependentUpon>
@@ -96,6 +99,9 @@
     </Compile>
     <Compile Include="Views\TemplateView.xaml.cs">
       <DependentUpon>TemplateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ScanTesting.xaml.cs">
+      <DependentUpon>ScanTesting.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\FileBrowserControl.xaml">
       <SubType>Designer</SubType>
@@ -114,7 +120,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Themes\CloseButtonTheme.xaml">
+    <Page Include="Views\ConfigurationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -126,11 +132,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CreatePageView.xaml">
+    <Page Include="Windows\CreatePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\EditableTextBlock.xaml">
+    <Page Include="Controls\EditableTextBlockControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TemplateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ScanTesting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -179,10 +189,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ViDoScanner.Core\ViDoScanner.Core.csproj">
+      <Project>{05fee228-e91c-449a-b073-742e7d6bcac4}</Project>
+      <Name>ViDoScanner.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ViDoScanner.Processing\ViDoScanner.Processing.csproj">
       <Project>{15add0d2-c4a5-4210-a1fa-410f1b163fcc}</Project>
       <Name>ViDoScanner.Processing</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Themes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

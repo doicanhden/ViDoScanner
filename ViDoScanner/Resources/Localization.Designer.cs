@@ -142,6 +142,15 @@ namespace ViDoScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ngưỡng xám.
+        /// </summary>
+        public static string GrayscaleThreshold {
+            get {
+                return ResourceManager.GetString("GrayscaleThreshold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chiều cao.
         /// </summary>
         public static string Height {
@@ -237,6 +246,33 @@ namespace ViDoScanner.Resources {
         public static string Page {
             get {
                 return ResourceManager.GetString("Page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tên trang.
+        /// </summary>
+        public static string PageName {
+            get {
+                return ResourceManager.GetString("PageName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tỉ lệ phân biệt.
+        /// </summary>
+        public static string RatioDelta {
+            get {
+                return ResourceManager.GetString("RatioDelta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tỉ lệ tô kín.
+        /// </summary>
+        public static string RatioThreshold {
+            get {
+                return ResourceManager.GetString("RatioThreshold", resourceCulture);
             }
         }
         

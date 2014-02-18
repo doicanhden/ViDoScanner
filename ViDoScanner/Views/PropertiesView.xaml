@@ -43,7 +43,7 @@
               <TextBlock Margin="4" Text="{x:Static Resrc:Localization.Index}"/>
               <TextBox Margin="4" Text="{Binding Index, Mode=TwoWay}"/>
 
-              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.FieldName}"/>
+              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.PageName}"/>
               <TextBox Margin="4" Text="{Binding Name, Mode=TwoWay}"/>
 
               <TextBlock Margin="4" Text="{x:Static Resrc:Localization.ImagePath}"/>

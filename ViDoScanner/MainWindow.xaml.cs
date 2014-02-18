@@ -61,10 +61,10 @@ namespace ViDoScanner
 
     private void MenuItemTestScanner_Click(object sender, RoutedEventArgs e)
     {
-      Scanner scanner = new Scanner();
-      scanner.LoadTemplate(@"F:\Khanh\SkyDrive\Development\Github\ViDoScanner\Template.xml");
-      scanner.Scan(@"F:\Khanh\SkyDrive\Development\Github\ViDoScanner\hoacd.xml.0.jpg");
-      scanner.SaveLog(@"F:\Khanh\SkyDrive\Development\Github\ViDoScanner\Template.log.xml");
+      var ScanTesting = new Windows.ScanTesting();
+      ScanTesting.Config = new ConfigViewModel();
+      ScanTesting.Show();
+
     }
   }
 }

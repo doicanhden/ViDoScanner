@@ -50,140 +50,6 @@ namespace ViDoScanner.Processing.Imaging
     }
 
     /// <summary>
-    /// Create and initialize new 8 bpp grayscale image.
-    /// </summary>
-    /// 
-    /// <param name="width">Image width.</param>
-    /// <param name="height">Image height.</param>
-    /// 
-    /// <returns>Returns the created grayscale image.</returns>
-    /// 
-    /// <remarks>The method creates new 8 bpp grayscale image and initializes its palette.
-    /// Grayscale image is represented as
-    /// <see cref="System.Drawing.Imaging.PixelFormat">Format8bppIndexed</see>
-    /// image with palette initialized to 256 gradients of gray color.</remarks>
-    /// 
-    public static Bitmap CreateGrayscaleImage(int width, int height)
-    {
-      Bitmap image = new Bitmap(width, height, PixelFormat.Format8bppIndexed);
-
-      SetGrayscalePalette(image);
-
-      return (image);
-    }
-
-    /// <summary>
-    /// Set pallete of the 8 bpp indexed image to grayscale.
-    /// </summary>
-    /// 
-    /// <param name="image">Image to initialize.</param>
-    /// 
-    /// <remarks>The method initializes palette of
-    /// <see cref="System.Drawing.Imaging.PixelFormat">Format8bppIndexed</see>
-    /// image with 256 gradients of gray color.</remarks>
-    /// 
-    /// <exception cref="UnsupportedImageFormatException">Provided image is not 8 bpp indexed image.</exception>
-    /// 
-    public static void SetGrayscalePalette(Bitmap image)
-    {
-      // check pixel format
-      if (image.PixelFormat != PixelFormat.Format8bppIndexed)
-        throw new Exception("Source image is not 8 bpp image.");
-
-      ColorPalette cp = image.Palette;
-
-      for ( int i = 0; i < 256; ++i)
-      {
-        cp.Entries[i] = Color.FromArgb(i, i, i);
-      }
-      // set palette back
-      image.Palette = cp;
-    }
-    
-    public static Bitmap ConvertToGrayscale(Bitmap source)
-    {
-      Bitmap image = CreateGrayscaleImage(source.Width, source.Height);
-
-      LockBitmap bm1 = new LockBitmap(source);
-      LockBitmap bm2 = new LockBitmap(image);
-      bm1.LockBits();
-      bm2.LockBits();
-      for (int y = 0; y < bm1.Height; ++y)
-      {
-        for (int x = 0; x < bm1.Width; ++x)
-        {
-          Color c = bm1.GetPixel(x, y);
-          byte g = (byte)(c.R * 0.299 + c.G * 0.587 + c.B * 0.114);
-          bm2.SetPixel(x, y, Color.FromArgb(g, g, g));
-        }
-      }
-      bm2.UnlockBits();
-      bm1.UnlockBits();
-
-      return (image);
-    }
-
-    public static byte[,] ConvertToBW(Bitmap source, int boxSize = 5, int c = -5)
-    {
-      if (boxSize < 5)
-        boxSize = 5;
-
-      int w = source.Width;
-      int h = source.Height;
-      int s = (boxSize * 2 + 1) * (boxSize * 2 + 1);
-
-      byte[,] grayscale = new byte[source.Width, source.Height];
-      int[,] integral = new int[source.Width, source.Height];
-
-      { // Convert image source to grayscale
-        LockBitmap bm = new LockBitmap(source);
-
-        bm.LockBits();
-        for (int y = 0; y < bm.Height; ++y)
-        {
-          for (int x = 0; x < bm.Width; ++x)
-          {
-            var clr = bm.GetPixel(x, y);
-            integral[x, y] = grayscale[x, y] = (byte)(clr.R * 0.299 + clr.G * 0.587 + clr.B * 0.114);
-          }
-        }
-        bm.UnlockBits();
-      }
-
-      { // Sum integral image.
-        for (int i = 1; i < w; ++i)
-          integral[i, 0] += integral[i - 1, 0];
-
-        for (int j = 1; j < h; ++j)
-        {
-          integral[0, j] += integral[0, j - 1];
-          for (int i = 1; i < w; ++i)
-            integral[i, j] += integral[i - 1, j] + integral[i, j - 1] - integral[i - 1, j - 1];
-        }
-      }
-
-      byte[,] binary = new byte[w - 2 * boxSize - 1, h - 2 * boxSize - 1];
-
-      { // Convert image to black & white
-        byte mean;
-        for (int i = 1 + boxSize; i < w - boxSize; ++i)
-        {
-          for (int j = 1 + boxSize; j < h - boxSize; ++j)
-          {
-            mean = (byte)(Math.Max(0, c + (
-              integral[i + boxSize, j + boxSize] -
-              integral[i + boxSize, j - boxSize - 1] -
-              integral[i - boxSize - 1, j + boxSize] +
-              integral[i - boxSize - 1, j - boxSize - 1]) / s));
-
-            binary[i - boxSize - 1, j - boxSize - 1] = (byte)(grayscale[i, j] < mean ? 0 : 255);
-          }
-        }
-      }
-
-      return (binary);
-    }
-    /// <summary>
     /// Load bitmap from file.
     /// </summary>
     /// <param name="fileName">File name to load bitmap from.</param>
@@ -222,6 +88,77 @@ namespace ViDoScanner.Processing.Imaging
       }
 
       return (loadedImage);
+    }
+
+    /// <summary>
+    /// Get grayscale pixels for region
+    /// </summary>
+    /// <param name="bitmap">Source bitmap</param>
+    /// <param name="x">X location</param>
+    /// <param name="y">Y location</param>
+    /// <param name="width">Width</param>
+    /// <param name="height">Height</param>
+    /// <returns></returns>
+    public static byte[,] GetGrayscalePixels(Bitmap bitmap, int x, int y, int width, int height)
+    {
+      BitmapData bmpData = bitmap.LockBits(new Rectangle(x, y, width, height),
+        ImageLockMode.ReadOnly, bitmap.PixelFormat);
+
+      try
+      {
+        unsafe
+        {
+          byte[,] pixel = new byte[width, height];
+          byte* ptr = (byte*)bmpData.Scan0.ToPointer();
+
+          int depth = System.Drawing.Image.GetPixelFormatSize(bmpData.PixelFormat);
+
+          if (depth == 24 || depth == 32)
+          {
+            int off = depth / 8;
+
+            for (int yy = 0; yy < height; ++yy)
+            {
+              byte* row = ptr + (yy * bmpData.Stride);
+
+              for (int xx = 0; xx < width; xx += off)
+              {
+                // Convert to grayscale
+                pixel[xx, yy] = (byte)(
+                  row[xx + 2] * 0.299 + // Red 
+                  row[xx + 1] * 0.587 + // Green
+                  row[xx    ] * 0.114); // Blue
+              }
+            }
+          }
+          else if (depth == 8)
+          {
+            for (int yy = 0; yy < height; ++yy)
+            {
+              byte* row = ptr + (yy * bmpData.Stride);
+
+              for (int xx = 0; xx < width; ++xx)
+              {
+                pixel[xx, yy] = row[xx];
+              }
+            }
+          }
+          else
+          {
+            throw new ArgumentException("Only 8, 24 and 32 bpp images are supported.");
+          }
+
+          return (pixel);
+        }
+      }
+      catch (Exception e)
+      {
+        throw e;
+      }
+      finally
+      {
+        bitmap.UnlockBits(bmpData);
+      }
     }
   }
 

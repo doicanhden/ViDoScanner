@@ -1,0 +1,98 @@
+﻿<Window
+  x:Class="ViDoScanner.Windows.ScanTesting"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:Controls="clr-namespace:ViDoScanner.Controls"
+  xmlns:Resrc="clr-namespace:ViDoScanner.Resources"
+  Title="ScanTesting" Height="300" Width="389"
+  x:Name="ScanTestingWindow">
+  <Window.Resources>
+    <Style x:Key="MySimpleScrollBar" TargetType="{x:Type ScrollBar}">
+      <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
+      <Setter Property="MinHeight" Value="18"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type ScrollBar}">
+            <Border BorderThickness="1" BorderBrush="Gray">
+              <Grid>
+                <TextBlock VerticalAlignment="Center" MinWidth="16" Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <Grid Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" HorizontalAlignment="Right">
+                  <Grid.RowDefinitions>
+                    <RowDefinition MinHeight="8"/>
+                    <RowDefinition MinHeight="8"/>
+                  </Grid.RowDefinitions>
+                  <RepeatButton Grid.Row="0" x:Name="DecreaseRepeat" Command="ScrollBar.LineDownCommand" Focusable="False" BorderThickness="0">
+                    <Path Fill="#FF606060" Margin="4,0,4,0" Stretch="Uniform" Data="M0,4C0,4 0,6 0,6 0,6 3.5,2.5 3.5,2.5 3.5,2.5 7,6 7,6 7,6 7,4 7,4 7,4 3.5,0.5 3.5,0.5 3.5,0.5 0,4 0,4z"/>
+                  </RepeatButton>
+                  <RepeatButton Grid.Row="1" x:Name="IncreaseRepeat" Command="ScrollBar.LineUpCommand" Focusable="False" BorderThickness="0">
+                    <Path Fill="#FF606060" Margin="4,0,4,0" Stretch="Uniform" Data="M0,2.5C0,2.5 0,0.5 0,0.5 0,0.5 3.5,4 3.5,4 3.5,4 7,0.5 7,0.5 7,0.5 7,2.5 7,2.5 7,2.5 3.5,6 3.5,6 3.5,6 0,2.5 0,2.5z"/>
+                  </RepeatButton>
+                </Grid>
+              </Grid>
+            </Border>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </Window.Resources>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+
+    <Grid Grid.Row="0" Grid.ColumnSpan="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition/>
+      </Grid.ColumnDefinitions>
+      <TextBlock Grid.Column="0" Text="{x:Static Resrc:Localization.ImagePath}" VerticalAlignment="Center"/>
+      <Controls:FileBrowserControl Grid.Column="1" Margin="4" FileName="{Binding ImagePath, ElementName=ScanTestingWindow, Mode=OneWayToSource}" />
+    </Grid>
+    
+    <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition/>
+        <RowDefinition/>
+      </Grid.RowDefinitions>
+
+      <TextBlock Margin="5" Grid.Row="0" Grid.Column="0" Text="{x:Static Resrc:Localization.RatioThreshold}" VerticalAlignment="Center"/>
+      <ScrollBar Margin="5" Grid.Row="0" Grid.Column="1" Value="{Binding RatioThreshold}" Maximum="255" SmallChange="1" Width="Auto"  Style="{DynamicResource MySimpleScrollBar}"/>
+
+      <TextBlock Margin="5" Grid.Row="1" Grid.Column="0" Text="{x:Static Resrc:Localization.GrayscaleThreshold}" VerticalAlignment="Center"/>
+      <ScrollBar Margin="5" Grid.Row="1" Grid.Column="1" Value="{Binding GrayscaleThreshold}" Maximum="255" SmallChange="1" Width="Auto"  Style="{DynamicResource MySimpleScrollBar}"/>
+    </Grid>
+
+
+    <Grid Grid.Row="1" Grid.Column="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <TextBlock Margin="5" Grid.Row="0" Grid.Column="0" Text="{x:Static Resrc:Localization.RatioDelta}" VerticalAlignment="Center"/>
+      <ScrollBar Margin="5" Grid.Row="0" Grid.Column="1" Value="{Binding RatioDelta}" Maximum="255" SmallChange="1" Width="Auto"  Style="{DynamicResource MySimpleScrollBar}"/>
+    </Grid>
+
+    <Grid Grid.Row="2" Grid.Column="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition/>
+        <ColumnDefinition/>
+      </Grid.ColumnDefinitions>
+      <Button Margin="5" Grid.Column="0" Click="Button0_Click" Content="Scan"/>
+      <Button Margin="5" Grid.Column="1" Click="Button1_Click" Content="Save Setting"/>
+    </Grid>
+
+    <DataGrid Grid.Row="3" Grid.ColumnSpan="2"/>
+  </Grid>
+</Window>

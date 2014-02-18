@@ -1,4 +1,4 @@
-﻿namespace ViDoScanner.Processing.Scanner
+﻿namespace ViDoScanner.Core
 {
   using System.Xml.Serialization;
 

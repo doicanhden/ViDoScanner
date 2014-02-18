@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ViDoScanner.Views
 {
   /// <summary>
-  /// Interaction logic for CreatePageView.xaml
+  /// Interaction logic for ConfigurationView.xaml
   /// </summary>
-  public partial class CreatePageView : Window
+  public partial class ConfigurationView : UserControl
   {
-    public CreatePageView()
+    public ConfigurationView()
     {
       InitializeComponent();
     }

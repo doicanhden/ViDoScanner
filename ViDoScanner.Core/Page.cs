@@ -1,7 +1,6 @@
-﻿namespace ViDoScanner.Processing.Scanner
+﻿using System.Xml.Serialization;
+namespace ViDoScanner.Core
 {
-  using System.Xml.Serialization;
-
   public class Page
   {
     [XmlAttribute]

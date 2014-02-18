@@ -1,4 +1,4 @@
-﻿namespace ViDoScanner.Views
+﻿namespace ViDoScanner.Controls
 {
   using System.Windows;
   using System.Windows.Controls;
@@ -7,14 +7,14 @@
   /// <summary>
   /// Interaction logic for EditableTextBlock.xaml
   /// </summary>
-  public partial class EditableTextBlock : UserControl
+  public partial class EditableTextBlockControl : UserControl
   {
     #region Data Members
     private string oldText;
     #endregion
 
     #region Constructors
-    public EditableTextBlock()
+    public EditableTextBlockControl()
     {
       InitializeComponent();
       base.Focusable = true;
@@ -29,7 +29,7 @@
       set { SetValue(TextProperty, value); }
     }
     public static readonly DependencyProperty TextProperty =
-      DependencyProperty.Register("Text", typeof(string), typeof(EditableTextBlock), new PropertyMetadata(""));
+      DependencyProperty.Register("Text", typeof(string), typeof(EditableTextBlockControl), new PropertyMetadata(""));
 
     public bool IsEditable
     {
@@ -37,7 +37,7 @@
       set { SetValue(IsEditableProperty, value); }
     }
     public static readonly DependencyProperty IsEditableProperty =
-      DependencyProperty.Register("IsEditable", typeof(bool), typeof(EditableTextBlock), new PropertyMetadata(true));
+      DependencyProperty.Register("IsEditable", typeof(bool), typeof(EditableTextBlockControl), new PropertyMetadata(true));
 
     public bool IsInEditMode
     {
@@ -53,7 +53,7 @@
       }
     }
     public static readonly DependencyProperty IsInEditModeProperty =
-      DependencyProperty.Register("IsInEditMode", typeof(bool), typeof(EditableTextBlock), new PropertyMetadata(false));
+      DependencyProperty.Register("IsInEditMode", typeof(bool), typeof(EditableTextBlockControl), new PropertyMetadata(false));
     #endregion
 
     #region Event Handlers

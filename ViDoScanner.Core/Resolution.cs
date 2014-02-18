@@ -1,4 +1,4 @@
-﻿namespace ViDoScanner.Processing.Scanner
+﻿namespace ViDoScanner.Core
 {
   public class Resolution
   {
@@ -12,6 +12,7 @@
       X = x;
       Y = y;
     }
+
     public double X { get; set; }
     public double Y { get; set; }
   }
