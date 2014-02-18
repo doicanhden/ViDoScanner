@@ -68,10 +68,10 @@
       </Grid.RowDefinitions>
 
       <TextBlock Margin="5" Grid.Row="0" Grid.Column="0" Text="{x:Static Resrc:Localization.RatioThreshold}" VerticalAlignment="Center"/>
-      <ScrollBar Margin="5" Grid.Row="0" Grid.Column="1" Value="{Binding RatioThreshold}" Maximum="255" SmallChange="1" Width="Auto"  Style="{DynamicResource MySimpleScrollBar}"/>
+      <ScrollBar Margin="5" Grid.Row="0" Grid.Column="1" Value="{Binding RatioThreshold, Mode=TwoWay}" Maximum="255" SmallChange="1" Width="Auto"  Style="{DynamicResource MySimpleScrollBar}"/>
 
       <TextBlock Margin="5" Grid.Row="1" Grid.Column="0" Text="{x:Static Resrc:Localization.GrayscaleThreshold}" VerticalAlignment="Center"/>
-      <ScrollBar Margin="5" Grid.Row="1" Grid.Column="1" Value="{Binding GrayscaleThreshold}" Maximum="255" SmallChange="1" Width="Auto"  Style="{DynamicResource MySimpleScrollBar}"/>
+      <ScrollBar Margin="5" Grid.Row="1" Grid.Column="1" Value="{Binding GrayscaleThreshold, Mode=TwoWay}" Maximum="255" SmallChange="1" Width="Auto"  Style="{DynamicResource MySimpleScrollBar}"/>
     </Grid>
 
 
@@ -81,7 +81,7 @@
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
       <TextBlock Margin="5" Grid.Row="0" Grid.Column="0" Text="{x:Static Resrc:Localization.RatioDelta}" VerticalAlignment="Center"/>
-      <ScrollBar Margin="5" Grid.Row="0" Grid.Column="1" Value="{Binding RatioDelta}" Maximum="255" SmallChange="1" Width="Auto"  Style="{DynamicResource MySimpleScrollBar}"/>
+      <ScrollBar Margin="5" Grid.Row="0" Grid.Column="1" Value="{Binding RatioDelta, Mode=TwoWay}" Maximum="255" SmallChange="1" Width="Auto"  Style="{DynamicResource MySimpleScrollBar}"/>
     </Grid>
 
     <Grid Grid.Row="2" Grid.Column="1">
@@ -93,6 +93,6 @@
       <Button Margin="5" Grid.Column="1" Click="Button1_Click" Content="Save Setting"/>
     </Grid>
 
-    <DataGrid Grid.Row="3" Grid.ColumnSpan="2"/>
+    <DataGrid Grid.Row="3" Grid.ColumnSpan="2" x:Name="ResultDataGrid"/>
   </Grid>
 </Window>

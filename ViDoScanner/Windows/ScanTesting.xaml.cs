@@ -1,5 +1,7 @@
-﻿using System;
+﻿using LumenWorks.Framework.IO.Csv;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,8 +46,10 @@ namespace ViDoScanner.Windows
     private void Button0_Click(object sender, RoutedEventArgs e)
     {
       Scanner scanner = new Scanner();
+      scanner.Config = Config.Model;
       scanner.LoadTemplate(@"F:\Khanh\SkyDrive\Development\Github\ViDoScanner\Template.xml");
-      scanner.ScanFolder(@"F:\Example");
+
+      scanner.SinglePage(scanner.Template.Pages[0], new string[] { ImagePath }, null);
     }
 
     private void Button1_Click(object sender, RoutedEventArgs e)

@@ -1,18 +1,12 @@
 ﻿namespace ViDoScanner.ViewModels
 {
+  using System.Xml.Serialization;
+  using ViDoScanner.Core;
+
   public class ConfigViewModel : ViewModelBasic
   {
     #region Data Members
-    private string imagesDirectory;
-    private string outputDirectory;
-
-    private string blankSelection;
-    private string multiSelection;
-
-    private double ratioThreshold;
-    private double ratioTheta;
-
-    private int grayscaleThreshold;
+    private Configuration config = new Configuration();
     #endregion
 
     public ConfigViewModel()
@@ -25,24 +19,24 @@
 
     public string ImagesDirectory
     {
-      get { return (imagesDirectory); }
+      get { return (config.ImagesDirectory); }
       set
       {
-        if (imagesDirectory != value)
+        if (config.ImagesDirectory != value)
         {
-          imagesDirectory = value;
+          config.ImagesDirectory = value;
           RaisePropertyChanged("ImagesDirectory");
         }
       }
     }
     public string OutputDirectory
     {
-      get { return (outputDirectory); }
+      get { return (config.OutputDirectory); }
       set
       {
-        if (outputDirectory != value)
+        if (config.OutputDirectory != value)
         {
-          outputDirectory = value;
+          config.OutputDirectory = value;
           RaisePropertyChanged("OutputDirectory");
         }
       }
@@ -50,24 +44,24 @@
 
     public string BlankSelection
     {
-      get { return (blankSelection); }
+      get { return (config.BlankSelection); }
       set
       {
-        if (blankSelection != value)
+        if (config.BlankSelection != value)
         {
-          blankSelection = value;
+          config.BlankSelection = value;
           RaisePropertyChanged("BlankSelection");
         }
       }
     }
     public string MultiSelection
     {
-      get { return (multiSelection); }
+      get { return (config.MultiSelection); }
       set
       {
-        if (multiSelection != value)
+        if (config.MultiSelection != value)
         {
-          multiSelection = value;
+          config.MultiSelection = value;
           RaisePropertyChanged("MultiSelection");
         }
       }
@@ -75,40 +69,44 @@
 
     public double RatioThreshold
     {
-      get { return (ratioThreshold); }
+      get { return (config.RatioThreshold); }
       set
       {
-        if (ratioThreshold != value)
+        if (config.RatioThreshold != value)
         {
-          ratioThreshold = value;
+          config.RatioThreshold = value;
           RaisePropertyChanged("RatioThreshold");
         }
       }
     }
     public double RatioDelta
     {
-      get { return (ratioTheta); }
+      get { return (config.RatioDelta); }
       set
       {
-        if (ratioTheta != value)
+        if (config.RatioDelta != value)
         {
-          ratioTheta = value;
-          RaisePropertyChanged("RatioTheta");
+          config.RatioDelta = value;
+          RaisePropertyChanged("RatioDelta");
         }
       }
     }
 
     public int GrayscaleThreshold
     {
-      get { return (grayscaleThreshold); }
+      get { return (config.GrayscaleThreshold); }
       set
       {
-        if (grayscaleThreshold != value)
+        if (config.GrayscaleThreshold != value)
         {
-          grayscaleThreshold = value;
+          config.GrayscaleThreshold = value;
           RaisePropertyChanged("GrayscaleThreshold");
         }
       }
     }
+
+    [XmlIgnore]
+    public Configuration Model { get { return (config); } }
+
   }
 }

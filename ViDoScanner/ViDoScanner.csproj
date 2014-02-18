@@ -189,6 +189,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LumenWorks.Framework.IO\LumenWorks.Framework.IO.csproj">
+      <Project>{e3b83d68-c90c-4874-8e5f-dec8d038bc7c}</Project>
+      <Name>LumenWorks.Framework.IO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ViDoScanner.Core\ViDoScanner.Core.csproj">
       <Project>{05fee228-e91c-449a-b073-742e7d6bcac4}</Project>
       <Name>ViDoScanner.Core</Name>

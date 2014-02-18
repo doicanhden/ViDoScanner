@@ -1,54 +1,28 @@
 ﻿namespace ViDoScanner.Core
 {
-  public class CalcCellsRatio
+  public class FieldScanner
   {
+    #region Data Members
     private int nRecords = 1;
     private int nSelection = 1;
+    #endregion
 
-    public CalcCellsRatio(int nRecords, int nSelection)
+    #region Constructors
+    public FieldScanner(Field field)
     {
-      this.nRecords = nRecords;
-      this.nSelection = nSelection;
+      this.nRecords = field.NumberOfRecords;
+      this.nSelection = field.NumberOfSelection;
+      this.BuildCells(field.Width, field.Height, field.Direction == Directions.Vertical);
     }
+    #endregion
 
+    #region Public Properties
     public static int BlankSelection { get { return (-1); } }
     public static int MultiSelection { get { return (-2); } }
-    public Cell[,] Cells { get; set; }
+    public Cell[,] Cells { get; private set; }
+    #endregion
 
-    public void BuildCells(int width, int height, bool isVertical)
-    {
-      Cells = new Cell[nRecords, nSelection];
-
-      if (isVertical)
-      {
-        int cellWidth = width / nSelection;
-        int cellHeight = height / nRecords;
-
-        for (int i = 0; i < nRecords; ++i)
-        {
-          for (int j = 0; j < nSelection; ++j)
-          {
-            Cells[i, j] = new Cell(
-              j * cellWidth, i * cellHeight, cellWidth, cellHeight);
-          }
-        }
-      }
-      else
-      {
-        int cellWidth = width / nRecords;
-        int cellHeight = height / nSelection;
-
-        for (int i = 0; i < nRecords; ++i)
-        {
-          for (int j = 0; j < nSelection; ++j)
-          {
-            Cells[i, j] = new Cell(
-              i * cellWidth, j * cellHeight, cellWidth, cellHeight);
-          }
-        }
-      }
-    }
-
+    #region Public Methods
     public void CalcRatios(byte[,] grayscalePixels, byte grayscaleThreshold = 144)
     {
       int cX, cY, count = 0;
@@ -96,5 +70,43 @@
 
       return (results);
     }
+    #endregion
+
+    #region Private Methods
+    private void BuildCells(int width, int height, bool isVertical)
+    {
+      Cells = new Cell[nRecords, nSelection];
+      int cellWidth, cellHeight;
+
+      if (isVertical)
+      {
+        cellWidth = width / nSelection;
+        cellHeight = height / nRecords;
+
+        for (int i = 0; i < nRecords; ++i)
+        {
+          for (int j = 0; j < nSelection; ++j)
+          {
+            Cells[i, j] = new Cell(
+              j * cellWidth, i * cellHeight, cellWidth, cellHeight);
+          }
+        }
+      }
+      else
+      {
+        cellWidth = width / nRecords;
+        cellHeight = height / nSelection;
+
+        for (int i = 0; i < nRecords; ++i)
+        {
+          for (int j = 0; j < nSelection; ++j)
+          {
+            Cells[i, j] = new Cell(
+              i * cellWidth, j * cellHeight, cellWidth, cellHeight);
+          }
+        }
+      }
+    }
+    #endregion
   }
 }

@@ -1,45 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
-using System.Xml.Serialization;
-using ViDoScanner.Core;
-using ViDoScanner.Processing.Imaging;
-
-namespace ViDoScanner.Processing.Scanner
+﻿namespace ViDoScanner.Processing.Scanner
 {
+  using System;
+  using System.IO;
+  using System.Text;
+  using System.Threading.Tasks;
+  using System.Xml.Serialization;
+  using ViDoScanner.Core;
+  using ViDoScanner.Processing.Core;
+  using ViDoScanner.Processing.Imaging;
+
   public class Scanner
   {
     private class ProcessPageData
     {
-      public Page Page { get; set; }
-      public string ImagePath { get; set; }
+      public ProcessPageData(Page page, string imagePath, StringBuilder result)
+      {
+        this.Result = result;
+        this.Page = page;
+        this.ImagePath = imagePath;
+      }
+      public StringBuilder Result { get; private set; }
+      public Page Page { get; private set; }
+      public string ImagePath { get; private set; }
     }
 
-    private Template template;
-    private Configuration config;
-    private List<string> results = new List<string>();
+    public Template Template { get; private set; }
+    public Configuration Config { get; set; }
 
-    public List<string> Results
-    {
-      get { return (results); }
-    }
     public Scanner()
     {
-      config = new Configuration();
-      config.GrayscaleThreshold = 144;
-      config.RatioThreshold = 15;
     }
     public bool LoadTemplate(string pathTemplate)
     {
       XmlSerializer serializer = new XmlSerializer(typeof(Template));
 
       FileStream stream = new FileStream(pathTemplate, FileMode.Open);
-      template = (Template)serializer.Deserialize(stream);
+      Template = (Template)serializer.Deserialize(stream);
       stream.Close();
 
-      Array.Sort(template.Pages, (r, l) => r.Index.CompareTo(l.Index));
-      foreach (var page in template.Pages)
+      Array.Sort(Template.Pages, (r, l) => r.Index.CompareTo(l.Index));
+      foreach (var page in Template.Pages)
       {
         Array.Sort(page.Fields, (r, l) => r.Index.CompareTo(l.Index));
       }
@@ -52,31 +52,73 @@ namespace ViDoScanner.Processing.Scanner
       XmlSerializer serializer = new XmlSerializer(typeof(Configuration));
 
       FileStream stream = new FileStream(pathConfig, FileMode.Open);
-      config = (Configuration)serializer.Deserialize(stream);
+      Config = (Configuration)serializer.Deserialize(stream);
       stream.Close();
 
       return (true);
     }
 
-    public void ScanFolder(string folderName, string extension = "*.jpg", bool subDirectories = true)
+    public void SinglePage(Page page, string[] images, Action<string> callBack)
     {
-      if (template != null || !Directory.Exists(folderName))
+      if (page != null && images != null && images.Length > 0)
       {
         try
         {
-          var images = new Queue<string>(Directory.GetFiles(folderName, extension,
-            subDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly));
+          var result = new StringBuilder();
 
-          while (images.Count != 0)
+          #region Make CSV header
           {
-            foreach (var page in template.Pages)
+            StringBuilder sb = new StringBuilder("Tên tệp,");
+            foreach (var f in page.Fields)
             {
-              ThreadPool.QueueUserWorkItem(ProcessPageProc, new ProcessPageData()
-              {
-                Page = page,
-                ImagePath = images.Dequeue()
-              });
+              sb.AppendFormat("\"{0}\",", f.Name);
             }
+            sb.Remove(sb.Length - 1, 1); // Remove last ','.
+
+            result.AppendLine(sb.ToString());
+          }
+          #endregion
+
+          Task task = new Task(
+            () =>
+            {
+              using (ThreadPoolWait tpw = new ThreadPoolWait())
+              {
+                foreach (var image in images)
+                {
+                  tpw.QueueUserWorkItem(ProcessPageProc,
+                    new ProcessPageData(page, image, result));
+                }
+
+                tpw.WaitOne();
+              }
+            });
+
+          task.ContinueWith(x => callBack(result.ToString()));
+          task.Start();
+        }
+        catch
+        {
+
+        }
+        finally
+        {
+
+        }
+      }
+    }
+    public void ScanFolder(string folderName, string outputFilename, string extension = "*.jpg")
+    {
+      if (Template != null && Template.Pages.Length == 1 && Directory.Exists(folderName))
+      {
+        try
+        {
+          var imagesPath = Directory.GetFiles(folderName, extension, SearchOption.TopDirectoryOnly);
+          if (imagesPath != null && imagesPath.Length > 0)
+          {
+            var page = Template.Pages[0];
+            SinglePage(page, imagesPath, (x) =>
+              File.WriteAllText(Config.OutputDirectory + outputFilename, x));
           }
         }
         catch
@@ -89,45 +131,38 @@ namespace ViDoScanner.Processing.Scanner
         }
       }
     }
-
-    private void AddResult(string result)
-    {
-      lock (Results)
-      {
-        Results.Add(result);
-      Console.WriteLine(result);
-      }
-    }
     private void ProcessPageProc(object objData)
     {
-      List<CalcCellsRatio> logs = new List<CalcCellsRatio>();
       try
       {
         var data = objData as ProcessPageData;
-        var result = string.Empty;
-
         System.Drawing.Bitmap image = Image.FromFile(data.ImagePath);
+
         if (image != null && data.Page.Width == image.Width && data.Page.Height == image.Height)
         {
+          var sb = new StringBuilder();
+          sb.AppendFormat("\"{0}\",", Path.GetFileNameWithoutExtension(data.ImagePath));
+
           foreach (var f in data.Page.Fields)
           {
-            var grayscalePixels = Image.GetGrayscalePixels(image, f.X, f.Y, f.Width, f.Height);
+            var fieldScanner = new FieldScanner(f);
 
-            CalcCellsRatio fieldScan = new CalcCellsRatio(f.NumberOfRecords, f.NumberOfSelection);
+            fieldScanner.CalcRatios(Image.GetGrayscalePixels(image, f.X, f.Y, f.Width, f.Height),
+              (byte)Config.GrayscaleThreshold);
 
-            fieldScan.BuildCells(f.Width, f.Height, f.Direction == Directions.Vertical);
+            sb.Append(GetStringResult(f.Type, fieldScanner.Checks(
+              Config.RatioThreshold, Config.RatioDelta)));
 
-            fieldScan.CalcRatios(grayscalePixels, (byte)config.GrayscaleThreshold);
+            sb.Append(',');
+          }
 
-            var records = fieldScan.Checks(config.RatioThreshold, config.RatioDelta);
+          sb.Remove(sb.Length - 1, 1); // Remove last ','.
 
-            logs.Add(fieldScan);
-
-            result += GetResult(records, f.Type) + new string(' ', f.NumberOfBlanks);
+          lock (data.Result)
+          {
+            data.Result.AppendLine(sb.ToString());
           }
         }
-
-        AddResult(result + data.ImagePath);
       }
       finally
       {
@@ -135,76 +170,79 @@ namespace ViDoScanner.Processing.Scanner
       }
     }
 
-    public string GetResult(int[] records, DataTypes type)
+    public string GetStringResult(DataTypes type, int[] records)
     {
-      string result = string.Empty;
+      var sb = new StringBuilder();
 
-      switch (type)
+      if (type == DataTypes.Boolean)
       {
-        case DataTypes.Alpha:
-          foreach (var i in records)
+        foreach (var i in records)
+        {
+          sb.Append(i != FieldScanner.BlankSelection);
+        }
+      }
+      else if (type == DataTypes.Alpha)
+      {
+        foreach (var i in records)
+        {
+          if (i == FieldScanner.MultiSelection)
           {
-            if (i == CalcCellsRatio.MultiSelection)
-            {
-              result += config.MultiSelection;
-            }
-            else if (i == CalcCellsRatio.BlankSelection)
-            {
-              result += config.BlankSelection;
-            }
-            else
-            {
-              result += ((char)('A' + i)).ToString();
-            }
+            sb.Append(Config.MultiSelection);
           }
-          break;
-        case DataTypes.Number1:
-          foreach (var i in records)
+          else if (i == FieldScanner.BlankSelection)
           {
-            if (i == CalcCellsRatio.MultiSelection)
-            {
-              result += config.MultiSelection;
-            }
-            else if (i == CalcCellsRatio.BlankSelection)
-            {
-              result += config.BlankSelection;
-            }
-            else
-            {
-              result += i.ToString();
-            }
+            sb.Append(Config.BlankSelection);
           }
-          break;
-        case DataTypes.Number2:
-          foreach (var i in records)
+          else
           {
-            if (i == CalcCellsRatio.MultiSelection)
-            {
-              result += config.MultiSelection;
-            }
-            else if (i == CalcCellsRatio.BlankSelection)
-            {
-              result += config.BlankSelection;
-            }
-            else
-            {
-              if (i < 10)
-                result += '0';
-              result += i.ToString();
-            }
+            sb.Append((char)('A' + i));
           }
-          break;
-        case DataTypes.Boolean:
-          foreach (var i in records)
+        }
+      }
+      else if (type == DataTypes.Number1)
+      {
+        foreach (var i in records)
+        {
+          if (i == FieldScanner.MultiSelection)
           {
-            result += (i == CalcCellsRatio.BlankSelection) ? "FALSE" : "TRUE";
+            sb.Append(Config.MultiSelection);
           }
-          break;
-        default:
-          break;
+          else if (i == FieldScanner.BlankSelection)
+          {
+            sb.Append(Config.BlankSelection);
+          }
+          else
+          {
+            sb.Append(i);
+          }
+        }
+      }
+      else if (type == DataTypes.Number2)
+      {
+        foreach (var i in records)
+        {
+          if (i == FieldScanner.MultiSelection)
+          {
+            sb.Append(Config.MultiSelection);
+          }
+          else if (i == FieldScanner.BlankSelection)
+          {
+            sb.Append(Config.BlankSelection);
+          }
+          else
+          {
+            if (i < 10)
+              sb.Append('0');
+            sb.Append(i);
+          }
+        }
+      }
+      else
+      {
+        //??? 
       }
 
-      return (result);
+      return (sb.ToString());
     }
   }
 }

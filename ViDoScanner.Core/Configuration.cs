@@ -1,4 +1,4 @@
-﻿namespace ViDoScanner.Processing.Scanner
+﻿namespace ViDoScanner.Core
 {
   public class Configuration
   {
@@ -8,6 +8,7 @@
       MultiSelection = "*";
       RatioThreshold = 25;
       RatioDelta = 125;
+      GrayscaleThreshold = 144;
     }
 
     public string ImagesDirectory { get; set; }

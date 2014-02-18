@@ -37,7 +37,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Anchor.cs" />
-    <Compile Include="CalcCellsRatio.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="FieldScanner.cs" />
     <Compile Include="Cell.cs" />
     <Compile Include="DataTypes.cs" />
     <Compile Include="Directions.cs" />
