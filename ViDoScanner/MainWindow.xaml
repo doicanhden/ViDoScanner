@@ -1,32 +1,65 @@
 ﻿<Window
   x:Class="ViDoScanner.MainWindow"
+  x:Name="MainAppWindow"
+  Title="ViDoScanner"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:Views="clr-namespace:ViDoScanner.Views"
   xmlns:ViewModels="clr-namespace:ViDoScanner.ViewModels"
   xmlns:Resrc="clr-namespace:ViDoScanner.Resources"
-  Title="ViDoScanner">
+  xmlns:Convs="clr-namespace:ViDoScanner.ValueConverters"
+  MinWidth="790" MinHeight="432" Width="964" Height="780">
   <Grid>
     <Menu>
+      <Menu.Resources>
+        <Style x:Key="ConfigMenuItemStyle" TargetType="MenuItem">
+          <Setter Property="Header" Value="{Binding}"></Setter>
+          <Setter Property="Command" Value="{Binding Path=DataContext.ChangeConfigFileCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+          <Setter Property="CommandParameter" Value="{Binding}"/>
+          <Setter Property="IsCheckable" Value="True"/>
+          <Setter Property="StaysOpenOnClick" Value="True"/>
+        </Style>
+      </Menu.Resources>
+      
       <MenuItem Header="Mẫu">
-        <MenuItem Header="Tạo mẫu mới" HorizontalAlignment="Left"/>
-        <MenuItem Header="Mở mẫu sẵn có" HorizontalAlignment="Left" Click="MenuItemOpenTemplate_Click"/>
-        <MenuItem Header="Đóng mẫu" HorizontalAlignment="Left"/>
-        <MenuItem Header="Lưu mẫu" HorizontalAlignment="Left" Click="MenuItemSaveTemplate_Click"/>
-        <MenuItem Header="Lưu mẫu với tên khác" HorizontalAlignment="Left"/>
+        <MenuItem Header="Tạo mẫu mới"/>
+        <MenuItem Header="Mở mẫu sẵn có" Command="{Binding OpenTemplateCommand}"/>
+        <Separator/>
+        <MenuItem Header="Đóng mẫu"/>
+        <Separator/>
+        <MenuItem Header="Lưu mẫu" Command="{Binding SaveTemplateCommand}"/>
+        <MenuItem Header="Lưu mẫu với tên khác"/>
+        <Separator/>
+        <MenuItem Header="Trình quản lý mẫu"/>
+        <Separator/>
+        <MenuItem Header="Thoát"/>
       </MenuItem>
       <MenuItem Header="Chỉnh sửa">
-        <MenuItem Header="Thêm trang" HorizontalAlignment="Left" Click="MenuItemTestScanner_Click"/>
-        <MenuItem Header="Xóa trang" HorizontalAlignment="Left"/>
-        <MenuItem Header="Thêm vùng" HorizontalAlignment="Left" Click="MenuItemOpenTemplate_Click"/>
-        <MenuItem Header="Xóa vùng" HorizontalAlignment="Left" Click="MenuItemOpenTemplate_Click"/>
+        <MenuItem Header="Thêm vùng" Command="{Binding CreateFieldCommand}"/>
+        <Separator/>
+        <MenuItem Header="Sao chép" Command="Copy"/>
+        <MenuItem Header="Dán" Command="Paste"/>
+        <MenuItem Header="Xóa" Command="Delete"/>
+        <Separator/>
+        
       </MenuItem>
       <MenuItem Header="Chức năng">
-        <MenuItem Header="Quét thử nghiệm mẫu" HorizontalAlignment="Left" Click="MenuItemTestScanner_Click"/>
-        <MenuItem Header="Quét nhận dạng" HorizontalAlignment="Left"/>
-        <MenuItem Header="Xem kết quả đã quét" HorizontalAlignment="Left" Click="MenuItemOpenTemplate_Click"/>
+        <MenuItem Header="Quét thử nghiệm mẫu" Command="{Binding ShowScanTestingCommand}"/>
+        <MenuItem Header="Quét nhận dạng" Command="{Binding ShowScanCommand}"/>
+        <Separator/>
+        <MenuItem Header="Xem kết quả đã quét"/>
+      </MenuItem>
+      <MenuItem Header="Tùy chỉnh">
+        <MenuItem Header="Tập tin thông số"
+                  ItemsSource="{Binding ConfigNames}"
+                  ItemContainerStyle="{StaticResource ConfigMenuItemStyle}"/>
+        <Separator/>
+        <MenuItem Header="Thông số quét" Command="{Binding ShowConfigCommand}"/>
+      </MenuItem>
+      <MenuItem Header="Giúp đỡ">
+        <MenuItem Header="Về ViDoScanner"/>
       </MenuItem>
     </Menu>
-    <Views:TemplateView Grid.Row="1" x:Name="TemplateView" Margin="0,20,20,20"/>
+    <Views:TemplateView Grid.Row="1" DataContext="{Binding Template}" Margin="0,20,20,20"/>
   </Grid>
 </Window>

@@ -120,8 +120,17 @@
   <data name="Alpha" xml:space="preserve">
     <value>Chữ cái</value>
   </data>
+  <data name="BlankSelection" xml:space="preserve">
+    <value>Bỏ trống</value>
+  </data>
   <data name="Boolean" xml:space="preserve">
     <value>Đúng / Sai</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Hủy</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Tạo</value>
   </data>
   <data name="DefaultValue" xml:space="preserve">
     <value>Giá trị mặc định</value>
@@ -156,11 +165,17 @@
   <data name="ImagePath" xml:space="preserve">
     <value>Đường dẫn ảnh</value>
   </data>
+  <data name="ImagesDirectoryName" xml:space="preserve">
+    <value>Thưc mục chứa ảnh</value>
+  </data>
   <data name="Index" xml:space="preserve">
     <value>Số thứ tự</value>
   </data>
   <data name="Location" xml:space="preserve">
     <value>Vị trí</value>
+  </data>
+  <data name="MultiSelection" xml:space="preserve">
+    <value>Chọn nhiều</value>
   </data>
   <data name="Number1" xml:space="preserve">
     <value>Một chữ số</value>
@@ -177,11 +192,17 @@
   <data name="NumberOfSelection" xml:space="preserve">
     <value>Số lượng lựa chọn</value>
   </data>
+  <data name="OutputDirectoryName" xml:space="preserve">
+    <value>Thư mục kết quả</value>
+  </data>
   <data name="Page" xml:space="preserve">
     <value>Trang</value>
   </data>
   <data name="PageName" xml:space="preserve">
     <value>Tên trang</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Tạm dừng</value>
   </data>
   <data name="RatioDelta" xml:space="preserve">
     <value>Tỉ lệ phân biệt</value>
@@ -189,8 +210,20 @@
   <data name="RatioThreshold" xml:space="preserve">
     <value>Tỉ lệ tô kín</value>
   </data>
+  <data name="Resume" xml:space="preserve">
+    <value>Tiếp tục</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Lưu</value>
+  </data>
+  <data name="Scan" xml:space="preserve">
+    <value>Quét</value>
+  </data>
   <data name="Size" xml:space="preserve">
     <value>Kích thước</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Dừng</value>
   </data>
   <data name="Vertical" xml:space="preserve">
     <value>Chiều dọc</value>

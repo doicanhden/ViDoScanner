@@ -8,19 +8,18 @@
   using System.Windows.Media;
   using System.Xml.Serialization;
   using ViDoScanner.Commands;
+  using ViDoScanner.Core;
   using ViDoScanner.Utilities;
 
   [XmlRootAttribute("Template", IsNullable=false)]
   public class TemplateViewModel:ViewModelBasic
   {
     #region Data Members
-    private string name;
+    private Template template = new Template();
+
     private ObservableCollection<PageViewModel> pages;
-    private ICommand createPage;
-    private ICommand selectPage;
-    private ICommand deletePage;
-    private ICommand saveTemplate;
-    private ICommand loadTemplate;
+    private ICommand createPageCommand;
+    private ICommand deletePageCommand;
     private PageViewModel selectedPage;
     #endregion
 
@@ -33,6 +32,11 @@
       Pages = new ObservableCollection<PageViewModel>();
       Name = "Template";
     }
+    public TemplateViewModel(Template template)
+    {
+      this.template = template;
+      Pages = new ObservableCollection<PageViewModel>();
+    }
     #endregion
 
     #region Model of TemplateViewModel
@@ -41,12 +45,12 @@
     /// </summary>
     public string Name
     {
-      get { return (name); }
+      get { return (template.Name); }
       set
       {
-        if (name != value)
+        if (template.Name != value)
         {
-          name = value;
+          template.Name = value;
           RaisePropertyChanged("Name");
         }
       }
@@ -70,6 +74,21 @@
     #endregion
 
     #region Public Properties
+    [XmlIgnore]
+    public Template Template
+    {
+      get
+      {
+        template.Pages = new Page[Pages.Count];
+        for (int i = 0; i < Pages.Count; ++i)
+        {
+          template.Pages[i] = Pages[i].Page;
+        }
+
+        return (template);
+      }
+    }
+
     /// <summary>
     /// Gets or sets selected page.
     /// </summary>
@@ -89,114 +108,40 @@
     #endregion
 
     #region Public Commands
-    public ICommand LoadTemplate
+    public ICommand CreatePageCommand
     {
       get
       {
-        return (loadTemplate ?? (loadTemplate = new RelayCommand<string>(
-          DoLoadTemplate, (p) => !File.Exists(p))));
+        return (createPageCommand ?? (createPageCommand = new RelayCommand<string>(
+          (x) => CreatePage(),
+          (x) => Pages.Count < 1)));
       }
     }
-    private void DoLoadTemplate(string pathTemplate)
+
+    public void CreatePage()
     {
-      XmlSerializer serializer = new XmlSerializer(typeof(TemplateViewModel));
-
-      FileStream stream = new FileStream(pathTemplate, FileMode.Open);
-      var template = (TemplateViewModel)serializer.Deserialize(stream);
-      stream.Close();
-
-      var pathFolder = Path.GetDirectoryName(pathTemplate) + Path.DirectorySeparatorChar;
-      foreach (var page in template.Pages)
+      var p = Browsers.ShowOpenFile("Chọn ảnh nền cho trang", "Picture (*.jpg)|*.jpg");
+      if (!string.IsNullOrWhiteSpace(p))
       {
-        if (page.Fields != null)
+        int pageIndex = GenerateIndex;
+        var page = new PageViewModel()
         {
-          foreach (var field in page.Fields)
-          {
-            field.Page = page;
-          }
-        }
+          Index = pageIndex,
+          Name = "Trang " + pageIndex,
+          ImagePath = p
+        };
 
-        if (page.Anchors != null)
-        {
-          foreach (var anchor in page.Anchors)
-          {
-            anchor.Page = page;
-          }
-        }
+        Pages.Add(page);
 
-        page.ImagePath = pathFolder + Path.GetFileName(page.ImagePath);
+        SelectedPage = page;
       }
-
-      this.Name = template.Name;
-      this.Pages = template.Pages;
     }
 
-    public ICommand SaveTemplate
+    public ICommand DeletePageCommand
     {
       get
       {
-        return (saveTemplate ?? (saveTemplate = new RelayCommand<string>(
-          DoSaveTemplate, (p) => Directory.Exists(p) && IsValid)));
-      }
-    }
-    private void DoSaveTemplate(string pathFolder)
-    {
-      if (Directory.Exists(pathFolder))
-      {
-        var templatePath = pathFolder + Path.DirectorySeparatorChar + Name;
-
-        foreach (var page in Pages)
-        {
-          var newImagePath = templatePath + '.' + page.Index + Path.GetExtension(page.ImagePath);
-          try
-          {
-            File.Copy(page.ImagePath, newImagePath, true);
-          }
-          catch { }
-
-          page.ImagePath = newImagePath;
-        }
-
-        StreamWriter stream = new StreamWriter(templatePath + ".xml");
-
-        XmlSerializer serializer = new XmlSerializer(typeof(TemplateViewModel));
-        serializer.Serialize(stream, this);
-
-        stream.Close();
-      }
-
-    }
-
-    public ICommand CreatePage
-    {
-      get
-      {
-        return (createPage ?? (createPage = new RelayCommand<string>(
-          (x) =>
-          {
-            var page = new PageViewModel(x) { Index = GenerateIndex };
-            Pages.Add(page);
-            SelectedPage = page;
-          },
-          (x) => !string.IsNullOrEmpty(x))));
-      }
-    }
-
-    public ICommand SelectPage
-    {
-      get
-      {
-        return (selectPage ?? (selectPage = new RelayCommand<PageViewModel>(
-          (x) => SelectedPage = x,
-          (x) => x != null)));
-      }
-    }
-
-    public ICommand DeletePage
-    {
-      get
-      {
-        return (deletePage ?? (deletePage = new RelayCommand<PageViewModel>(
+        return (deletePageCommand ?? (deletePageCommand = new RelayCommand<PageViewModel>(
           (x) =>
           {
             if (Pages.Contains(x))
@@ -242,6 +187,13 @@
     protected override string[] ValidatedProperties
     {
       get { return (validatedProperties); }
+    }
+    public override bool IsValid
+    {
+      get
+      {
+        return (Pages != null && Pages.Count > 0 && base.IsValid);
+      }
     }
     protected override string GetValidationError(string propertyName)
     {

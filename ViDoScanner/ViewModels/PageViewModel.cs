@@ -9,21 +9,17 @@
   using System.Xml.Serialization;
   using ViDoScanner.Commands;
   using ViDoScanner.Core;
-  using ViDoScanner.Processing.Scanner;
+  using ViDoScanner.Processing;
 
   [XmlType(TypeName="Page")]
   public class PageViewModel:ViewModelBasic
   {
     #region Data Members
-    private int index = 0;
-    private string name;
-    private string imagePath;
-    private int pixelWidth;
-    private int pixelHeight;
+    private Page page = new Page();
 
-    private ICommand createField;
-    private ICommand selectField;
-    private ICommand deleteField;
+    private ICommand createFieldCommand;
+    private ICommand selectFieldCommand;
+    private ICommand deleteFieldCommand;
     private FieldViewModel selectedField;
 
     private bool isInCreationMode;
@@ -41,20 +37,14 @@
       this.Fields = new ObservableCollection<FieldViewModel>();
       this.Anchors = new ObservableCollection<AnchorViewModel>();
     }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="PageViewModel"/> class.
-    /// </summary>
-    /// <param name="imagePath">Path of image background.</param>
-    public PageViewModel(string imagePath)
-    {
-
-      this.Fields = new ObservableCollection<FieldViewModel>();
-      this.Anchors = new ObservableCollection<AnchorViewModel>();
-
-      this.ImagePath = imagePath;
-    }
     #endregion
+
+    public void CreateField(System.Windows.Rect rect)
+    {
+      var field = new FieldViewModel(this, rect, GenerateIndex);
+      Fields.Add(field);
+      SelectedField = field;
+    }
 
     #region Model of PageViewModel
     /// <summary>
@@ -63,12 +53,12 @@
     [XmlAttribute]
     public int Index
     {
-      get { return (index); }
+      get { return (page.Index); }
       set
       {
-        if (index != value)
+        if (page.Index != value)
         {
-          index = value;
+          page.Index = value;
           RaisePropertyChanged("Index");
         }
       }
@@ -80,12 +70,12 @@
     [XmlAttribute(AttributeName="Width")]
     public int PixelWidth
     {
-      get { return (pixelWidth); }
+      get { return (page.Width); }
       set
       {
-        if (pixelWidth != value)
+        if (page.Width != value)
         {
-          pixelWidth = value;
+          page.Width = value;
           RaisePropertyChanged("PixelWidth", "Width");
         }
       }
@@ -97,12 +87,12 @@
     [XmlAttribute(AttributeName="Height")]
     public int PixelHeight
     {
-      get { return (pixelHeight); }
+      get { return (page.Height); }
       set
       {
-        if (pixelHeight != value)
+        if (page.Height != value)
         {
-          pixelHeight = value;
+          page.Height = value;
           RaisePropertyChanged("PixelHeight", "Height");
         }
       }
@@ -113,12 +103,12 @@
     /// </summary>
     public string ImagePath
     {
-      get { return (imagePath); }
+      get { return (page.ImagePath); }
       set
       {
-        if (imagePath != value)
+        if (page.ImagePath != value)
         {
-          imagePath = value;
+          page.ImagePath = value;
           RaisePropertyChanged("ImagePath");
 
           try
@@ -134,19 +124,30 @@
     /// <summary>
     /// Gets or sets resolution of image background.
     /// </summary>
-    public Resolution Resolution { get; set; }
+    public Resolution Resolution
+    {
+      get { return (page.Resolution); }
+      set
+      {
+        if (page.Resolution != value)
+        {
+          page.Resolution = value;
+          RaisePropertyChanged("Resolution");
+        }
+      }
+    }
 
     /// <summary>
     /// Gets or sets name of page.
     /// </summary>
     public string Name
     {
-      get { return (name); }
+      get { return (page.Name); }
       set
       {
-        if (name != value)
+        if (page.Name != value)
         {
-          name = value;
+          page.Name = value;
           RaisePropertyChanged("Name");
         }
       }
@@ -164,6 +165,33 @@
     #endregion
 
     #region Public Properties
+    [XmlIgnore]
+    public Page Page
+    {
+      get
+      {
+        if (Fields != null)
+        {
+          page.Fields = new Field[Fields.Count];
+          for (int i = 0; i < Fields.Count; ++i)
+          {
+            page.Fields[i] = Fields[i].Field;
+          }
+        }
+
+        if (Anchors != null)
+        {
+          page.Anchors = new Anchor[Anchors.Count];
+          for (int i = 0; i < Anchors.Count; ++i)
+          {
+            page.Anchors[i] = Anchors[i].Anchor;
+          }
+        }
+
+        return (page);
+      }
+    }
+
     /// <summary>
     /// Gets or sets image background.
     /// </summary>
@@ -279,19 +307,12 @@
     /// <summary>
     /// Create a new field. Parameter: Position and size, Rect type.
     /// </summary>
-    public ICommand CreateField
+    public ICommand CreateFieldCommand
     {
       get
       {
-        return (createField ?? (createField = new RelayCommand<System.Windows.Rect>(
-          (x) =>
-          {
-            var field = new FieldViewModel(this, x, GenerateIndex);
-
-            Fields.Add(field);
-
-            SelectedField = field;
-          },
+        return (createFieldCommand ?? (createFieldCommand = new RelayCommand<System.Windows.Rect>(
+          (x) => CreateField(x),
           (x) => !(x.IsEmpty) && x.Width > 10 && x.Height > 10)));
       }
     }
@@ -299,11 +320,11 @@
     /// <summary>
     /// Select a field. Parameter: Reference to Field.
     /// </summary>
-    public ICommand SelectField
+    public ICommand SelectFieldCommand
     {
       get
       {
-        return (selectField ?? (selectField = new RelayCommand<FieldViewModel>(
+        return (selectFieldCommand ?? (selectFieldCommand = new RelayCommand<FieldViewModel>(
           (x) => SelectedField = x,
           (x) =>(SelectedField == null || SelectedField.IsValid ||
             (x != null && !x.IsValid)) && !IsInCreationMode)));
@@ -313,11 +334,11 @@
     /// <summary>
     /// Delete a field.
     /// </summary>
-    public ICommand DeleteField
+    public ICommand DeleteFieldCommand
     {
       get
       {
-        return (deleteField ?? (deleteField = new RelayCommand<FieldViewModel>(
+        return (deleteFieldCommand ?? (deleteFieldCommand = new RelayCommand<FieldViewModel>(
           (x) =>
           {
             if (Fields.Contains(x))

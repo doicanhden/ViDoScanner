@@ -1,9 +1,10 @@
-﻿using LumenWorks.Framework.IO.Csv;
+﻿using Com.StellmanGreene.CSVReader;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
-using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,7 +14,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using ViDoScanner.Processing.Scanner;
+using ViDoScanner.Processing;
+using ViDoScanner.Utilities;
 using ViDoScanner.ViewModels;
 
 namespace ViDoScanner.Windows
@@ -23,38 +25,23 @@ namespace ViDoScanner.Windows
   /// </summary>
   public partial class ScanTesting : Window
   {
-    public ConfigViewModel Config
-    {
-      get
-      {
-        return (ConfigViewModel)(this.DataContext ?? (
-          this.DataContext = new ConfigViewModel()));
-      }
-      set
-      {
-        this.DataContext = value;
-      }
-    }
+    private ScanTestingViewModel model;
 
-    public string ImagePath { get; set; }
-
-    public ScanTesting()
+    public ScanTesting(ScanTestingViewModel model)
     {
       InitializeComponent();
+      this.model = model;
+      this.DataContext = model;
     }
 
-    private void Button0_Click(object sender, RoutedEventArgs e)
+    private void Button_Click(object sender, RoutedEventArgs e)
     {
-      Scanner scanner = new Scanner();
-      scanner.Config = Config.Model;
-      scanner.LoadTemplate(@"F:\Khanh\SkyDrive\Development\Github\ViDoScanner\Template.xml");
-
-      scanner.SinglePage(scanner.Template.Pages[0], new string[] { ImagePath }, null);
+      var imagePath = Browsers.ShowOpenFile("Chọn ảnh quét", "Pictures (*.jpg)|*.jpg");
+      if (!string.IsNullOrWhiteSpace(imagePath))
+      {
+        this.model.ImagePath = imagePath;
+      }
     }
 
-    private void Button1_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
   }
 }

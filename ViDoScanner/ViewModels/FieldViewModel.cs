@@ -4,25 +4,13 @@
   using System.ComponentModel;
   using System.Windows;
   using System.Xml.Serialization;
+  using ViDoScanner.Core;
   using ViDoScanner.Utilities;
-  using ViDoScanner.Enums;
   [XmlType(TypeName="Field")]
   public class FieldViewModel : ViewModelBasic
   {
     #region Data Members
-    private int pixelX;
-    private int pixelY;
-    private int pixelWidth;
-    private int pixelHeight;
-
-    private string name;
-    private int index = 0;
-    private int numberOfBlanks = 0;
-    private int numberOfRows = 1;
-    private int numberOfCols = 1;
-    private DataTypes type = DataTypes.Alpha;
-    private Directions direction = Directions.Vertical;
-    private string defaultValue = "X";
+    private Field field = new Field();
     #endregion
 
     #region Constructors
@@ -49,7 +37,7 @@
     /// <param name="page">Page contain this Field</param>
     /// <param name="rect">Rect of Field</param>
     /// <param name="index">Index of Field</param>
-    public FieldViewModel(PageViewModel page, Rect rect, int index)
+    public FieldViewModel(PageViewModel page, System.Windows.Rect rect, int index)
     {
       Name = "Vùng " + index;
       Index = index;
@@ -69,12 +57,12 @@
     [XmlAttribute]
     public int Index
     {
-      get { return (index); }
+      get { return (field.Index); }
       set
       {
-        if (index != value)
+        if (field.Index != value)
         {
-          index = value;
+          field.Index = value;
           RaisePropertyChanged("Index");
         }
       }
@@ -86,12 +74,12 @@
     [XmlAttribute(AttributeName="X")]
     public int PixelX
     {
-      get { return (pixelX); }
+      get { return (field.X); }
       set
       {
-        if (pixelX != value)
+        if (field.X != value)
         {
-          pixelX = value;
+          field.X = value;
           RaisePropertyChanged("PixelX", "X");
         }
       }
@@ -103,12 +91,12 @@
     [XmlAttribute(AttributeName="Y")]
     public int PixelY
     {
-      get { return (pixelY); }
+      get { return (field.Y); }
       set
       {
-        if (pixelY != value)
+        if (field.Y != value)
         {
-          pixelY = value;
+          field.Y = value;
           RaisePropertyChanged("PixelY", "Y");
         }
       }
@@ -120,12 +108,12 @@
     [XmlAttribute(AttributeName="Width")]
     public int PixelWidth
     {
-      get { return (pixelWidth); }
+      get { return (field.Width); }
       set
       {
-        if (pixelWidth != value)
+        if (field.Width != value)
         {
-          pixelWidth = value;
+          field.Width = value;
           RaisePropertyChanged("PixelWidth", "Width", "Cell");
         }
       }
@@ -137,12 +125,12 @@
     [XmlAttribute(AttributeName="Height")]
     public int PixelHeight
     {
-      get { return (pixelHeight); }
+      get { return (field.Height); }
       set
       {
-        if (pixelHeight != value)
+        if (field.Height != value)
         {
-          pixelHeight = value;
+          field.Height = value;
           RaisePropertyChanged("PixelHeight", "Height", "Cell");
         }
       }
@@ -153,12 +141,12 @@
     /// </summary>
     public string Name
     {
-      get { return (name); }
+      get { return (field.Name); }
       set
       {
-        if (name != value)
+        if (field.Name != value)
         {
-          name = value;
+          field.Name = value;
           RaisePropertyChanged("Name");
         }
       }
@@ -167,14 +155,14 @@
     /// <summary>
     /// Gets or sets type of data.
     /// </summary>
-    public DataTypes Type
+    public ViDoScanner.Enums.DataTypes Type
     {
-      get { return (type); }
+      get { return ((ViDoScanner.Enums.DataTypes)field.Type); }
       set
       {
-        if (type != value)
+        if (field.Type != (DataTypes)value)
         {
-          type = value;
+          field.Type = (DataTypes)value;
           RaisePropertyChanged("Type");
         }
       }
@@ -183,14 +171,14 @@
     /// <summary>
     /// Gets or sets direction of data.
     /// </summary>
-    public Directions Direction
+    public ViDoScanner.Enums.Directions Direction
     {
-      get { return (direction); }
+      get { return ((ViDoScanner.Enums.Directions)field.Direction); }
       set
       {
-        if (direction != value)
+        if (field.Direction != (Directions)value)
         {
-          direction = value;
+          field.Direction = (Directions)value;
           RaisePropertyChanged("Direction", "Cell");
         }
       }
@@ -201,12 +189,12 @@
     /// </summary>
     public int NumberOfRecords
     {
-      get { return (numberOfRows); }
+      get { return (field.NumberOfRecords); }
       set
       {
-        if (numberOfRows != value)
+        if (field.NumberOfRecords != value)
         {
-          numberOfRows = value;
+          field.NumberOfRecords = value;
           RaisePropertyChanged("NumberOfRecords", "Cell");
         }
       }
@@ -217,12 +205,12 @@
     /// </summary>
     public int NumberOfSelection
     {
-      get { return (numberOfCols); }
+      get { return (field.NumberOfSelection); }
       set
       {
-        if (numberOfCols != value)
+        if (field.NumberOfSelection != value)
         {
-          numberOfCols = value;
+          field.NumberOfSelection = value;
           RaisePropertyChanged("NumberOfSelection", "Cell");
         }
       }
@@ -233,12 +221,12 @@
     /// </summary>
     public int NumberOfBlanks
     {
-      get { return (numberOfBlanks); }
+      get { return (field.NumberOfBlanks); }
       set
       {
-        if (numberOfBlanks != value)
+        if (field.NumberOfBlanks != value)
         {
-          numberOfBlanks = value;
+          field.NumberOfBlanks = value;
           RaisePropertyChanged("NumberOfBlanks");
         }
       }
@@ -249,12 +237,12 @@
     /// </summary>
     public string DefaultValue
     {
-      get { return (defaultValue); }
+      get { return (field.DefaultValue); }
       set
       {
-        if (defaultValue != value)
+        if (field.DefaultValue != value)
         {
-          defaultValue = value;
+          field.DefaultValue = value;
           RaisePropertyChanged("DefaultValue");
         }
       }
@@ -264,6 +252,9 @@
     #region Public Properties
     [XmlIgnore]
     public PageViewModel Page { get; set; }
+
+    [XmlIgnore]
+    public Field Field { get { return (field); } }
 
     [XmlIgnore]
     public double X
@@ -294,13 +285,13 @@
     }
 
     [XmlIgnore]
-    public Rect Cell
+    public System.Windows.Rect Cell
     {
       get
       {
-        return ((Direction == Directions.Vertical) ? 
-          new Rect(0, 0, Width / NumberOfSelection, Height / NumberOfRecords) :
-          new Rect(0, 0, Width / NumberOfRecords, Height / NumberOfSelection));
+        return ((field.Direction == Directions.Vertical) ? 
+          new System.Windows.Rect(0, 0, Width / NumberOfSelection, Height / NumberOfRecords) :
+          new System.Windows.Rect(0, 0, Width / NumberOfRecords, Height / NumberOfSelection));
       }
     }
     #endregion

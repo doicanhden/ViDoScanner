@@ -31,9 +31,9 @@
           Canvas.Left="{Binding X, Mode=TwoWay}"
           Canvas.Top="{Binding Y, Mode=TwoWay}"
           TabIndex="{Binding Index}"
-          SelectCommand="{Binding ElementName=MainUserControl, Path=DataContext.SelectField}"
+          SelectCommand="{Binding ElementName=MainUserControl, Path=DataContext.SelectFieldCommand}"
           SelectCommandParameter="{Binding}"
-          DeleteCommand="{Binding ElementName=MainUserControl, Path=DataContext.DeleteField}"
+          DeleteCommand="{Binding ElementName=MainUserControl, Path=DataContext.DeleteFieldCommand}"
           DeleteCommandParameter="{Binding}"/>
       </Canvas>
     </DataTemplate>

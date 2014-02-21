@@ -41,10 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\ThreadPoolWait.cs" />
+    <Compile Include="Threading\ThreadPoolWait.cs" />
     <Compile Include="Imaging\Image.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scanner\Scanner.cs" />
+    <Compile Include="Scanner.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ViDoScanner.Core\ViDoScanner.Core.csproj">

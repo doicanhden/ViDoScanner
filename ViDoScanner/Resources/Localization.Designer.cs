@@ -70,11 +70,38 @@ namespace ViDoScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bỏ trống.
+        /// </summary>
+        public static string BlankSelection {
+            get {
+                return ResourceManager.GetString("BlankSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Đúng / Sai.
         /// </summary>
         public static string Boolean {
             get {
                 return ResourceManager.GetString("Boolean", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hủy.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tạo.
+        /// </summary>
+        public static string Create {
+            get {
+                return ResourceManager.GetString("Create", resourceCulture);
             }
         }
         
@@ -178,6 +205,15 @@ namespace ViDoScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thưc mục chứa ảnh.
+        /// </summary>
+        public static string ImagesDirectoryName {
+            get {
+                return ResourceManager.GetString("ImagesDirectoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Số thứ tự.
         /// </summary>
         public static string Index {
@@ -192,6 +228,15 @@ namespace ViDoScanner.Resources {
         public static string Location {
             get {
                 return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chọn nhiều.
+        /// </summary>
+        public static string MultiSelection {
+            get {
+                return ResourceManager.GetString("MultiSelection", resourceCulture);
             }
         }
         
@@ -241,6 +286,15 @@ namespace ViDoScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thư mục kết quả.
+        /// </summary>
+        public static string OutputDirectoryName {
+            get {
+                return ResourceManager.GetString("OutputDirectoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trang.
         /// </summary>
         public static string Page {
@@ -255,6 +309,15 @@ namespace ViDoScanner.Resources {
         public static string PageName {
             get {
                 return ResourceManager.GetString("PageName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tạm dừng.
+        /// </summary>
+        public static string Pause {
+            get {
+                return ResourceManager.GetString("Pause", resourceCulture);
             }
         }
         
@@ -277,11 +340,47 @@ namespace ViDoScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tiếp tục.
+        /// </summary>
+        public static string Resume {
+            get {
+                return ResourceManager.GetString("Resume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lưu.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quét.
+        /// </summary>
+        public static string Scan {
+            get {
+                return ResourceManager.GetString("Scan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kích thước.
         /// </summary>
         public static string Size {
             get {
                 return ResourceManager.GetString("Size", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dừng.
+        /// </summary>
+        public static string Stop {
+            get {
+                return ResourceManager.GetString("Stop", resourceCulture);
             }
         }
         

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-namespace ViDoScanner.Processing.Core
+namespace ViDoScanner.Processing.Threading
 {
   /// <summary>ThreadPool utility class that allows for easily waiting on queued delegates.</summary>
   public class ThreadPoolWait : IDisposable

@@ -65,7 +65,7 @@
         }
 
         results[i] = (Cells[i, maxRatio1].Ratio < ratioThreshold) ? BlankSelection :
-          (Cells[i, maxRatio1].Ratio * ratioDelta <= Cells[i, maxRatio2].Ratio) ? MultiSelection : maxRatio1;
+          (maxRatio1 == maxRatio2 || Cells[i, maxRatio1].Ratio > Cells[i, maxRatio2].Ratio * (ratioDelta / 100)) ? maxRatio1 : MultiSelection;
       }
 
       return (results);

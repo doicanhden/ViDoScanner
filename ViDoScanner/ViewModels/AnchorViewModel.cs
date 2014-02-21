@@ -2,16 +2,14 @@
 {
   using System.Windows;
   using System.Xml.Serialization;
+  using ViDoScanner.Core;
   using ViDoScanner.Utilities;
 
   [XmlType(TypeName="Anchor")]
   public class AnchorViewModel:ViewModelBasic
   {
     #region Data Members
-    private int pixelX;
-    private int pixelY;
-    private int pixelWidth;
-    private int pixelHeight;
+    private Anchor anchor = new Anchor();
     #endregion
 
     #region Constructors
@@ -23,18 +21,19 @@
     }
     #endregion
 
+    #region Public Properties
     /// <summary>
     /// Gets or sets X location of Field (pixel unit).
     /// </summary>
     [XmlAttribute(AttributeName="X")]
     public int PixelX
     {
-      get { return (pixelX); }
+      get { return (anchor.X); }
       set
       {
-        if (pixelX != value)
+        if (anchor.X != value)
         {
-          pixelX = value;
+          anchor.X = value;
           RaisePropertyChanged("PixelX", "X");
         }
       }
@@ -46,12 +45,12 @@
     [XmlAttribute(AttributeName="Y")]
     public int PixelY
     {
-      get { return (pixelY); }
+      get { return (anchor.Y); }
       set
       {
-        if (pixelY != value)
+        if (anchor.Y != value)
         {
-          pixelY = value;
+          anchor.Y = value;
           RaisePropertyChanged("PixelY", "Y");
         }
       }
@@ -63,12 +62,12 @@
     [XmlAttribute(AttributeName="Width")]
     public int PixelWidth
     {
-      get { return (pixelWidth); }
+      get { return (anchor.Width); }
       set
       {
-        if (pixelWidth != value)
+        if (anchor.Width != value)
         {
-          pixelWidth = value;
+          anchor.Width = value;
           RaisePropertyChanged("PixelWidth", "Width");
         }
       }
@@ -80,19 +79,24 @@
     [XmlAttribute(AttributeName="Height")]
     public int PixelHeight
     {
-      get { return (pixelHeight); }
+      get { return (anchor.Height); }
       set
       {
-        if (pixelHeight != value)
+        if (anchor.Height != value)
         {
-          pixelHeight = value;
+          anchor.Height = value;
           RaisePropertyChanged("PixelHeight", "Height");
         }
       }
     }
 
     [XmlIgnore]
+    public Anchor Anchor { get { return (anchor); } }
+    [XmlIgnore]
     public PageViewModel Page { get; set; }
+    #endregion
+
+    #region Binding Properties
     [XmlIgnore]
     public double X
     {
@@ -117,5 +121,6 @@
       get { return (PixelHeight / Page.ScaleY); }
       set { PixelHeight = (int)(value * Page.ScaleY); }
     }
+    #endregion
   }
 }

@@ -1,8 +1,14 @@
-﻿<Application x:Class="ViDoScanner.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="MainWindow.xaml">
-    <Application.Resources>
-         
-    </Application.Resources>
+﻿<Application
+  x:Class="ViDoScanner.App"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:Properties="clr-namespace:ViDoScanner.Properties"
+  Exit="Application_Exit"
+  StartupUri="MainWindow.xaml">
+
+  <Application.Resources>
+    <Properties:Settings x:Key="Settings">
+      
+    </Properties:Settings>
+  </Application.Resources>
 </Application>

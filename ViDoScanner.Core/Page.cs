@@ -14,6 +14,6 @@ namespace ViDoScanner.Core
     public Resolution Resolution { get; set; }
     public string Name { get; set; }
     public Field[] Fields { get; set; }
-    public Anchor[] Anchor { get; set; }
+    public Anchor[] Anchors { get; set; }
   }
 }

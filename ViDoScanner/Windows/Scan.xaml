@@ -1,0 +1,68 @@
+﻿<Window
+  x:Class="ViDoScanner.Windows.Scan"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:Resrc="clr-namespace:ViDoScanner.Resources"
+  ResizeMode="NoResize"
+  Title="Scan" Height="172" Width="654">
+  <Grid Margin="10">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="35"/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <TextBlock Margin="4" Grid.Row="0" Text="{x:Static Resrc:Localization.ImagesDirectoryName}"/>
+    <TextBox Margin="4" Grid.Row="0" Grid.Column="1" Text="{Binding ImagesDirectoryName, Mode=TwoWay}" IsEnabled="{Binding IsNotScanning}"/>
+    <Button Margin="4" Grid.Row="0" Grid.Column="2" Content="..." IsEnabled="{Binding IsNotScanning}" Click="Button_Click"/>
+
+    <TextBlock Margin="4" Grid.Row="1" Text="{x:Static Resrc:Localization.OutputDirectoryName}"/>
+    <TextBox Margin="4" Grid.Row="1" Grid.Column="1" Text="{Binding OutputDirectoryName, Mode=TwoWay}" IsEnabled="{Binding IsNotScanning}"/>
+    <Button Margin="4" Grid.Row="1" Grid.Column="2" Content="..." IsEnabled="{Binding IsNotScanning}" Click="Button_Click_1"/>
+
+    <Grid Margin="4" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+      </Grid.ColumnDefinitions>
+      <StackPanel Grid.Column="0">
+        <ProgressBar Height="25" Maximum="{Binding MaximumImages}" Value="{Binding ScannedImages}"/>
+        <TextBlock/>
+      </StackPanel>
+
+      <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
+        <ToggleButton Width="75" Height="25" Margin="4,0,4,0"  Command="{Binding ScanCommand}">
+          <ToggleButton.Style>
+            <Style TargetType="{x:Type ToggleButton}">
+              <Style.Triggers>
+                <Trigger Property="IsChecked" Value="False">
+                  <Setter Property="Content" Value="{x:Static Resrc:Localization.Scan}"/>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="True">
+                  <Setter Property="Content" Value="{x:Static Resrc:Localization.Stop}"/>
+                  <Setter Property="Command" Value="{Binding StopCommand}"/>
+                </Trigger>
+              </Style.Triggers>
+            </Style>
+          </ToggleButton.Style>
+        </ToggleButton>
+
+        <ToggleButton Width="75" Height="25" Margin="4,0,4,0" Content="{x:Static Resrc:Localization.Pause}" Command="{Binding PauseCommand}">
+          <ToggleButton.Style>
+            <Style TargetType="{x:Type ToggleButton}">
+              <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                  <Setter Property="Content" Value="{x:Static Resrc:Localization.Resume}"/>
+                </Trigger>
+              </Style.Triggers>
+            </Style>
+          </ToggleButton.Style>
+        </ToggleButton>
+      </StackPanel>
+    </Grid>
+  </Grid>
+</Window>

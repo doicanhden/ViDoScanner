@@ -80,7 +80,7 @@
               <Controls:EditableTextBlockControl Grid.Column="0" Text="{Binding Name, Mode=TwoWay}"/>
               <Button Grid.Column="1" Width="16" Height="16" Margin="8,0,0,0"
                       Template="{StaticResource CloseButtonTheme}"
-                      Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=DataContext.DeletePage}"
+                      Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=DataContext.DeletePageCommand}"
                       CommandParameter="{Binding}"/>
             </Grid>
           </DataTemplate>
@@ -116,16 +116,32 @@
                 <RowDefinition x:Name="RowDefinition1" Height="*"/>
               </Grid.RowDefinitions>
 
-              <StackPanel x:Name="headerPanel" Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Margin="2,2,2,0">
+              <StackPanel x:Name="headerPanel"
+                Grid.Row="0"
+                Grid.Column="0"
+                Orientation="Horizontal"
+                Margin="2,2,2,0">
                 <TabPanel Background="Transparent" IsItemsHost="true" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
-                <Button VerticalAlignment="Bottom" Width="20" Height="20" Command="{Binding Path=CreatePage}" KeyboardNavigation.TabIndex="2"
-                        CommandParameter="F:\Khanh\SkyDrive\Development\Github\ViDoScanner\Template.0.jpg"
-                        Template="{StaticResource AddButtonTemplate}">
+                <Button
+                  VerticalAlignment="Bottom" Width="20" Height="20"
+                  Command="{Binding Path=CreatePageCommand}"
+                  KeyboardNavigation.TabIndex="2"
+                  Template="{StaticResource AddButtonTemplate}">
                 </Button>
               </StackPanel>
 
-              <Border x:Name="contentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
-                <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+              <Border
+                Grid.Row="1" Grid.Column="0" x:Name="contentPanel" BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Background="{TemplateBinding Background}"
+                KeyboardNavigation.DirectionalNavigation="Contained"
+                KeyboardNavigation.TabIndex="2"
+                KeyboardNavigation.TabNavigation="Local">
+                <ContentPresenter
+                  x:Name="PART_SelectedContentHost"
+                  ContentSource="SelectedContent"
+                  Margin="{TemplateBinding Padding}"
+                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
               </Border>
             </Grid>
 
@@ -173,16 +189,26 @@
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto"/>
-      <ColumnDefinition Width="80*"/>
-      <ColumnDefinition Width="20*"/>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto" MinWidth="260"/>
     </Grid.ColumnDefinitions>
     <ToggleButton Grid.Column="0" IsChecked="{Binding SelectedContent.IsInCreationMode, ElementName=PagesView, Mode=TwoWay}"
                   VerticalAlignment="Top" HorizontalAlignment="Left"
                   Content="F" FontWeight="ExtraBlack"
                   Width="24" Height="24" Margin="4,48,4,0"/>
-    <TabControl Grid.Column="1" Grid.RowSpan="2" x:Name="PagesView" ItemsSource="{Binding Pages}" SelectedItem="{Binding SelectedPage, Mode=TwoWay}" SelectedIndex="0"
-                ItemContainerStyle="{StaticResource TabItemHeaderContainerStyle}" Margin="0,-1,0,0" Style="{DynamicResource PagesViewStyle}"/>
 
+    <TabControl Grid.Column="1" Grid.RowSpan="2" x:Name="PagesView"
+                ItemsSource="{Binding Pages}"
+                SelectedItem="{Binding SelectedPage, Mode=TwoWay}"
+                SelectedIndex="0"
+                ItemContainerStyle="{StaticResource TabItemHeaderContainerStyle}"
+                Style="{DynamicResource PagesViewStyle}" Background="Transparent" />
+    <GridSplitter Grid.Column="2"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Stretch"
+              ShowsPreview="True"
+              Width="5"
+              />
     <local:PropertiesView Grid.Column="2" Grid.RowSpan="2" DataContext="{Binding SelectedPage}" Margin="10,0,0,0" />
   </Grid>
 </UserControl>

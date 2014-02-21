@@ -81,9 +81,9 @@
         r.Height = (int)r.Height;
 
         PageViewModel page = this.DataContext as PageViewModel;
-        if (page.CreateField.CanExecute(r))
+        if (page.CreateFieldCommand.CanExecute(r))
         {
-          page.CreateField.Execute(r);
+          page.CreateFieldCommand.Execute(r);
           IsInCreationMode = false;
         }
       }

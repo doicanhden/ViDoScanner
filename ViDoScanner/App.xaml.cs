@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-
+﻿using System.Windows;
 namespace ViDoScanner
 {
   /// <summary>
@@ -13,5 +6,9 @@ namespace ViDoScanner
   /// </summary>
   public partial class App : Application
   {
+    private void Application_Exit(object sender, ExitEventArgs e)
+    {
+      ViDoScanner.Properties.Settings.Default.Save();
+    }
   }
 }

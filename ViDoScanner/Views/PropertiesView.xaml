@@ -10,9 +10,7 @@
   xmlns:Views="clr-namespace:ViDoScanner.Views"
   xmlns:Enums="clr-namespace:ViDoScanner.Enums"
   xmlns:VCons="clr-namespace:ViDoScanner.ValueConverters"
-  BorderThickness="1"
-  
-  mc:Ignorable="d" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}">
+  mc:Ignorable="d" MinWidth="244">
   <UserControl.Resources>
     <ObjectDataProvider x:Key="DataTypes" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
       <ObjectDataProvider.MethodParameters>

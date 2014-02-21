@@ -6,13 +6,11 @@
     {
       BlankSelection = "-";
       MultiSelection = "*";
-      RatioThreshold = 25;
+      RatioThreshold = 15;
       RatioDelta = 125;
       GrayscaleThreshold = 144;
     }
 
-    public string ImagesDirectory { get; set; }
-    public string OutputDirectory { get; set; }
     public string BlankSelection { get; set; }
     public string MultiSelection { get; set; }
     public double RatioThreshold { get; set; }

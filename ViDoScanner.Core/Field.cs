@@ -4,6 +4,12 @@
 
   public class Field:Rect
   {
+    public Field()
+    {
+      NumberOfRecords = 1;
+      NumberOfSelection = 1;
+    }
+
     [XmlAttribute]
     public int Index { get; set; }
 
