@@ -77,9 +77,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Attributes\LocalizableDescriptionAttribute.cs" />
-    <Compile Include="Controls\FileBrowserControl.xaml.cs">
-      <DependentUpon>FileBrowserControl.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Controls\MenuItemExtensions.cs" />
     <Compile Include="Enums\DataTypes.cs" />
     <Compile Include="Enums\Directions.cs" />
     <Compile Include="Resources\Localization.Designer.cs">
@@ -98,12 +96,15 @@
     <Compile Include="ViewModels\ConfigViewModel.cs" />
     <Compile Include="ViewModels\FieldViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\MenuItemCheckableViewModel.cs" />
     <Compile Include="ViewModels\PageViewModel.cs" />
     <Compile Include="ViewModels\PromptViewModel.cs" />
     <Compile Include="ViewModels\ScanTestingViewModel.cs" />
     <Compile Include="ViewModels\ScanViewModel.cs" />
     <Compile Include="ViewModels\TemplateViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBasic.cs" />
+    <Compile Include="ViewModels\ViewResultsViewModel.cs" />
+    <Compile Include="ViewModels\ViewSingleResultViewModel.cs" />
     <Compile Include="Views\PropertiesView.xaml.cs">
       <DependentUpon>PropertiesView.xaml</DependentUpon>
     </Compile>
@@ -131,16 +132,12 @@
     <Compile Include="Windows\ScanTesting.xaml.cs">
       <DependentUpon>ScanTesting.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\TemplatesManagement.xaml.cs">
-      <DependentUpon>TemplatesManagement.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\ViewResults.xaml.cs">
       <DependentUpon>ViewResults.xaml</DependentUpon>
     </Compile>
-    <Page Include="Controls\FileBrowserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Compile Include="Windows\ViewSingleResult.xaml.cs">
+      <DependentUpon>ViewSingleResult.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -154,6 +151,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ControlsStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PropertiesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -190,11 +191,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\TemplatesManagement.xaml">
+    <Page Include="Windows\ViewResults.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ViewResults.xaml">
+    <Page Include="Windows\ViewSingleResult.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -257,7 +258,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -8,58 +8,66 @@
   xmlns:ViewModels="clr-namespace:ViDoScanner.ViewModels"
   xmlns:Resrc="clr-namespace:ViDoScanner.Resources"
   xmlns:Convs="clr-namespace:ViDoScanner.ValueConverters"
+  xmlns:Controls="clr-namespace:ViDoScanner.Controls"
+  WindowStartupLocation="CenterScreen"
   MinWidth="790" MinHeight="432" Width="964" Height="780">
-  <Grid>
-    <Menu>
+  <Grid Margin="5,0,5,5">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <Menu Background="Transparent">
       <Menu.Resources>
         <Style x:Key="ConfigMenuItemStyle" TargetType="MenuItem">
-          <Setter Property="Header" Value="{Binding}"></Setter>
+          <Setter Property="Controls:MenuItemExtensions.GroupName" Value="ConfigNames"/>
           <Setter Property="Command" Value="{Binding Path=DataContext.ChangeConfigFileCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
-          <Setter Property="CommandParameter" Value="{Binding}"/>
+          <Setter Property="CommandParameter" Value="{Binding Header}"/>
+          <Setter Property="Header" Value="{Binding Header}"/>
+          <Setter Property="IsChecked" Value="{Binding IsChecked, Mode=TwoWay}"/>
           <Setter Property="IsCheckable" Value="True"/>
-          <Setter Property="StaysOpenOnClick" Value="True"/>
         </Style>
       </Menu.Resources>
       
       <MenuItem Header="Mẫu">
-        <MenuItem Header="Tạo mẫu mới"/>
+        <MenuItem Header="Tạo mẫu mới" Command="{Binding CreateTemplateCommand}"/>
         <MenuItem Header="Mở mẫu sẵn có" Command="{Binding OpenTemplateCommand}"/>
         <Separator/>
-        <MenuItem Header="Đóng mẫu"/>
+        <MenuItem Header="Đóng mẫu" Command="{Binding CloseTemplateCommand}"/>
         <Separator/>
         <MenuItem Header="Lưu mẫu" Command="{Binding SaveTemplateCommand}"/>
-        <MenuItem Header="Lưu mẫu với tên khác"/>
-        <Separator/>
-        <MenuItem Header="Trình quản lý mẫu"/>
+        <MenuItem Header="Lưu mẫu với tên khác" Command="{Binding SaveTemplateAsCommand}"/>
         <Separator/>
         <MenuItem Header="Thoát"/>
       </MenuItem>
+
       <MenuItem Header="Chỉnh sửa">
-        <MenuItem Header="Thêm vùng" Command="{Binding CreateFieldCommand}"/>
-        <Separator/>
         <MenuItem Header="Sao chép" Command="Copy"/>
+        <MenuItem Header="Cắt" Command="Cut"/>
         <MenuItem Header="Dán" Command="Paste"/>
         <MenuItem Header="Xóa" Command="Delete"/>
         <Separator/>
-        
+        <MenuItem Header="Thêm vùng" Command="{Binding CreateFieldCommand}"/>
       </MenuItem>
+
       <MenuItem Header="Chức năng">
         <MenuItem Header="Quét thử nghiệm mẫu" Command="{Binding ShowScanTestingCommand}"/>
         <MenuItem Header="Quét nhận dạng" Command="{Binding ShowScanCommand}"/>
         <Separator/>
         <MenuItem Header="Xem kết quả đã quét"/>
       </MenuItem>
+
       <MenuItem Header="Tùy chỉnh">
-        <MenuItem Header="Tập tin thông số"
-                  ItemsSource="{Binding ConfigNames}"
-                  ItemContainerStyle="{StaticResource ConfigMenuItemStyle}"/>
+        <MenuItem Header="Tập tin thông số" ItemsSource="{Binding ConfigNames}" ItemContainerStyle="{StaticResource ConfigMenuItemStyle}"/>
         <Separator/>
         <MenuItem Header="Thông số quét" Command="{Binding ShowConfigCommand}"/>
       </MenuItem>
+
       <MenuItem Header="Giúp đỡ">
         <MenuItem Header="Về ViDoScanner"/>
       </MenuItem>
     </Menu>
-    <Views:TemplateView Grid.Row="1" DataContext="{Binding Template}" Margin="0,20,20,20"/>
+
+    <Views:TemplateView Grid.Row="1" DataContext="{Binding Template}" Margin="0,0,20,20"/>
+
   </Grid>
 </Window>

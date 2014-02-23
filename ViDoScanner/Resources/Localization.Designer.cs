@@ -268,20 +268,20 @@ namespace ViDoScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Số lượng lựa chọn.
+        /// </summary>
+        public static string NumberOfOptions {
+            get {
+                return ResourceManager.GetString("NumberOfOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Số lượng bản ghi.
         /// </summary>
         public static string NumberOfRecords {
             get {
                 return ResourceManager.GetString("NumberOfRecords", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Số lượng lựa chọn.
-        /// </summary>
-        public static string NumberOfSelection {
-            get {
-                return ResourceManager.GetString("NumberOfSelection", resourceCulture);
             }
         }
         

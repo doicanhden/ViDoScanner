@@ -44,10 +44,6 @@ namespace ViDoScanner.Processing
       MaximumImages = 0;
       Config = new Configuration();
     }
-    public void Reset()
-    {
-      IsScanning = true;
-    }
     public void ScanAllDirectories(string directoryName, string imageExtension, string outputDirectoryName, Page page)
     {
       if (page == null)
@@ -85,17 +81,27 @@ namespace ViDoScanner.Processing
       if (page == null)
         throw new System.ArgumentNullException("page");
 
-//    try
+      try
       {
         var task = new Task(() =>
         {
           var imagePaths = Directory.GetFiles(directoryName, imageExtension, SearchOption.TopDirectoryOnly);
-          Images(imagePaths, page, (x) => File.WriteAllText(outputFileName, x));
+          Images(imagePaths, page, (x) =>
+          {
+            try
+            {
+              File.WriteAllText(outputFileName, x);
+            }
+            catch (System.IO.IOException)
+            {
+              
+            }
+          });
         });
 
         task.Start();
       }
-//    catch
+      catch
       {
 
       }
@@ -107,7 +113,7 @@ namespace ViDoScanner.Processing
 
       if (imagePaths != null && imagePaths.Length > 0)
       {
-//      try
+        try
         {
           var task = new Task(
             () =>
@@ -146,7 +152,7 @@ namespace ViDoScanner.Processing
 
           task.Start();
         }
-//      catch
+        catch
         {
 
         }
@@ -257,7 +263,7 @@ namespace ViDoScanner.Processing
         case DataTypes.Boolean:
           foreach (var i in records)
           {
-            sb.Append(i != FieldScanner.BlankSelection);
+            sb.Append(i == 0);
           }
           break;
         default:

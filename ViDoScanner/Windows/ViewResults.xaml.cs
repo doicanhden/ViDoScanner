@@ -3,6 +3,8 @@ using System.Data;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using ViDoScanner.Utilities;
+using ViDoScanner.ViewModels;
 namespace ViDoScanner.Windows
 {
   /// <summary>
@@ -10,30 +12,12 @@ namespace ViDoScanner.Windows
   /// </summary>
   public partial class ViewResults : Window
   {
-    private string fileName;
-    public string FileName
-    {
-      get { return (fileName); }
-      set
-      {
-        if (File.Exists(value))
-        {
-          fileName = value;
-          UpdateDataGrid(value);
-        }
-      }
-    }
-
-    private void UpdateDataGrid(string value)
-    {
-      var csv = new CSVReader(new StringReader(File.ReadAllText(value)));
-      this.ResultsDataGrid.ItemsSource = csv.CreateDataTable(true).DefaultView;
-      this.ResultsDataGrid.AutoGenerateColumns = true;
-    }
- 
-    public ViewResults()
+    private ViewResultsViewModel model;
+    public ViewResults(ViewResultsViewModel model)
     {
       InitializeComponent();
+      this.model = model;
+      this.DataContext = model;
     }
 
     private void ResultsDataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -47,6 +31,15 @@ namespace ViDoScanner.Windows
           DataGridRow dgr = grid.ItemContainerGenerator.ContainerFromItem(grid.SelectedItem) as DataGridRow;
           
         }
+      }
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+      var dir = Browsers.ShowBrowserFolder("Chọn thư mục chứ kết quả", false);
+      if (!string.IsNullOrWhiteSpace(dir))
+      {
+        model.OutputDirectoryName = dir;
       }
     }
   }

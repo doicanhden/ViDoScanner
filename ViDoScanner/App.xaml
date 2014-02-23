@@ -7,8 +7,14 @@
   StartupUri="MainWindow.xaml">
 
   <Application.Resources>
-    <Properties:Settings x:Key="Settings">
-      
-    </Properties:Settings>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ControlsStyle.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+
+      <Properties:Settings x:Key="Settings">
+
+      </Properties:Settings>
+    </ResourceDictionary>
   </Application.Resources>
 </Application>

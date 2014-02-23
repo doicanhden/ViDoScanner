@@ -7,7 +7,7 @@
     public Field()
     {
       NumberOfRecords = 1;
-      NumberOfSelection = 1;
+      NumberOfOptions = 1;
     }
 
     [XmlAttribute]
@@ -17,8 +17,6 @@
     public DataTypes Type { get; set; }
     public Directions Direction { get; set; }
     public int NumberOfRecords { get; set; }
-    public int NumberOfSelection { get; set; }
-    public int NumberOfBlanks { get; set; }
-    public string DefaultValue { get; set; }
+    public int NumberOfOptions { get; set; }
   }
 }

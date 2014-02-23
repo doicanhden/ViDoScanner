@@ -16,11 +16,11 @@
   {
     #region Data Members
     private Template template = new Template();
+    private ObservableCollection<PageViewModel> pages = new ObservableCollection<PageViewModel>();
+    private PageViewModel selectedPage;
 
-    private ObservableCollection<PageViewModel> pages;
     private ICommand createPageCommand;
     private ICommand deletePageCommand;
-    private PageViewModel selectedPage;
     #endregion
 
     #region Constructors
@@ -29,13 +29,11 @@
     /// </summary>
     public TemplateViewModel()
     {
-      Pages = new ObservableCollection<PageViewModel>();
       Name = "Template";
     }
     public TemplateViewModel(Template template)
     {
       this.template = template;
-      Pages = new ObservableCollection<PageViewModel>();
     }
     #endregion
 
@@ -187,13 +185,6 @@
     protected override string[] ValidatedProperties
     {
       get { return (validatedProperties); }
-    }
-    public override bool IsValid
-    {
-      get
-      {
-        return (Pages != null && Pages.Count > 0 && base.IsValid);
-      }
     }
     protected override string GetValidationError(string propertyName)
     {

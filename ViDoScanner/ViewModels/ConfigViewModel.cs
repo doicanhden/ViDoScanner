@@ -11,6 +11,7 @@
   {
     #region Data Members
     private Configuration config = new Configuration();
+    private MainWindowViewModel mainViewModel;
     private ICommand saveCommand;
     private RelayCommand<Window> cancelCommand;
     #endregion
@@ -18,13 +19,15 @@
     {
     }
 
-    public ConfigViewModel(ConfigViewModel config)
+    public ConfigViewModel(MainWindowViewModel main)
     {
-      this.config.GrayscaleThreshold = config.GrayscaleThreshold;
-      this.config.RatioDelta = config.RatioDelta;
-      this.config.RatioThreshold = config.RatioThreshold;
-      this.config.BlankSelection = config.BlankSelection;
-      this.config.MultiSelection = config.MultiSelection;
+      var mainConfig = main.Config;
+      this.mainViewModel = main;
+      this.GrayscaleThreshold = mainConfig.GrayscaleThreshold;
+      this.RatioDelta = mainConfig.RatioDelta;
+      this.RatioThreshold = mainConfig.RatioThreshold;
+      this.MultiSelection = mainConfig.MultiSelection;
+      this.BlankSelection = mainConfig.BlankSelection;
     }
     public string BlankSelection
     {
@@ -133,11 +136,10 @@
 
             if (!string.IsNullOrWhiteSpace(configName))
             {
-              MainWindowViewModel.SaveConfigAsName(configName, this);
+              this.mainViewModel.CreateConfig(configName, this);
 
               if (x != null)
               {
-                x.DialogResult = true;
                 x.Close();
               }
             }
@@ -161,9 +163,13 @@
       switch (propertyName)
       {
         case "BlankSelection":
+          if (BlankSelection == MultiSelection)
+            return ("Trùng với kí tự Chọn nhiều.");
           result = DoAssert(string.IsNullOrWhiteSpace(BlankSelection), "Không được để trống.");
           break;
         case "MultiSelection":
+          if (BlankSelection == MultiSelection)
+            return ("Trùng với kí tự Bỏ trống.");
           result = DoAssert(string.IsNullOrWhiteSpace(MultiSelection), "Không được để trống.");
           break;
         default:

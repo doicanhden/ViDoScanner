@@ -9,63 +9,16 @@
   xmlns:Controls="clr-namespace:ViDoScanner.Controls"
   xmlns:Resrc="clr-namespace:ViDoScanner.Resources"
   mc:Ignorable="d">
+  <UserControl.Style>
+    <Style TargetType="{x:Type UserControl}">
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding DataContext, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+          <Setter Property="IsEnabled" Value="False"/>
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
+  </UserControl.Style>
   <UserControl.Resources>
-    <LinearGradientBrush x:Key="HoverGradientButton">
-      <GradientStop Color="#FF757474"/>
-      <GradientStop Color="#FF918F8F"/>
-    </LinearGradientBrush>
-
-    <LinearGradientBrush x:Key="ClickGradientCloseButton">
-      <GradientStop Color="#FF5C2014"/>
-      <GradientStop Color="#FFB0452C"/>
-    </LinearGradientBrush>
-
-    <LinearGradientBrush x:Key="ClickGradientAddButton">
-      <GradientStop Color="#FF33CC33"/>
-      <GradientStop Color="#FF009933"/>
-    </LinearGradientBrush>
-
-    <ControlTemplate x:Key="CloseButtonTheme" TargetType="{x:Type Button}">
-      <Grid x:Name="MainGrid">
-        <Rectangle x:Name="MainRectangle" Fill="#00000000" RadiusX="8" RadiusY="8"/>
-        <ContentPresenter x:Name="Presenter" TextBlock.Foreground="#BB225588"
-                          HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Path x:Name="Cross" Data="M0,0 L1,1 M0,1 L1,0" Stretch="Fill"
-              Stroke="Black" StrokeThickness="2" Width="8" Height="8" />
-      </Grid>
-      <ControlTemplate.Triggers>
-        <Trigger Property="IsMouseOver" Value="True">
-          <Setter TargetName="MainRectangle" Property="Fill" Value="{StaticResource HoverGradientButton}"/>
-          <Setter TargetName="MainRectangle" Property="Stroke" Value="Transparent"/>
-          <Setter TargetName="Cross" Property="Stroke" Value="White" />
-        </Trigger>
-        <Trigger Property="IsPressed" Value="True">
-          <Setter TargetName="MainRectangle" Property="Fill" Value="{StaticResource ClickGradientCloseButton}"/>
-          <Setter TargetName="Cross" Property="Stroke" Value="White" />
-        </Trigger>
-      </ControlTemplate.Triggers>
-    </ControlTemplate>
-    
-    <ControlTemplate x:Key="AddButtonTemplate" TargetType="{x:Type Button}">
-      <Grid x:Name="MainGrid">
-        <Rectangle x:Name="MainRectangle" Fill="Transparent"  RadiusX="0" RadiusY="0"/>
-        <ContentPresenter x:Name="Presenter" TextBlock.Foreground="#BB225588"
-                                              HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Path x:Name="Cross" Data="M 0.5,0 L 0.5,1 M 0,0.5 L 1,0.5" Stretch="Fill"
-                                  Stroke="Black" StrokeThickness="2" Width="10" Height="10"/>
-      </Grid>
-      <ControlTemplate.Triggers>
-        <Trigger Property="IsMouseOver" Value="True">
-          <Setter TargetName="MainRectangle" Property="Fill" Value="{StaticResource HoverGradientButton}"/>
-          <Setter TargetName="MainRectangle" Property="Stroke" Value="Transparent"/>
-          <Setter TargetName="Cross" Property="Stroke" Value="White" />
-        </Trigger>
-        <Trigger Property="IsPressed" Value="True">
-          <Setter TargetName="MainRectangle" Property="Fill" Value="{StaticResource ClickGradientAddButton}"/>
-          <Setter TargetName="Cross" Property="Stroke" Value="White" />
-        </Trigger>
-      </ControlTemplate.Triggers>
-    </ControlTemplate>
 
     <!-- Tab item header container style -->
     <Style x:Key="TabItemHeaderContainerStyle" TargetType="TabItem">
@@ -92,98 +45,6 @@
       <local:PageView IsInCreationMode="{Binding IsInCreationMode, Mode=TwoWay}"/>
     </DataTemplate>
 
-    <SolidColorBrush x:Key="TabItem.Selected.Background" Color="#FFFFFF"/>
-    <SolidColorBrush x:Key="TabItem.Selected.Border" Color="#ACACAC"/>
-    <Style x:Key="PagesViewStyle" TargetType="{x:Type TabControl}">
-      <Setter Property="Padding" Value="2"/>
-      <Setter Property="HorizontalContentAlignment" Value="Center"/>
-      <Setter Property="VerticalContentAlignment" Value="Center"/>
-      <Setter Property="Background" Value="{StaticResource TabItem.Selected.Background}"/>
-      <Setter Property="BorderBrush" Value="{StaticResource TabItem.Selected.Border}"/>
-      <Setter Property="BorderThickness" Value="1"/>
-      <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate TargetType="{x:Type TabControl}">
-
-            <Grid x:Name="templateRoot" ClipToBounds="true" SnapsToDevicePixels="true" KeyboardNavigation.TabNavigation="Local">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="ColumnDefinition0"/>
-                <ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
-              </Grid.ColumnDefinitions>
-              <Grid.RowDefinitions>
-                <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
-                <RowDefinition x:Name="RowDefinition1" Height="*"/>
-              </Grid.RowDefinitions>
-
-              <StackPanel x:Name="headerPanel"
-                Grid.Row="0"
-                Grid.Column="0"
-                Orientation="Horizontal"
-                Margin="2,2,2,0">
-                <TabPanel Background="Transparent" IsItemsHost="true" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
-                <Button
-                  VerticalAlignment="Bottom" Width="20" Height="20"
-                  Command="{Binding Path=CreatePageCommand}"
-                  KeyboardNavigation.TabIndex="2"
-                  Template="{StaticResource AddButtonTemplate}">
-                </Button>
-              </StackPanel>
-
-              <Border
-                Grid.Row="1" Grid.Column="0" x:Name="contentPanel" BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="{TemplateBinding BorderThickness}"
-                Background="{TemplateBinding Background}"
-                KeyboardNavigation.DirectionalNavigation="Contained"
-                KeyboardNavigation.TabIndex="2"
-                KeyboardNavigation.TabNavigation="Local">
-                <ContentPresenter
-                  x:Name="PART_SelectedContentHost"
-                  ContentSource="SelectedContent"
-                  Margin="{TemplateBinding Padding}"
-                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-              </Border>
-            </Grid>
-
-            <ControlTemplate.Triggers>
-              <Trigger Property="TabStripPlacement" Value="Bottom">
-                <Setter Property="Grid.Row" TargetName="headerPanel" Value="1"/>
-                <Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
-                <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
-                <Setter Property="Height" TargetName="RowDefinition1" Value="Auto"/>
-                <Setter Property="Margin" TargetName="headerPanel" Value="2,0,2,2"/>
-              </Trigger>
-              <Trigger Property="TabStripPlacement" Value="Left">
-                <Setter Property="Grid.Row" TargetName="headerPanel" Value="0"/>
-                <Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
-                <Setter Property="Grid.Column" TargetName="headerPanel" Value="0"/>
-                <Setter Property="Grid.Column" TargetName="contentPanel" Value="1"/>
-                <Setter Property="Width" TargetName="ColumnDefinition0" Value="Auto"/>
-                <Setter Property="Width" TargetName="ColumnDefinition1" Value="*"/>
-                <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
-                <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
-                <Setter Property="Margin" TargetName="headerPanel" Value="2,2,0,2"/>
-              </Trigger>
-              <Trigger Property="TabStripPlacement" Value="Right">
-                <Setter Property="Grid.Row" TargetName="headerPanel" Value="0"/>
-                <Setter Property="Grid.Row" TargetName="contentPanel" Value="0"/>
-                <Setter Property="Grid.Column" TargetName="headerPanel" Value="1"/>
-                <Setter Property="Grid.Column" TargetName="contentPanel" Value="0"/>
-                <Setter Property="Width" TargetName="ColumnDefinition0" Value="*"/>
-                <Setter Property="Width" TargetName="ColumnDefinition1" Value="Auto"/>
-                <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
-                <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
-                <Setter Property="Margin" TargetName="headerPanel" Value="0,2,2,2"/>
-              </Trigger>
-              <Trigger Property="IsEnabled" Value="false">
-                <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-              </Trigger>
-            </ControlTemplate.Triggers>
-
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
 
   </UserControl.Resources>
   <Grid>
@@ -200,7 +61,6 @@
     <TabControl Grid.Column="1" Grid.RowSpan="2" x:Name="PagesView"
                 ItemsSource="{Binding Pages}"
                 SelectedItem="{Binding SelectedPage, Mode=TwoWay}"
-                SelectedIndex="0"
                 ItemContainerStyle="{StaticResource TabItemHeaderContainerStyle}"
                 Style="{DynamicResource PagesViewStyle}" Background="Transparent" />
     <GridSplitter Grid.Column="2"

@@ -6,12 +6,15 @@
 
   public class PromptViewModel:ViewModelBasic
   {
+    #region Data Members
     private ICommand okCommand;
     private ICommand cancelCommand;
     private string title;
     private string text;
     private string detail;
+    #endregion
 
+    #region Public Properties
     public string Title
     {
       get { return (title); }
@@ -48,7 +51,9 @@
         }
       }
     }
+    #endregion
 
+    #region Public Commands
     public ICommand OkCommand
     {
       get
@@ -65,7 +70,6 @@
           (x) => this.IsValid)));
       }
     }
-
     public ICommand CancelCommand
     {
       get
@@ -80,7 +84,9 @@
           })));
       }
     }
+    #endregion
 
+    #region Validations
     private static readonly string[] validatedProperties = {"Text"};
     protected override string[] ValidatedProperties
     {
@@ -95,6 +101,6 @@
 
       return (null);
     }
+    #endregion
   }
-
 }

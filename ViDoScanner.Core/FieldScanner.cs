@@ -11,7 +11,7 @@
     public FieldScanner(Field field)
     {
       this.nRecords = field.NumberOfRecords;
-      this.nSelection = field.NumberOfSelection;
+      this.nSelection = field.NumberOfOptions;
       this.BuildCells(field.Width, field.Height, field.Direction == Directions.Vertical);
     }
     #endregion

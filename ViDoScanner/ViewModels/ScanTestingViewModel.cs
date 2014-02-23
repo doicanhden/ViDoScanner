@@ -1,19 +1,22 @@
-﻿using Com.StellmanGreene.CSVReader;
-using System.Data;
-using System.IO;
-using System.Text;
-using System.Windows.Input;
-using ViDoScanner.Commands;
-using ViDoScanner.Processing;
-namespace ViDoScanner.ViewModels
+﻿namespace ViDoScanner.ViewModels
 {
+  using Com.StellmanGreene.CSVReader;
+  using System.Data;
+  using System.IO;
+  using System.Text;
+  using System.Windows.Input;
+  using ViDoScanner.Commands;
+  using ViDoScanner.Processing;
+
   public class ScanTestingViewModel:ViewModelBasic
   {
-    private ConfigViewModel config;
+    #region Data Members
     private MainWindowViewModel main;
+    private ConfigViewModel config;
     private ICommand scanCommand;
+    private DataTable data;
     private string imagePath;
-    private DataView dataView;
+    #endregion
 
     public ConfigViewModel Config
     {
@@ -33,19 +36,20 @@ namespace ViDoScanner.ViewModels
       }
     }
 
-    public DataView DataView
+    public DataTable Data
     {
-      get { return (dataView); }
+      get { return (data); }
       set
       {
-        dataView = value;
-        RaisePropertyChanged("DataView");
+        
+        data = value;
+        RaisePropertyChanged("Data");
       }
     }
 
     public ScanTestingViewModel(MainWindowViewModel main)
     {
-      this.config = new ConfigViewModel(main.Config);
+      this.config = new ConfigViewModel(main);
       this.main = main;
     }
 
@@ -61,7 +65,7 @@ namespace ViDoScanner.ViewModels
             sb.Append(Scanner.Image(ImagePath, main.Template.Pages[0].Page, config.Config));
 
             var csv = new CSVReader(sb.ToString());
-            DataView = csv.CreateDataTable(true).DefaultView;
+            Data = csv.CreateDataTable(true);
           },
           (x) => this.IsValid)));
       }

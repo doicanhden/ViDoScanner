@@ -201,49 +201,17 @@
     }
 
     /// <summary>
-    /// Gets or sets number of selection
+    /// Gets or sets number of options
     /// </summary>
-    public int NumberOfSelection
+    public int NumberOfOptions
     {
-      get { return (field.NumberOfSelection); }
+      get { return (field.NumberOfOptions); }
       set
       {
-        if (field.NumberOfSelection != value)
+        if (field.NumberOfOptions != value)
         {
-          field.NumberOfSelection = value;
-          RaisePropertyChanged("NumberOfSelection", "Cell");
-        }
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets number of blanks
-    /// </summary>
-    public int NumberOfBlanks
-    {
-      get { return (field.NumberOfBlanks); }
-      set
-      {
-        if (field.NumberOfBlanks != value)
-        {
-          field.NumberOfBlanks = value;
-          RaisePropertyChanged("NumberOfBlanks");
-        }
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets default value.
-    /// </summary>
-    public string DefaultValue
-    {
-      get { return (field.DefaultValue); }
-      set
-      {
-        if (field.DefaultValue != value)
-        {
-          field.DefaultValue = value;
-          RaisePropertyChanged("DefaultValue");
+          field.NumberOfOptions = value;
+          RaisePropertyChanged("NumberOfOptions", "Cell");
         }
       }
     }
@@ -290,8 +258,8 @@
       get
       {
         return ((field.Direction == Directions.Vertical) ? 
-          new System.Windows.Rect(0, 0, Width / NumberOfSelection, Height / NumberOfRecords) :
-          new System.Windows.Rect(0, 0, Width / NumberOfRecords, Height / NumberOfSelection));
+          new System.Windows.Rect(0, 0, Width / NumberOfOptions, Height / NumberOfRecords) :
+          new System.Windows.Rect(0, 0, Width / NumberOfRecords, Height / NumberOfOptions));
       }
     }
     #endregion
@@ -303,9 +271,8 @@
       "Y",
       "Width",
       "Height",
-      "NumberOfBlank",
       "NumberOfRecords",
-      "NumberOfSelection"
+      "NumberOfOptions"
     };
     protected override string[] ValidatedProperties
     {
@@ -328,14 +295,11 @@
         case "Height":
           error = DoAssert(Height <= 0, "Giá trị Height không hợp lệ.");
           break;
-        case "NumberOfBlanks":
-          error = DoAssert(NumberOfBlanks < 0, "Số lượng khoảng trắng phải lớn hơn hoặc bằng 0.");
-          break;
         case "NumberOfRecords":
           error = DoAssert(NumberOfRecords <= 0, "Số lượng bản ghi phải lớn hơn 0.");
           break;
-        case "NumberOfSelection":
-          error = DoAssert(NumberOfSelection <= 0, "Số lượng lựa chọn phải lớn hơn 0.");
+        case "NumberOfOptions":
+          error = DoAssert(NumberOfOptions <= 0, "Số lượng lựa chọn phải lớn hơn 0.");
           break;
       }
       return (error);

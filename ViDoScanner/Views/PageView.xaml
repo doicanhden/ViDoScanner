@@ -9,6 +9,15 @@
   xmlns:ValueConverters="clr-namespace:ViDoScanner.ValueConverters"
   mc:Ignorable="d"
   x:Name="MainUserControl">
+  <UserControl.Style>
+    <Style TargetType="{x:Type UserControl}">
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding DataContext, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+          <Setter Property="IsEnabled" Value="False"/>
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
+  </UserControl.Style>
   <UserControl.Resources>
     <ValueConverters:PathToImageConverter x:Key="PathToImageConverter"/>
     <DataTemplate DataType="{x:Type ViewModels:AnchorViewModel}">
@@ -23,6 +32,7 @@
           Height="{Binding Height}"/>
       </Canvas>
     </DataTemplate>
+
     <DataTemplate DataType="{x:Type ViewModels:FieldViewModel}">
       <Canvas>
         <Views:GridLinesFieldView

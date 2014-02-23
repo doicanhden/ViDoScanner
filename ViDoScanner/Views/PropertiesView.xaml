@@ -11,6 +11,15 @@
   xmlns:Enums="clr-namespace:ViDoScanner.Enums"
   xmlns:VCons="clr-namespace:ViDoScanner.ValueConverters"
   mc:Ignorable="d" MinWidth="244">
+  <UserControl.Style>
+    <Style TargetType="{x:Type UserControl}">
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding DataContext, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+          <Setter Property="IsEnabled" Value="False"/>
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
+  </UserControl.Style>
   <UserControl.Resources>
     <ObjectDataProvider x:Key="DataTypes" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
       <ObjectDataProvider.MethodParameters>
@@ -39,13 +48,20 @@
           <Expander Header="{x:Static Resrc:Localization.Detail}" IsExpanded="True">
             <StackPanel Margin="10,4,0,0">
               <TextBlock Margin="4" Text="{x:Static Resrc:Localization.Index}"/>
-              <TextBox Margin="4" Text="{Binding Index, Mode=TwoWay}"/>
+              <TextBox Margin="4" Text="{Binding Index, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
               <TextBlock Margin="4" Text="{x:Static Resrc:Localization.PageName}"/>
-              <TextBox Margin="4" Text="{Binding Name, Mode=TwoWay}"/>
+              <TextBox Margin="4" Text="{Binding Name, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
               <TextBlock Margin="4" Text="{x:Static Resrc:Localization.ImagePath}"/>
-              <Controls:FileBrowserControl Margin="4" FileName="{Binding ImagePath, Mode=TwoWay}"/>
+              <Grid Margin="4">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="25"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding ImagePath, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,2,0"/>
+                <Button Margin="2,0,0,0" Grid.Column="1" Click="Button_Click" Content="..."/>
+              </Grid>
             </StackPanel>
           </Expander>
         </Grid>
@@ -62,13 +78,13 @@
           <Expander Grid.Row="0" IsExpanded="True" Header="{x:Static Resrc:Localization.Detail}">
             <StackPanel Margin="10,4,0,0">
               <TextBlock Margin="4" Text="{x:Static Resrc:Localization.Index}"/>
-              <TextBox Text="{Binding Index, Mode=TwoWay}"/>
+              <TextBox Text="{Binding Index, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
               <TextBlock Margin="4" Text="{x:Static Resrc:Localization.FieldName}"/>
-              <TextBox Text="{Binding Name, Mode=TwoWay}"/>
+              <TextBox Text="{Binding Name, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
               <TextBlock Margin="4" Text="{x:Static Resrc:Localization.ExportDataType}"/>
-              <ComboBox ItemsSource="{Binding Source={StaticResource DataTypes}}" SelectedItem="{Binding Type, Mode=TwoWay}" Height="Auto">
+              <ComboBox ItemsSource="{Binding Source={StaticResource DataTypes}}" SelectedItem="{Binding Type, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Height="Auto">
                 <ComboBox.ItemTemplate>
                   <DataTemplate>
                     <TextBlock Text="{Binding Mode=OneWay, Converter={StaticResource EnumItemsConverter}}" Height="Auto" Margin="0" VerticalAlignment="Center"/>
@@ -77,7 +93,7 @@
               </ComboBox>
 
               <TextBlock Margin="4" Text="{x:Static Resrc:Localization.ExportDataDirection}"/>
-              <ComboBox ItemsSource="{Binding Source={StaticResource Directions}}" SelectedItem="{Binding Direction, Mode=TwoWay}" Height="Auto">
+              <ComboBox ItemsSource="{Binding Source={StaticResource Directions}}" SelectedItem="{Binding Direction, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Height="Auto">
                 <ComboBox.ItemTemplate>
                   <DataTemplate>
                     <TextBlock Text="{Binding Mode=OneWay, Converter={StaticResource EnumItemsConverter}}" Height="Auto" Margin="0" VerticalAlignment="Center"/>
@@ -86,41 +102,34 @@
               </ComboBox>
 
               <TextBlock Margin="4" Text="{x:Static Resrc:Localization.NumberOfRecords}"/>
-              <TextBox Text="{Binding NumberOfRecords, Mode=TwoWay}" />
+              <TextBox Text="{Binding NumberOfRecords, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
 
-              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.NumberOfSelection}"/>
-              <TextBox Text="{Binding NumberOfSelection, Mode=TwoWay}" />
-
-              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.NumberOfBlanks}"/>
-              <TextBox Text="{Binding NumberOfBlanks, Mode=TwoWay}" />
-
-              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.DefaultValue}"/>
-              <TextBox Text="{Binding DefaultValue, Mode=TwoWay}" />
+              <TextBlock Margin="4" Text="{x:Static Resrc:Localization.NumberOfOptions}"/>
+              <TextBox Text="{Binding NumberOfOptions, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
           </Expander>
 
           <Expander Grid.Row="1" IsExpanded="False" Header="{x:Static Resrc:Localization.Location}">
             <StackPanel Margin="10,4,0,0">
               <TextBlock Margin="4" Text="{x:Static Resrc:Localization.X}"/>
-              <TextBox Text="{Binding X, Mode=TwoWay}"/>
+              <TextBox Text="{Binding X, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
               <TextBlock Margin="4" Text="{x:Static Resrc:Localization.Y}"/>
-              <TextBox Text="{Binding Y, Mode=TwoWay}"/>
+              <TextBox Text="{Binding Y, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
           </Expander>
 
           <Expander Grid.Row="2" IsExpanded="False" Header="{x:Static Resrc:Localization.Size}">
             <StackPanel Margin="10,4,0,0">
               <TextBlock Margin="4" Text="{x:Static Resrc:Localization.Width}"/>
-              <TextBox Text="{Binding Width, Mode=TwoWay}"/>
+              <TextBox Text="{Binding Width, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
               <TextBlock Margin="4" Text="{x:Static Resrc:Localization.Height}"/>
-              <TextBox Text="{Binding Height, Mode=TwoWay}"/>
+              <TextBox Text="{Binding Height, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
           </Expander>
         </Grid>
       </GroupBox>
-      <TextBlock Margin="5" Grid.Row="2" TextWrapping="Wrap"/>
     </Grid>
   </ScrollViewer>
 </UserControl>

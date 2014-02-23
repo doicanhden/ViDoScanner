@@ -189,7 +189,7 @@
   <data name="NumberOfRecords" xml:space="preserve">
     <value>Số lượng bản ghi</value>
   </data>
-  <data name="NumberOfSelection" xml:space="preserve">
+  <data name="NumberOfOptions" xml:space="preserve">
     <value>Số lượng lựa chọn</value>
   </data>
   <data name="OutputDirectoryName" xml:space="preserve">

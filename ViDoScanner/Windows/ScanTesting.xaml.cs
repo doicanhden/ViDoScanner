@@ -1,23 +1,9 @@
-﻿using Com.StellmanGreene.CSVReader;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using ViDoScanner.Processing;
 using ViDoScanner.Utilities;
 using ViDoScanner.ViewModels;
-
 namespace ViDoScanner.Windows
 {
   /// <summary>
@@ -40,6 +26,24 @@ namespace ViDoScanner.Windows
       if (!string.IsNullOrWhiteSpace(imagePath))
       {
         this.model.ImagePath = imagePath;
+      }
+    }
+
+    private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+      if (sender != null)
+      {
+        DataGrid grid = sender as DataGrid;
+
+        if (grid != null && grid.SelectedItems != null && grid.SelectedItems.Count == 1)
+        {
+          var row = grid.SelectedItem as DataRowView;
+          
+
+          DataGridRow dgr = grid.ItemContainerGenerator.ContainerFromItem(grid.SelectedItem) as DataGridRow;
+          
+          
+        }
       }
     }
 

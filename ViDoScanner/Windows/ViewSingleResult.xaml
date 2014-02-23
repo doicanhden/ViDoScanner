@@ -1,0 +1,34 @@
+﻿<Window
+  x:Class="ViDoScanner.Windows.ViewSingleResult"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:ViewModels="clr-namespace:ViDoScanner.ViewModels"
+  Title="ViewSingleResult" Height="300" Width="300">
+  <Window.Resources>
+    <DataTemplate DataType="{x:Type ViewModels:FieldViewModel}">
+      <Border>
+        <Border.Background>
+          <VisualBrush TileMode="Tile" Viewport="{Binding Cell}" ViewboxUnits="Absolute" Viewbox="{Binding Cell}" ViewportUnits="Absolute">
+            <VisualBrush.Visual>
+              <Rectangle Stroke="Red" StrokeThickness="1" Height="{Binding Cell.Height}" Width="{Binding Cell.Width}"/>
+            </VisualBrush.Visual>
+          </VisualBrush>
+        </Border.Background>
+      </Border>
+    </DataTemplate>
+  </Window.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <TextBlock Grid.Row="0" Text="{Binding ImagePath}" Foreground="Red"/>
+    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto">
+      <Grid>
+        <Image Source="{Binding Image, Mode=OneWay}"/>
+        <ItemsControl ItemsSource="{Binding Anchors}"/>
+        <ItemsControl ItemsSource="{Binding Fields}"/>
+      </Grid>
+    </ScrollViewer>
+  </Grid>
+</Window>
