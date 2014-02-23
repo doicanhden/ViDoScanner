@@ -145,7 +145,7 @@
     #region Save Template As
     private void SaveTemplateAsExecute(object x)
     {
-      var dir = Browsers.ShowBrowserFolder("Chọn thư mục chứa chứ thư mục mẫu");
+      var dir = Browsers.ShowBrowserFolder("Chọn thư mục chứa thư mục mẫu");
       SaveTemplateAs(dir);
     }
     private bool SaveTemplateAsCanExecute(object x)

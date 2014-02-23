@@ -26,7 +26,6 @@
     <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto">
       <Grid>
         <Image Source="{Binding Image, Mode=OneWay}"/>
-        <ItemsControl ItemsSource="{Binding Anchors}"/>
         <ItemsControl ItemsSource="{Binding Fields}"/>
       </Grid>
     </ScrollViewer>
