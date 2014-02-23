@@ -288,7 +288,12 @@
       if (Directory.Exists(templateFolder))
       {
         templateFolder += Path.DirectorySeparatorChar;
-
+        if (!File.Exists(templateFolder + "template.xml"))
+        {
+          MessageBox.Show(string.Format(
+            "Thư mục \"{0}\" không phải thư mục mẫu.", templateFolder), "Thông báo");
+          return;
+        }
         var template = Xml.Deserialize<TemplateViewModel>(templateFolder + "template.xml");
 
         foreach (var page in template.Pages)

@@ -63,12 +63,7 @@
                 SelectedItem="{Binding SelectedPage, Mode=TwoWay}"
                 ItemContainerStyle="{StaticResource TabItemHeaderContainerStyle}"
                 Style="{DynamicResource PagesViewStyle}" Background="Transparent" />
-    <GridSplitter Grid.Column="2"
-              HorizontalAlignment="Left"
-              VerticalAlignment="Stretch"
-              ShowsPreview="True"
-              Width="5"
-              />
+    <GridSplitter Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Stretch" ShowsPreview="True" Width="5"/>
     <local:PropertiesView Grid.Column="2" Grid.RowSpan="2" DataContext="{Binding SelectedPage}" Margin="10,0,0,0" />
   </Grid>
 </UserControl>
